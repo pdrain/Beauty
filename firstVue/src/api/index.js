@@ -16,7 +16,7 @@ export const USER_POINTS="/api/user-mypoints.json";
 export const USER_SUBSCRIBERS="/api/user-mysubscribers.json";
 
 
-export const SUBMIT_ORDER='/api/order/submit';
+export const SUBMIT_ORDER='/api/order';
 
 
 

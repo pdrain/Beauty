@@ -19,9 +19,9 @@
         </div>
         <div class="contact">
             <ul>                
-                <li><label class="title">联系人</label><input type="text"/></li>
-                <li><label class="title">联系手机</label><input type="text"/></li>
-                <li><label class="title">介绍人手机</label><input type="text"/></li>
+                <li><label class="title">联系人</label><input type="text" v-model="user.contactor"/></li>
+                <li><label class="title">联系手机</label><input type="text" v-model="user.mobile"/></li>
+                <li><label class="title">介绍人手机</label><input type="text" v-model="user.intrudcer"/></li>
             </ul>
         </div>
         <div class="remark">*请填写正确的介绍人手机，可以获取介绍人专属优惠。</div>
@@ -42,7 +42,8 @@ export default {
       }
   },
     computed: mapGetters({
-        detail: 'ProjectDetail'
+        detail: 'SubmitProjectDetail',
+        user:'UserInfo'
   }),
   created(){
      
@@ -55,8 +56,8 @@ export default {
       }
       else{
           this.$set(this.$data,'projectId',projectId);
-           this.$store.dispatch('queryProjectsDetail',projectId);
-         //  this.$store.dispatch('getUserInfo',1);
+           this.$store.dispatch('querySubmitProjectsDetail',projectId);
+           this.$store.dispatch('getUserInfo',1);
         
       }
 
@@ -64,7 +65,7 @@ export default {
   },
   methods:{
     submitOrder:function () {
-        alert(1);
+         this.$store.dispatch('submitOrder');
     }
 
   }

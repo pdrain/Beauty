@@ -69,6 +69,6 @@ D:\学习\VueJS\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\ko\System
 D:\学习\VueJS\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\ru\System.Spatial.resources.dll
 D:\学习\VueJS\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\zh-Hans\System.Spatial.resources.dll
 D:\学习\VueJS\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\zh-Hant\System.Spatial.resources.dll
-D:\学习\VueJS\VueServer\firstVueServer-net\ServiceApi\ServiceApi\obj\Debug\ServiceApi.csprojResolveAssemblyReference.cache
 D:\学习\VueJS\VueServer\firstVueServer-net\ServiceApi\ServiceApi\obj\Debug\ServiceApi.dll
 D:\学习\VueJS\VueServer\firstVueServer-net\ServiceApi\ServiceApi\obj\Debug\ServiceApi.pdb
+D:\学习\VueJS\VueServer\firstVueServer-net\ServiceApi\ServiceApi\obj\Debug\ServiceApi.csprojResolveAssemblyReference.cache
