@@ -15,3 +15,9 @@ export const QUEREY_PROJECT_LIST="quere_project_list";
 export const QUEREY_PROJECT_DETAIL="quere_project_detail";
 
 
+export const SUBMIT_ORDER="submit_order";
+
+
+export const GET_USER_INFO="get_user_info";
+
+

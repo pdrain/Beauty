@@ -27,9 +27,11 @@ namespace ServiceApi.Models
 
         public string Description { get; set; }
 
-        public string ShortDesc { get; set; }
+        public string ShorDesc { get; set; }
 
         public string DisplayImage { get; set; }
+
+        public int CatID { get; set; }
 
         
     }

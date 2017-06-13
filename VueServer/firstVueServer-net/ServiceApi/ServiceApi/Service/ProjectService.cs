@@ -1,4 +1,5 @@
 ﻿using ServiceApi.Models;
+using ServiceApi.Service.Dao;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +17,15 @@ namespace ServiceApi.Service
 
         public List<ProjectCat> GetProjectCats()
         {
-            return new List<ProjectCat>() { new ProjectCat(), new ProjectCat() };
+            ProjectCatDao projectCatDao = new ProjectCatDao();
+           return  projectCatDao.GetProjectCats();
         }
 
 
         public BeautyItem GetProject(int id)
         {
-            return new BeautyItem();
+            ProjectDao projectDao = new ProjectDao();
+            return projectDao.GetProject(id);
         }
 
         public List<BeautyItem> GetProjectList()
@@ -32,7 +35,9 @@ namespace ServiceApi.Service
 
         public List<BeautyItem> GetProjectList(int catId)
         {
-            return new List<BeautyItem>(){ new BeautyItem(),new BeautyItem()};
+
+            ProjectDao projectDao = new ProjectDao();
+            return projectDao.GetProjectList(catId);
         }
     }
 }

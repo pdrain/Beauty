@@ -5,9 +5,9 @@
                 <img src="../assets/none.jpg" />
             </div>
             <div class="right">
-                <div class="title">{{projectItem==null?'':projectItem.Name}}</div>
-                <div class="desc">{{projectItem==null?'':projectItem.ShortDesc}}</div>
-                <div class="price">预付款：￥{{projectItem==null?'':projectItem.Price}}</div>
+                <div class="title">{{detail==null?'':detail.Name}}</div>
+                <div class="desc">{{detail==null?'':detail.ShorDesc}}</div>
+                <div class="price">预付款：￥{{detail==null?'':detail.Imprest}}</div>
             </div>
         </div>
         <div class="service-package"><label class="title">服务包</label><span class="info">暂无其他服务</span></div>
@@ -26,8 +26,8 @@
         </div>
         <div class="remark">*请填写正确的介绍人手机，可以获取介绍人专属优惠。</div>
         <footer>
-            <span class="price">预付款：￥{{projectItem==null?'':projectItem.Price}}</span>
-            <button>提交订单</button>
+            <span class="price">预付款：￥{{detail==null?'':detail.Imprest}}</span>
+            <button @click="submitOrder">提交订单</button>
         </footer>
     </div>
 </template>
@@ -42,7 +42,7 @@ export default {
       }
   },
     computed: mapGetters({
-        projectItem: 'ProjectItem'
+        detail: 'ProjectDetail'
   }),
   created(){
      
@@ -55,13 +55,18 @@ export default {
       }
       else{
           this.$set(this.$data,'projectId',projectId);
+           this.$store.dispatch('queryProjectsDetail',projectId);
+         //  this.$store.dispatch('getUserInfo',1);
         
       }
 
     
   },
-  mounted(){
-        this.$store.dispatch('queryProjectsDetail');
+  methods:{
+    submitOrder:function () {
+        alert(1);
+    }
+
   }
 }
 </script>

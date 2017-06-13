@@ -4,59 +4,44 @@ import * as api from '../../api'
 
 const state = {
     order: null,
-    projectItem: null,
     userInfo: null
 }
 
 const getters = {
     Order: state => state.order,
-    ProjectItem: state => state.projectItem,
     UserInfo: state => state.userInfo
+
 }
 
 const actions = {
-    queryProjectsDetail({ commit, state }, projectId) {
-        commit(types.QUEREY_PROJECT_DETAIL, projectId);
+    getUserInfo({ commit, state }, userId) {
+        commit(types.GET_USER_INFO, userId);
     },
-    saveOrder(commit, state) {
+    submitOrder(commit, state) {
         commit(types.SUBMIT_ORDER);
     }
 
 }
 
 const mutations = {
-    [types.QUEREY_PROJECT_DETAIL](state, projectId) {
-        var result = getProject(state, projectId)
-        result.then(() => {
-            result = getUserInfo(state, 1);
-        })
 
-
-        
-    },
     [types.SUBMIT_ORDER](state) {
         axios.post(api.SUBMIT_ORDER, state.order).then(response => {
 
         })
+    },
+    [types.GET_USER_INFO](state, userId) {
+      //  getUserInfo(state, userId);
     }
 
 }
 
-const getProject = (state, id) => {
-
-    let promise = axios.get(api.PROJECT_DETAIL).then(response => {
-        state.projectItem = response.data;
-    })
-    return promise
-}
 
 const getUserInfo = (state, userId) => {
 
-    let promise = axios.get(api.USER_INFO).then(response => {
+    axios.get(api.USER_INFO).then(response => {
         state.userInfo = response.data;
     });
-
-    return promise;
 }
 
 

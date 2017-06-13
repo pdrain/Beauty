@@ -1,4 +1,5 @@
 ﻿using ServiceApi.Models;
+using ServiceApi.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,15 @@ namespace ServiceApi.Controllers
         //GET api/productlist
         public IEnumerable<Product> Get()
         {
+            ProductService productService = new ProductService();
             return new Product[] { new Product(), new Product() };
         }
 
         //GET api/productlist/1
-        public IEnumerable<Product> Get(int catId)
+        public IEnumerable<Product> Get(int id)
         {
-            return new Product[] { new Product(), new Product() };
+            ProductService productService = new ProductService();
+            return productService.GetProductList(id);
         }
 
     }

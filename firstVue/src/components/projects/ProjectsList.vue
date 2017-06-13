@@ -3,7 +3,7 @@
     <div class="item" v-for="item in list">
       <router-link :to="{ path: '/projects-detail', query: { id: item.ID }}">
         <img src="../../assets/none.jpg" />
-        <div class="title">{{item.Title}}</div>
+        <div class="title">{{item.Name}}</div>
         <div class="price">0</div>
       </router-link>
     </div>

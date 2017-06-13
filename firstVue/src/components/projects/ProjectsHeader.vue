@@ -37,12 +37,15 @@ export default {
     cats: 'ProjectCats',
   }),
   mounted() {
-    //组件装载完成后获取分类数据
+    //组件装载完成后获取分类数据;
     this.$store.dispatch('quereProjectCats');
   },
   updated() {
     //组件更新后根据数据动态获取 li 的宽度
     this.catItemWidth = this.$el.childNodes[0].firstChild.clientWidth;
+    
+    //分类加载完成后加载默认数据
+     this.$store.dispatch("chooseProjectCat", this.currentCat);
   },
   methods: {
     chooseCat: function (catId) {

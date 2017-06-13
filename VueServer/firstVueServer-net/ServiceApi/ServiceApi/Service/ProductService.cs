@@ -1,4 +1,5 @@
 ﻿using ServiceApi.Models;
+using ServiceApi.Service.Dao;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,8 @@ namespace ServiceApi.Service
 
         public List<ProductCat> GetProductCats()
         {
-            return new List<ProductCat>() { new ProductCat(), new ProductCat() };
+            ProductCatDao productCatDao = new ProductCatDao();
+            return productCatDao.GetProductCats();
         }
 
 
@@ -26,7 +28,8 @@ namespace ServiceApi.Service
 
         public List<Product> GetProductList(int catId)
         {
-            return new List<Product>() { new Product(), new Product() };
+            ProductDao productDao = new ProductDao();
+            return productDao.GetProductList(catId);
         }
     }
 }

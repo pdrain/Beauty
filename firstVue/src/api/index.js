@@ -3,11 +3,13 @@ export const NEWS='/api/news';
 export const WEIXIN_AUTH='/api/weixin/Auth';
 
 
-export const PRODUCT_CAT="/api/product-cat.json";
-export const PRODUCT_LIST="/api/product-list.json";
-export const PROJECT_CAT="/api/project-cat.json";
-export const PROJECT_LIST="/api/project-list.json";
-export const PROJECT_DETAIL="/api/project-detail.json";
+export const PRODUCT_CAT="/api/productcat";
+export const PRODUCT_LIST="/api/productlist/";
+
+export const PROJECT_CAT="/api/projectcat";
+export const PROJECT_LIST="/api/projectlist/";
+
+export const PROJECT_DETAIL="/api/project/";
 
 export const USER_INFO="/api/user-info.json";
 export const USER_POINTS="/api/user-mypoints.json";
