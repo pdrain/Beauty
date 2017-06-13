@@ -1,0 +1,8 @@
+2017/06/07 17:52:16 [emerg] 12728#4172: CreateFile() "D:\ѧϰ\VueJS\nginx-1.10.2/conf/nginx.conf" failed (3: The system cannot find the path specified)
+2017/06/07 17:55:21 [emerg] 9296#8156: CreateFile() "D:\ѧϰ\VueJS\nginx-1.10.2/conf\nginx.conf" failed (3: The system cannot find the path specified)
+2017/06/07 17:55:49 [emerg] 12924#11712: CreateFile() "D:\ѧϰ\VueJS\nginx-1.10.2/conf/nginx.conf" failed (3: The system cannot find the path specified)
+2017/06/07 17:56:34 [emerg] 11696#7608: CreateFile() "D:\ѧϰ\VueJS\nginx-1.10.2/conf/nginx.conf" failed (3: The system cannot find the path specified)
+2017/06/07 17:56:37 [emerg] 12708#4820: CreateFile() "D:\ѧϰ\VueJS\nginx-1.10.2/conf/nginx.conf" failed (3: The system cannot find the path specified)
+2017/06/07 17:57:34 [emerg] 3108#12704: CreateFile() "D:\ѧϰ\VueJS\nginx-1.10.2/conf/nginx.conf" failed (3: The system cannot find the path specified)
+2017/06/07 17:57:36 [emerg] 8756#6492: CreateFile() "D:\ѧϰ\VueJS\nginx-1.10.2/conf/nginx.conf" failed (3: The system cannot find the path specified)
+2017/06/07 17:57:38 [emerg] 13204#10548: CreateFile() "D:\ѧϰ\VueJS\nginx-1.10.2/conf/nginx.conf" failed (3: The system cannot find the path specified)
