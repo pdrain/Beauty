@@ -133,7 +133,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>06/12/2017 16:09:01</publishTime>
     </File>
     <File Include="bin/ServiceApi.dll">
-      <publishTime>06/14/2017 14:37:07</publishTime>
+      <publishTime>06/14/2017 17:46:24</publishTime>
     </File>
     <File Include="bin/System.Net.Http.dll">
       <publishTime>06/12/2017 16:09:00</publishTime>

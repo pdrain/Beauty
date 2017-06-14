@@ -7,7 +7,7 @@
       </div>
       <div class="right">
         <div class="title">{{item.Name}}</div>
-        <div class="shortdesc">{{item.ShorDesc}}</div>
+        <div class="shortdesc">{{item.ShortDesc}}</div>
         <div class="price">￥0</div>
       </div>
       <div class="clr"></div>
@@ -24,7 +24,7 @@
 .products .item img{width: 90%; height: auto; margin: auto;}
 .products .item .title,.products .item .price,.products .item .shortdesc{width:90%; margin: auto; min-height: @listitem-row-min-height; line-height: @listitem-line-height;}
 .products .item .price,.products .item .shortdesc{font-size: 12px;}
-.products .item .shortdesc{color:#ccc;}
+.products .item .shortdesc{color:#ccc; line-height: 15px;}
 .products .item .price{color:@listitem-font-hotcolor;}
 .products .item .price span{float:right;}
 .products .item a{text-decoration: none; color:@listitem-font-color;}
