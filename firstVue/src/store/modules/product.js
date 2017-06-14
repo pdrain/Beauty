@@ -12,6 +12,7 @@ const state = {
 
 }
 
+
 const getters = {
     CurrentProductCat: state => state.currentProductCat,
     ProductCats: state => state.productCats,
@@ -27,7 +28,6 @@ const actions = {
     queryProductList({ commit, state }, catId) {
         commit(types.QUERY_PRODUCT_LIST, catId)
     }
-
 
 }
 
