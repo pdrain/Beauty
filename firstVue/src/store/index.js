@@ -8,9 +8,10 @@ import * as types from './types'
 import loading from './modules/loading'
 import login from './modules/login'
 import projects from './modules/projects'
+import product from './modules/product'
 import submitorder from './modules/submitorder'
 
 Vue.use(Vuex);
 export default new Vuex.Store({
-    modules: { loading, login,projects,submitorder }
+    modules: { loading, login,projects,product,submitorder }
 })

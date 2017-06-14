@@ -10,5 +10,9 @@ namespace ServiceApi.Models
         public int ID { get; set; }
 
         public string  Name { get; set; }
+
+        public string IconClass { get; set; }
+
+        public int DisplayOrder { get; set; }
     }
 }

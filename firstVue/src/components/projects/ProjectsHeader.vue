@@ -42,7 +42,7 @@ export default {
   name: 'projects-cat',
   data() {
     return {
-      catItemWidth: 100,//默认宽度
+      
     }
   },
   computed: mapGetters({
@@ -53,10 +53,7 @@ export default {
     //组件装载完成后获取分类数据;
     this.$store.dispatch('quereProjectCats');
   },
-  updated() {
-    //组件更新后根据数据动态获取 li 的宽度
-    this.catItemWidth = this.$el.childNodes[0].firstChild.clientWidth;
-    
+  updated() {    
     //分类加载完成后加载默认数据
      this.$store.dispatch("chooseProjectCat", this.currentCat);
   },

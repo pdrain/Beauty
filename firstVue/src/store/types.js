@@ -15,6 +15,11 @@ export const QUEREY_PROJECT_LIST="quere_project_list";
 export const QUEREY_PROJECT_DETAIL="quere_project_detail";
 
 
+export const QUERY_PRODUCT_CATS="query_product_cats";
+export const QUERY_PRODUCT_LIST="query_product_list";
+export const CHOOSE_PRODUCT_CAT="choose_product_cat";
+
+
 export const SUBMIT_ORDER="submit_order";
 
 
