@@ -1,10 +1,11 @@
 import Vue from 'vue'
-import App from './App'
 import Router from './router'
 import Axios from './http'
-import Store from "./store"  // 引入store 对象
+import Store from "./store"  
 import VueResource from 'vue-resource'
 import VueMaterial from 'vue-material'
+
+import App from './App'
 
 Vue.use(VueResource);
 Vue.use(VueMaterial);
