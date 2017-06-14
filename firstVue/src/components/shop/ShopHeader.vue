@@ -10,7 +10,7 @@
 <style scoped lang="less">
 @import '../../assets/index.less';
 
-.cats{background: @cat-bgcolor; height: @cat-header-height; line-height: @cat-header-line-height; border-bottom:1px @cat-border-color solid; overflow-x:auto; overflow-y: hidden; }
+.cats{background: @cat-bgcolor; height: @cat-list-height; border-bottom:1px @cat-border-color solid; overflow-x:auto; overflow-y: hidden; }
 .cats ul{width: auto; height: 100%; margin: 0px; padding:0px;}
 .cats ul li{display: inline-block;width: @cat-item-width; padding: 0px; height: 100%; cursor: pointer; }
 .cats ul li.active{border-bottom: 2px @cat-border-hot-color solid; color:@font-hot-color;}

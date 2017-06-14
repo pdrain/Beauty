@@ -1,5 +1,5 @@
 <template>
-<div v-title="'产品'">
+<div v-title="'美容产品'">
   <VHeader></VHeader>
   <VList></VList>
 </div>
