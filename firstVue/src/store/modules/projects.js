@@ -17,6 +17,7 @@ const getters = {
     ProjectDetail: state => state.detail
 }
 
+
 const actions = {
     quereProjectCats({ commit, state }) {
         commit(types.QUEREY_PROJECT_CATS);

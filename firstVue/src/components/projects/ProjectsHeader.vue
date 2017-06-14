@@ -1,8 +1,9 @@
 <template>
   <div class="cats">
-    <ul v-bind:style="{width:(cats.length)*catItemWidth+'px'}">
-      <li v-for="cat in cats" @click="chooseCat(cat.ID)" :class="{active:currentCat==cat.ID}">{{cat.Name}}-{{currentCat}}</li>
-    </ul>
+    <div class="item"   v-for="cat in cats" @click="chooseCat(cat.ID)">
+       <span class="caticons icon-box" v-bind:class="cat.IconClass">&nbsp;</span>
+            <label>{{cat.Name}}</label>
+    </div>
   
   </div>
 </template>
@@ -10,11 +11,23 @@
 <style scoped lang="less">
 @import '../../assets/index.less';
 
-.cats{background: @cat-bgcolor; height: @cat-header-height; line-height: @cat-header-line-height; border-bottom:1px @cat-border-color solid; overflow-x: auto; overflow-y: auto; }
-.cats ul{width: auto; height: 100%; margin: 0px; padding:0px;}
-.cats ul li{display: inline-block;width: @cat-item-width; padding: 0px; height: 100%; cursor: pointer; }
-.cats ul li.active{border-bottom: 2px @cat-border-hot-color solid; color:@font-hot-color;}
 
+.cats{background: @cat-bgcolor; height: @cat-list-height;  border-bottom:1px @cat-border-color solid; overflow-x:auto; overflow-y: hidden; }
+
+.cats  .item{display: block; float: left; width: @cat-item-width;  padding: 0px; height: 50%; cursor: pointer; padding-top: 6px; font-size: 14px; }
+.caticons{background: url("../../assets/cat_icons.png") no-repeat;}
+.caticons.all{ background-position:-5px 7px;}
+.caticons.micro{ background-position:-5px -213px;}
+.caticons.skin{ background-position:-5px -253px;}
+.caticons.lunkuo{ background-position:-5px -104px;}
+.caticons.node{ background-position:-5px -36px;}
+.caticons.body{ background-position:-5px -140px;}
+.caticons.teeth{ background-position:-5px -348px;}
+.caticons.xiong{ background-position:-5px -70px;}
+.caticons.hair{ background-position:-5px -300px;}
+.caticons.eye{ background-position:-5px 5px;}
+.caticons.remark{ background-position:0px -380px;}
+.cats  .item .icon-box{display: block;width: 40px; height: 40px; border-radius: 20px; border:1px #ccc solid;margin: auto;}
 </style>
 
 
@@ -29,7 +42,7 @@ export default {
   name: 'projects-cat',
   data() {
     return {
-      catItemWidth: 100,//默认宽度
+      
     }
   },
   computed: mapGetters({
@@ -40,10 +53,7 @@ export default {
     //组件装载完成后获取分类数据;
     this.$store.dispatch('quereProjectCats');
   },
-  updated() {
-    //组件更新后根据数据动态获取 li 的宽度
-    this.catItemWidth = this.$el.childNodes[0].firstChild.clientWidth;
-    
+  updated() {    
     //分类加载完成后加载默认数据
      this.$store.dispatch("chooseProjectCat", this.currentCat);
   },

@@ -17,7 +17,7 @@ namespace ServiceApi.Service
         public List<ProductCat> GetProductCats()
         {
             ProductCatDao productCatDao = new ProductCatDao();
-            return productCatDao.GetProductCats();
+            return productCatDao.GetProductCats().OrderBy(o=>o.DisplayOrder).ToList();
         }
 
 
