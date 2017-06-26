@@ -61,5 +61,6 @@ button {
 .content-datagrid{width: 99.9%;height: 100%; margin-left:1px; background: #ccc; border-spacing: 1px; border-collapse: separate;}
 .content-datagrid thead tr{background: #f0f0f0; height: 35px;}
 .content-datagrid tbody tr{background: #fff; height: 30px;}
+.content-datagrid tbody tr.selected{background:#fe9e17;}
 
 

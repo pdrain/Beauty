@@ -12,22 +12,66 @@
                         <div class="title">窗口
                             <a class="close" @click="closeEditView">X</a>
                         </div>
-                        <table>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </table>
+                        <br/>
+                        <br/>
+                        <div class="filds">
+                            <table>
+                                <colgroup>
+                                    <col style="width:80px;" />
+                                    <col style="auto" />
+                                </colgroup>
+                                <tr>
+                                    <td>产品名称：</td>
+                                    <td>
+                                        <input type="text" v-model="product.Name" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>产品分类：</td>
+                                    <td>
+                                        <select v-model="product.CatID">
+                                            <option v-for="option in catList" v-bind:value="option.ID">
+                                                {{ option.Name }}
+                                            </option>
+                                        </select>
+                                    </td>
+    
+                                </tr>
+                                <tr>
+                                    <td>产品简介：</td>
+                                    <td>
+                                        <textarea></textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>显示图片：</td>
+                                    <td>
+                                        <button>选择图片...</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>产品描述：</td>
+                                    <td>
+                                        <textarea></textarea>
+                                    </td>
+                                </tr>
+    
+                            </table>
+                        </div>
+                        <div class="buttons">
+                            <button>保存</button>
+                        </div>
                     </div>
                 </div>
             </transition>
         </div>
         <table class="content-datagrid">
             <colgroup>
-                <col style="width:35px;"/>
-                <col style="width:200px;"/>
-                <col style="width:200px;"/>
-                <col style="width:auto;"/>
+                <col style="width:35px;" />
+                <col style="width:35px;" />
+                <col style="width:200px;" />
+                <col style="width:200px;" />
+                <col style="width:auto;" />
             </colgroup>
             <thead>
                 <tr>
@@ -36,10 +80,14 @@
                     <th></th>
                     <th></th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(item,i) in list">
+                <tr v-for="(item,i) in list" v-bind:class="{'selected':item.Selected}">
+                    <td>
+                        <input type="checkbox" v-model="item.Selected" @click="selectItem(item.ID)" />
+                    </td>
                     <td>{{i+1}}</td>
                     <td>{{item.Name}}</td>
                     <td></td>
@@ -55,6 +103,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import $ from 'jquery'
+
 export default {
     data() {
         return {
@@ -62,32 +112,44 @@ export default {
         }
     },
     computed: mapGetters({
-        list: 'ProductList'
+        product: 'Product',
+        list: 'ProductList',
+        catList: 'ProductCatList'
     }),
     created() {
         this.$store.dispatch('getProductList');
+        this.$store.dispatch('getProductCats');
     },
+
     methods: {
         addProduct: function () {
-            this.displayEditView = true;
+            let _this = this;
             this.$store.dispatch('getProduct', 0).then(function () {
-                this.displayEditView = true;
+                _this.displayEditView = true;
             });
         },
         editProduct: function () {
-            let product = this.getSelectedProduct();
-            this.$store.dispatch('getProduct', product.ID).then(function () {
-                this.displayEditView = true;
+            let _this = this;
+            this.$store.dispatch('getProduct', 1).then(function () {
+                _this.displayEditView = true;
+            }, function (errMsg) {
+                alert(errMsg)
             });
         },
         deleteProduct: function () {
+            let _this = this;
+            this.$store.dispatch('deleteProduct').then(function () {
 
-        },
-        getSelectedProduct: function () {
-
+                _this.$store.dispatch('getProductList');
+            }, function (errMsg) {
+                alert(errMsg)
+            });
         },
         closeEditView: function () {
             this.displayEditView = false;
+        },
+        selectItem:function(pId){
+            this.$store.dispatch('singleSelect',pId);
         }
     }
 }
@@ -147,6 +209,50 @@ export default {
     height: 20px;
     font-weight: bold;
     cursor: pointer;
+}
+
+.product-edit-view .body .filds {
+    width: 80%;
+    height: inherit;
+    margin: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.product-edit-view .body .filds table{width: 100%}
+
+.product-edit-view .body .filds tr {
+    line-height: 35px;
+}
+
+.product-edit-view .body .filds td {
+    vertical-align: top;
+}
+
+.product-edit-view .body .buttons {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    bottom: 10px;
+    background: #fff;
+}
+
+.product-edit-view .body .filds td:first-child {
+    text-align: right;
+}
+
+.product-edit-view .body .filds input,
+.product-edit-view .body .filds select,
+.product-edit-view .body .filds textarea {
+    width: 95%;
+}
+
+.product-edit-view .body .filds textarea {
+    min-height: 50px;
+}
+
+.product-edit-view .body .filds select {
+    height: 30px;
+    width: 96%;
 }
 
 
