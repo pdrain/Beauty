@@ -75,23 +75,23 @@ export default {
         list: 'SalesList'
     }),
     mounted() {
-        this.$store.dispatch('getSales', constant.SalesStatus.All);
+        this.$store.dispatch('getSalesList', constant.SalesStatus.All);
     },
     methods: {
         getAllSales: function () {
-            this.$store.dispatch('getSales', constant.SalesStatus.All);
+            this.$store.dispatch('getSalesList', constant.SalesStatus.All);
         },
         getNewApplySales: function () {
-            this.$store.dispatch('getSales', constant.SalesStatus.NewApply);
+            this.$store.dispatch('getSalesList', constant.SalesStatus.NewApply);
         },
         getNormalSaless: function () {
-            this.$store.dispatch('getSales', constant.SalesStatus.Normal);
+            this.$store.dispatch('getSalesList', constant.SalesStatus.Normal);
         },
         getMiddleSales: function () {
-            this.$store.dispatch('getSales', constant.SalesStatus.Middle);
+            this.$store.dispatch('getSalesList', constant.SalesStatus.Middle);
         },
         getHighSales: function () {
-            this.$store.dispatch('getSales', constant.SalesStatus.High);
+            this.$store.dispatch('getSalesList', constant.SalesStatus.High);
         },
     }
 }

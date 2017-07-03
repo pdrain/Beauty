@@ -44,4 +44,10 @@ export default {
   border-right: 1px #ccc solid;
   background: #fff;
 }
+
+.pagenav ul{margin: 0px; padding:0px;}
+
+.pagenav ul li{line-height: 30px;text-indent: 10px; border-bottom: 1px dashed #ccc;}
+.pagenav ul li:hover{background: #f0f0f0;}
+.pagenav ul li a{display: block; width: 100%; height:100%;}
 </style>

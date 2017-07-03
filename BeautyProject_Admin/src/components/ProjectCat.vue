@@ -27,11 +27,11 @@
             </thead>
             <tbody>
                 <tr v-for="(item,i) in list">
-                    <td>{i+1}</td>
-                    <td>item.Name</td>
-                    <td>item.DisplayOrder</td>
+                    <td>{{i+1}}</td>
+                    <td>{{item.Name}}</td>
+                    <td>{{item.DisplayOrder}}</td>
                     <td>
-                        <a @click="editProductCat">编辑</a>
+                        <a @click="editProductCat(item.ID)">编辑</a>
                         <a @click="deleteProductCat">删除</a>
                     </td>
                     <td>&nbsp;</td>
@@ -49,14 +49,15 @@ import { mapGetters } from 'vuex'
 export default {
     computed: mapGetters({
         cat: 'ProjectCat',
-        list: 'ProjectList'
+        list: 'ProjectCatList'
     }),
     created() {
+        
         this.$store.dispatch('getProjectCats');
     },
     methods: {
-        editProductCat: function () {
-            this.$store.dispatch('editProjectCat');
+        editProductCat: function (catId) {
+            this.$store.dispatch('editProjectCat',catId);
         },
         deleteProductCat: function () {
             this.$store.dispatch('deleteProjectCat').then(function () {

@@ -9,35 +9,125 @@ namespace ServiceApi.Service
 {
     public class ProjectService
     {
-        
-        public ProjectCat GetProjectCat(int id)
-        {
-            return new ProjectCat();
-        }
-
-        public List<ProjectCat> GetProjectCats()
+        public ApiResult SaveProjectCat(ProjectCat cat)
         {
             ProjectCatDao projectCatDao = new ProjectCatDao();
-           return  projectCatDao.GetProjectCats();
+            bool resultFlag = false;
+            string msg = string.Empty;
+            if (cat.ID == 0)
+            {
+                resultFlag = projectCatDao.Insert(cat);
+                if (!resultFlag)
+                {
+                    msg = "添加美容项目分类失败。";
+                }
+            }
+            else
+            {
+                resultFlag = projectCatDao.Update(cat);
+                if (!resultFlag)
+                {
+                    msg = "更新美容项目分类失败。";
+                }
+            }
+            return new ApiResult() { Code = resultFlag ? 0 : 1, Message = msg };
+        }
+
+        public ApiResult DeleteProject(int id)
+        {
+            ProjectCatDao projectCatDao = new ProjectCatDao();
+            try
+            {
+                bool result = projectCatDao.Delete(id);
+                if (!result)
+                {
+                    throw new Exception("删除失败。");
+                }
+                return new ApiResult() { Code = 0 };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResult() { Code = 1, Message = ex.Message };
+            }
+        }
+
+        public ApiResult GetProjectCat(int id)
+        {
+            ProjectCatDao projectCatDao = new ProjectCatDao();
+            try
+            {
+                ProjectCat cat = projectCatDao.GetProjectCat(id);
+                return new ApiResult() { Code = 0, Result = cat };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResult() { Code = 1, Message = ex.Message };
+            }
+
+
+        }
+
+        public ApiResult GetProjectCats()
+        {
+            ProjectCatDao projectCatDao = new ProjectCatDao();
+
+
+            try
+            {
+                var list = projectCatDao.GetProjectCats();
+                return new ApiResult() { Code = 0, Result = list };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResult() { Code = 1, Message = ex.Message };
+            }
         }
 
 
-        public BeautyItem GetProject(int id)
+        public ApiResult GetProject(int id)
         {
             ProjectDao projectDao = new ProjectDao();
-            return projectDao.GetProject(id);
+
+            try
+            {
+                var list = projectDao.GetProject(id);
+                return new ApiResult() { Code = 0, Result = list };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResult() { Code = 1, Message = ex.Message };
+            }
         }
 
-        public List<BeautyItem> GetProjectList()
+        public ApiResult GetProjectList()
         {
-            return new List<BeautyItem>() { new BeautyItem(), new BeautyItem(), new BeautyItem(), new BeautyItem() };
+            ProjectDao projectDao = new ProjectDao();
+
+            try
+            {
+                var list = projectDao.GetProjectList();
+                return new ApiResult() { Code = 0, Result = list };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResult() { Code = 1, Message = ex.Message };
+            }
         }
 
-        public List<BeautyItem> GetProjectList(int catId)
+        public ApiResult GetProjectList(int catId)
         {
 
             ProjectDao projectDao = new ProjectDao();
-            return projectDao.GetProjectList(catId);
+
+            try
+            {
+                var list = projectDao.GetProjectList(catId);
+                return new ApiResult() { Code = 0, Result = list };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResult() { Code = 1, Message = ex.Message };
+            }
         }
     }
 }

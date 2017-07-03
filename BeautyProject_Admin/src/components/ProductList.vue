@@ -6,10 +6,10 @@
             <button @click="editProduct">编辑</button>
             <button @click="deleteProduct">删除</button>
             <transition name="slide-fade">
-                <div class="product-edit-view" v-show="displayEditView">
+                <div class="dialog-edit-view" v-show="displayEditView">
                     <div class="mask"></div>
                     <div class="body">
-                        <div class="title">窗口
+                        <div class="title">{{windowTitle}}
                             <a class="close" @click="closeEditView">X</a>
                         </div>
                         <br/>
@@ -46,7 +46,8 @@
                                 <tr>
                                     <td>显示图片：</td>
                                     <td>
-                                        <button>选择图片...</button>
+                                        <button @click="choosePic('displayImage')">选择图片...</button>
+                                        <input type="file" name='displayImage' style="display:none"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -108,7 +109,8 @@ import $ from 'jquery'
 export default {
     data() {
         return {
-            displayEditView: false
+            displayEditView: false,
+            windowTitle:''
         }
     },
     computed: mapGetters({
@@ -124,12 +126,14 @@ export default {
     methods: {
         addProduct: function () {
             let _this = this;
+            _this.windowTitle="新增产品";
             this.$store.dispatch('getProduct', 0).then(function () {
                 _this.displayEditView = true;
             });
         },
         editProduct: function () {
             let _this = this;
+            _this.windowTitle="修改产品";
             this.$store.dispatch('getProduct', 1).then(function () {
                 _this.displayEditView = true;
             }, function (errMsg) {
@@ -149,7 +153,15 @@ export default {
             this.displayEditView = false;
         },
         selectItem:function(pId){
-            this.$store.dispatch('singleSelect',pId);
+            this.$store.dispatch('singleProductSelect',pId);
+        },
+        choosePic:function(picName){
+            $("input[name='"+picName+"']").trigger('click');
+        },
+        saveProduct:function(){
+            this.dispatch('saveProduct').then(function(){
+                 _this.$store.dispatch('getProductList');
+            });
         }
     }
 }

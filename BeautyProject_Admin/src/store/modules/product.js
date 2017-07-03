@@ -111,22 +111,44 @@ const actions = {
                 rej.call(this, '请选择需要删除的产品');
             } else {
                 //TODO 调用service
-                state.productList.filter((item)=>item.ID!==selectedItem[0].ID);
                 res.call();
             }
 
         });
     },
-    singleSelect({ commit, state }, pId) {
+    singleProductSelect({ commit, state }, pId) {
         let _data = state.productList;
         $.each(_data, (i) => {
-            
+
             if (pId !== _data[i].ID) {
                 _data[i].Selected = false;
             }
 
         });
         commit(types.GET_PRODUCT_LIST, _data);
+    },
+    saveProduct({ commit, state }) {
+        let validate=function(){
+            if(state.Name==='' || state.Name===undefined){
+                return {value:false,msg:'产品名称不能为空！'}
+            }
+            if(state.DisplayImg==='' || state.DisplayImg===undefined){
+                return {value:false,msg:'请选择产品显示图片！'}
+            }
+            if(state.ShortDesc==='' || state.ShortDesc===undefined){
+                return {value:false,msg:'产品简介不能为空！'}
+            }
+        }
+        return new Promise(function (res, rej) {
+           let validateResult = this.validate();
+            if (!validateResult.value) {
+                rej.call(this, validateResult.msg);
+            } else {
+                //TODO 调用service
+                res.call();
+            }
+
+        });
     }
 
 
