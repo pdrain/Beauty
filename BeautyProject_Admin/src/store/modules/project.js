@@ -16,11 +16,12 @@ const actions = {
     getProjectCats({ commit, state }) {
         return new Promise(function (res, rej) {
             axios.get(api.GET_PROJECT_CAT_LIST).then(function (res) {
-
+debugger
                 commit(types.GET_PROJECT_CAT_LIST, res)
 
                 res.call();
             }, function (err) {
+                debugger
                 console.log(err);
             });
         });
