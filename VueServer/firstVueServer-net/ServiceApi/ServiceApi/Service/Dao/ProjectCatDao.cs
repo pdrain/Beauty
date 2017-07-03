@@ -8,14 +8,14 @@ using System.Web;
 
 namespace ServiceApi.Service.Dao
 {
-    public class ProjectCatDao:BaseDao
+    public class ProjectCatDao : BaseDao
     {
         public bool Insert(ProjectCat cat)
         {
             var sql = "insert into ProjectCat ( Name, IconClass, DisplayOrder) values ( @Name, @IconClass, @DisplayOrder)";
 
             List<SqlParameter> parameters = new List<SqlParameter>();
-            parameters.Add(new SqlParameter() { ParameterName = "Name", Value = cat .Name});
+            parameters.Add(new SqlParameter() { ParameterName = "Name", Value = cat.Name });
             parameters.Add(new SqlParameter() { ParameterName = "IconClass", Value = cat.IconClass });
             parameters.Add(new SqlParameter() { ParameterName = "DisplayOrder", Value = cat.DisplayOrder });
 
@@ -27,16 +27,18 @@ namespace ServiceApi.Service.Dao
                 {
                     return false;
                 }
-                else {
+                else
+                {
 
                     return true;
 
                 }
             }
-            catch {
+            catch
+            {
                 return false;
             }
-        
+
         }
 
         public bool Delete(int id)
@@ -102,9 +104,16 @@ namespace ServiceApi.Service.Dao
             var sql = "select * from ProjectCat where  ID=@ID";
             List<SqlParameter> parameters = new List<SqlParameter>();
             parameters.Add(new SqlParameter() { ParameterName = "ID", Value = Id });
-            SqlDataReader dataReader = sqlHelper.ExecuteReader(CommandType.Text, sql,parameters.ToArray());
-
-            return base.ConvertDataReaderRowToEntity<ProjectCat>(dataReader);
+            SqlDataReader dataReader = sqlHelper.ExecuteReader(CommandType.Text, sql, parameters.ToArray());
+            if (dataReader.HasRows)
+            {
+                dataReader.Read();
+                return base.ConvertDataReaderRowToEntity<ProjectCat>(dataReader);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public List<ProjectCat> GetProjectCats()

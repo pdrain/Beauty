@@ -32,28 +32,43 @@ const actions = {
 
 const mutations = {
     [types.QUEREY_PROJECT_CATS](state) {
-        
-        axios.get(api.PROJECT_CAT).then(response => {
-            state.cats = response.data;
-            state.currentCat = state.cats[0].ID;
+
+        axios.get(api.PROJECT_CAT).then(response => {debugger
+            if (response.data.Code == 0) {
+                state.cats = response.data.Result;
+                state.currentCat = state.cats[0].ID;
+            }
+            else {
+                alert(response.data.Message);
+            }
         });
     },
     [types.QUEREY_PROJECT_LIST](state, catId) {
-        
-        state.currentCat = catId;        
+
+        state.currentCat = catId;
         let _url_project_list = util.format(api.PROJECT_LIST, state.currentCat);
         axios.get(_url_project_list).then(response => {
 
-            let result = response.data;
-            state.list = result;
+            if (response.data.Code == 0) {
+                let result = response.data.Result;
+                state.list = result;
+            }
+            else {
+                alert(response.data.Message);
+            }
         })
     },
     [types.QUEREY_PROJECT_DETAIL](state, projectId) {
         //获取项目明细        
         let _url_project_detail = util.format(api.PROJECT_DETAIL, projectId);
-      
+
         axios.get(_url_project_detail).then(response => {
-            state.detail = response.data;
+            if (response.data.Code == 0) {
+                state.detail = response.data.Result;
+            }
+            else {
+                alert(response.data.Message);
+            }
         })
     }
 }

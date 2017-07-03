@@ -34,22 +34,32 @@ const actions = {
 const mutations = {
     [types.QUERY_PRODUCT_CATS](state) {
         axios.get(api.PRODUCT_CAT).then(response => {
-            state.productCats = response.data;
-            state.currentProductCat = state.productCats[0].ID;
+            if (response.data.Code == 0) {
+                state.productCats = response.data.Result;
+                state.currentProductCat = state.productCats[0].ID;
+            }
+            else {
+                alert(response.data.Message);
+            }
         });
     },
     [types.QUERY_PRODUCT_LIST](state, catId) {
-        
+
         state.currentProductCat = catId;
         let _url_product_list = util.format(api.PRODUCT_LIST, state.currentProductCat);
         axios.get(_url_product_list).then(response => {
-            state.productList = response.data;
+            if (response.data.Code == 0) {
+                state.productList = response.data.Result;
+            }
+            else {
+                alert(response.data.Message);
+            }
         })
     }
 
 }
 
-export default{
+export default {
     state,
     getters,
     actions,
