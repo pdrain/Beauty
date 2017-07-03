@@ -10,13 +10,13 @@
         </div>
         <table class="content-datagrid">
             <colgroup>
-                <col style='width:35px;' />
-                <col style='width:200px;' />
-                <col style='width:80px;' />
-                <col style='width:80px;' />
-                <col style='width:80px;' />
-                <col style='width:120px;' />
-                <col style='width:auto;' />
+                <col style='width:35px;' ></col>
+                <col style='width:200px;' ></col>
+                <col style='width:80px;'></col>
+                <col style='width:80px;'></col>
+                <col style='width:80px;'></col>
+                <col style='width:120px;'></col>
+                <col style='width:auto;'></col>
             </colgroup>
             <thead>
                 <tr>
@@ -30,7 +30,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for='(item,i) in list'>
+                <tr v-for='(item,i) in list' v-bind:key='item.ID' >
                     <td>{{i+1}}</td>
                     <td>{{item.Name}}</td>
                     <td>提交日期</td>
@@ -99,6 +99,8 @@ export default {
 
 
 <style>
+.aa{font-size:10px;}
+
 
 </style>
 
