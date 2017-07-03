@@ -23,6 +23,16 @@ namespace ServiceApi.Service.Dao
 
         }
 
+        public List<BeautyItem> GetProjectList()
+        {
+            var sql = "select * from BeautyItem ";
+
+            var dataReader = sqlHelper.ExecuteReader(CommandType.Text, sql);
+
+            return base.ConvertDataReaderToEntiies<BeautyItem>(dataReader);
+
+        }
+
         public BeautyItem GetProject(long id)
         {
             var sql = "select * from BeautyItem where ID=@ID";

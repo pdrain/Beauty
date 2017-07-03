@@ -10,5 +10,5 @@ export default {
 </script>
 
 <style>
-.pageheader{height: 100%; width: 100%; margin: auto; background: #fff;}
+.pageheader{height: 100%; width: 100%; margin: auto; background: #1898ff; color:#fff;}
 </style>

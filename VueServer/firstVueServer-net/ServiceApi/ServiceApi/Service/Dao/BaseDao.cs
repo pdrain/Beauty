@@ -29,6 +29,8 @@ namespace ServiceApi.Service.Dao
 
         protected T ConvertDataReaderRowToEntity<T>(SqlDataReader dataReader)
         {
+            
+
             Type type = typeof(T);
 
             object entity = type.Assembly.CreateInstance(type.FullName);
@@ -70,9 +72,10 @@ namespace ServiceApi.Service.Dao
                     {
                         property.SetValue(entity, string.Empty, null);
                     }
-                    else {
+                    else
+                    {
                         property.SetValue(entity, fieldValue, null);
-                    
+
                     }
                 }
                 else if (IsType(property.PropertyType, "System.Double"))

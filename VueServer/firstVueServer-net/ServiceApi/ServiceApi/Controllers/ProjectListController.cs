@@ -11,16 +11,17 @@ namespace ServiceApi.Controllers
 {
     public class ProjectListController : ApiController
     {
-        public IEnumerable<BeautyItem> Get()
+        public ApiResult Get()
         {
             ProjectService projectService = new ProjectService();
             return projectService.GetProjectList();
         }
 
-        public IEnumerable<BeautyItem> Get(int id)
+        public ApiResult Get(int id)
         {
             ProjectService projectService = new ProjectService();
             return projectService.GetProjectList(id);
         }
+
     }
 }

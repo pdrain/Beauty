@@ -11,35 +11,38 @@ namespace ServiceApi.Controllers
 {
     public class ProjectCatController : ApiController
     {
-       
+
 
         // GET api/ProjectCat
-        public IEnumerable<ProjectCat> Get()
+        [HttpGet]
+        public ApiResult Get()
         {
             ProjectService projectService = new ProjectService();
             return projectService.GetProjectCats();
         }
 
         // GET api/ProjectCat/5
-        public ProjectCat Get(int id)
+        [HttpGet]
+        public ApiResult Get(int id)
         {
             ProjectService projectService = new ProjectService();
             return projectService.GetProjectCat(id);
         }
 
         // POST api/ProjectCat
-        public void Post([FromBody]string value)
+        [HttpPost]
+        public void Save([FromBody]string value)
         {
+            ProjectCat projectCat = new ProjectCat();
+
             ProjectService projectService = new ProjectService();
+            projectService.SaveProjectCat(projectCat);
         }
 
-        // PUT api/ProjectCat/5
-        public void Put(int id, [FromBody]string value)
-        {
-            ProjectService projectService = new ProjectService();
-        }
+
 
         // DELETE api/ProjectCat/5
+        [HttpPost]
         public void Delete(int id)
         {
             ProjectService projectService = new ProjectService();
