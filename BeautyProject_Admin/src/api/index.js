@@ -19,7 +19,7 @@ export const DELETE_PROJECT_CAT="api/projectcat/delete/{0}";
 //保存美容项目分类
 export const SAVE_PROJECT_CAT="api/projectcat/save";
 //美容项目
-export const GET_PROJECT="api/Project/{0}";
+export const GET_PROJECT="api/Project";
 //删除美容项目
 export const DELETE_PROJECT="api/Project/delete/{0}";
 //美容项目列表

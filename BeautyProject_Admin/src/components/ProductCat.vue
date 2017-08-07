@@ -26,7 +26,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(item,i) in list">
+                <tr v-for="(item,i) in list" v-bind:key="item.ID">
                     <td>{i+1}</td>
                     <td>item.Name</td>
                     <td>item.DisplayOrder</td>

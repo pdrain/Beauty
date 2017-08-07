@@ -30,7 +30,7 @@
                                     <td>产品分类：</td>
                                     <td>
                                         <select v-model="project.CatID">
-                                            <option v-for="option in catList" v-bind:value="option.ID">
+                                            <option v-for="option in catList" :key="option.ID" :value="option.ID">
                                                 {{ option.Name }}
                                             </option>
                                         </select>
@@ -47,7 +47,7 @@
                                     <td>美容项目图片：</td>
                                     <td>
                                         <button @click="choosePic('displayImage')">选择图片...</button>
-                                        <input type="file" name='displayImage' style="display:none"/>
+                                        <input type="file" name='displayImage' style="display:none" />
                                     </td>
                                 </tr>
                                 <tr>
@@ -76,24 +76,28 @@
             </colgroup>
             <thead>
                 <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
+                    <th>&nbsp;</th>
+                    <th>序号</th>
+                    <th>项目名称</th>
+                    <th>
+                        <select>
+                            <option v-for="(item,i) in catList" v-bind:key="item.ID" :value="item.ID">{{item.Name}}</option>
+                        </select>
+                    </th>
+                    <th>基础价格</th>
+                    <th>预付款</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(item,i) in list" v-bind:class="{'selected':item.Selected}">
+                <tr v-for="(item,i) in list" v-bind:key="item.ID" v-bind:class="{'selected':item.Selected}">
                     <td>
                         <input type="checkbox" v-model="item.Selected" @click="selectItem(item.ID)" />
                     </td>
                     <td>{{i+1}}</td>
                     <td>{{item.Name}}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{(getProjectCatName(item.CatID))}}</td>
+                    <td>{{item.Price}}</td>
+                    <td>{{item.Imprest}}</td>
                 </tr>
             </tbody>
             <tfoot></tfoot>
@@ -110,30 +114,41 @@ export default {
     data() {
         return {
             displayEditView: false,
-            windowTitle:''
+            windowTitle: ''
         }
     },
-    computed: mapGetters({
-        project: 'Project',
-        list: 'ProjectList',
-        catList: 'ProjectCatList'
-    }),
+    computed: {
+        ...mapGetters({
+            project: 'Project',
+            list: 'ProjectList',
+            catList: 'ProjectCatList'
+        })
+    },
     created() {
         this.$store.dispatch('getProjectList');
         this.$store.dispatch('getProjectCats');
     },
 
     methods: {
+
+        getProjectCatName: function (id) {
+            let cat = this.catList.filter((item) => item.ID == id);
+            if (cat.length == 1) {
+                return cat[0].Name;
+            } else {
+                return '';
+            }
+        },
         addProject: function () {
             let _this = this;
-            _this.windowTitle="新增美容项目";
+            _this.windowTitle = "新增美容项目";
             this.$store.dispatch('getProject', 0).then(function () {
                 _this.displayEditView = true;
             });
         },
         editProject: function () {
             let _this = this;
-            _this.windowTitle="修改美容产品";
+            _this.windowTitle = "修改美容产品";
             this.$store.dispatch('getProject', 1).then(function () {
                 _this.displayEditView = true;
             }, function (errMsg) {
@@ -152,15 +167,15 @@ export default {
         closeEditView: function () {
             this.displayEditView = false;
         },
-        selectItem:function(pId){
-            this.$store.dispatch('singleProjectSelect',pId);
+        selectItem: function (pId) {
+            this.$store.dispatch('singleProjectSelect', pId);
         },
-        choosePic:function(picName){
-            $("input[name='"+picName+"']").trigger('click');
+        choosePic: function (picName) {
+            $("input[name='" + picName + "']").trigger('click');
         },
-        saveProject:function(){
-            this.dispatch('saveProject').then(function(){
-                 _this.$store.dispatch('getProjectList');
+        saveProject: function () {
+            this.dispatch('saveProject').then(function () {
+                _this.$store.dispatch('getProjectList');
             });
         }
     }
@@ -169,8 +184,6 @@ export default {
 
 
 <style>
-
-
 .slide-fade-enter-active {
     transition: all .3s ease;
 }
@@ -183,5 +196,10 @@ export default {
 .slide-fade-leave-active {
     padding-top: 50px;
     opacity: 0;
+}
+
+th select {
+    width: 100%;
+    height: 100%;
 }
 </style>

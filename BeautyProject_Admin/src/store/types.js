@@ -22,6 +22,7 @@ export const GET_PROJECT_CAT="get_project_cat";
 
 export const GET_PROJECT_LIST="get_project_list";
 export const GET_PROJECT="get_project";
+export const DELETE_PROJECT="delete_project";
 
 //美容产品
 export const GET_PRODUCT_CAT_LIST="get_product_cat_list";

@@ -3,10 +3,11 @@
         <h1 class='content-title'>美容项目分类</h1>
         <div class="content-aciton-bar">
             <label>分类名称：</label>
-            <input type="text" placeholder="请在此输入" />
+            <input type="text" placeholder="请在此输入"  v-model="cat.Name"/>
             <label>显示顺序：</label>
-            <input type="text" placeholder="请输入数字" />
-            <button @click="saveProductCat">保存</button>
+            <input type="text" placeholder="请输入数字"  v-model="cat.DisplayOrder"/>
+            <button @click="saveProjectCat">保存</button>
+            <button @click="resetProjectCat" v-if="cat.ID>0" >取消</button>
         </div>
         <table class="content-datagrid">
             <colgroup>
@@ -31,8 +32,8 @@
                     <td>{{item.Name}}</td>
                     <td>{{item.DisplayOrder}}</td>
                     <td>
-                        <a @click="editProductCat(item.ID)">编辑</a>
-                        <a @click="deleteProductCat">删除</a>
+                        <a class="button" @click="editProjectCat(item.ID)">编辑</a>
+                        <a class="button" @click="deleteProductCat(item.ID)">删除</a>
                     </td>
                     <td>&nbsp;</td>
                 </tr>
@@ -56,18 +57,22 @@ export default {
         this.$store.dispatch('getProjectCats');
     },
     methods: {
-        editProductCat: function (catId) {
-            this.$store.dispatch('editProjectCat',catId);
+        editProjectCat: function (catId) {
+            this.$store.dispatch('getProjectCat',catId);
+            console.log(this.cat)
         },
-        deleteProductCat: function () {
+        deleteProjectCat: function (catId) {
             this.$store.dispatch('deleteProjectCat').then(function () {
                 this.$store.dispatch('getProjectCats');
             });
         },
-        saveProductCat: function () {
+        saveProjectCat: function () {
             this.$store.dispatch('saveProjectCat').then(function () {
                 this.$store.dispatch('getProjectCats');
             });
+        },
+        resetProjectCat:function(){
+            this.$store.dispatch('getProjectCat',0);
         }
 
     }
@@ -76,5 +81,5 @@ export default {
 
 
 <style>
-
+a.button{cursor: pointer;color: #f60;}
 </style>
