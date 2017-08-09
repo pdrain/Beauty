@@ -13,13 +13,14 @@ const state = {
 const getters = {
     ProjectCat: state => state.projectCat,
     ProjectCatList: state => state.projectCatList,
-    Project: state => state.projectCat,
+    Project: state => state.project,
     ProjectList: state => state.projectList
 }
 
 const actions = {
     getProjectCats({ commit, state }) {
         return new Promise(function (res, rej) {
+
             axios.get(api.GET_PROJECT_CAT_LIST).then(function (result) {
 
                 let _data = result.data;
@@ -33,20 +34,22 @@ const actions = {
 
 
             }, function (err) {
+
                 console.log(err);
             });
         });
 
     },
-    editProjectCat({ commit, state }, catId) {
+    getProjectCat({ commit, state }, catId) {
         return new Promise(function (res, rej) {
+            
             let url = api.GET_PROJECT_CAT + '/' + catId;
             axios.get(url).then(function (result) {
 
 
                 let _data = result.data;
                 if (_data.Code == 0) {
-                    commit(types.GET_PRODUCT_CAT, _data.Result)
+                    commit(types.GET_PROJECT_CAT, _data.Result)
                     res.call();
                 }
                 else {
@@ -62,7 +65,16 @@ const actions = {
     deleteProjectCat({ commit, state }, catId) {
         return new Promise(function (res, rej) {
             axios.get(api.GET_PROJECT_CAT_LIST).then(function (res) {
-                res.call();
+                let _data = result.data;
+
+                if (_data.Code == 0) {
+                    commit(types.DELETE_PROJECT, _data.Result);
+                    res.call();
+                }
+                else {
+                    alert(_data.Message);
+                }
+
             }, function (err) {
                 console.log(err);
             });
@@ -81,42 +93,46 @@ const actions = {
     getProject({ commit, state }, pId) {
         return new Promise(function (res, rej) {
             //TODO 调用service
-            let data = {};
-            if (pId === 0) {
-                //新增产品
-                data = { ID: 3, Name: 'sss', CatID: 0 };
-                commit(types.GET_PROJECT, data);
-                res.call();
-            }
-            if (pId === 1) {
-                //编辑产品
+            let url = api.GET_PROJECT + '/' + pId;
+            axios.get(url).then(function (result) {
 
-                let selectedItem = state.projectList.filter((item) => item.Selected === true)
-                if (selectedItem.length == 0) {
-                    rej.call(this, '请选择需要编辑的美容项目');
-                } else {
-                    data = selectedItem[0];
-                    commit(types.GET_PROJECT, data);
+                var _data = result.data;
+                if (_data.Code == 0) {
+                    _data.Result.Name="ssssss"
+                    commit(types.GET_PROJECT, _data.Result);
                     res.call();
+                } else {
+                    alert(_data.Message);
                 }
-            }
+            }, function (err) {
+                console.log(err);
+            });
+
 
         });
     },
     getProjectList({ commit, state }) {
         return new Promise(function (res, rej) {
-            //TODO 调用service
 
-            let data = [
-                { ID: 1, Name: '111111111111111', CatID: 1 },
-                { ID: 2, Name: '2222222222222', CatID: 1 },
-                { ID: 3, Name: '3333333333333', CatID: 1 },
-                { ID: 4, Name: '44444444444444', CatID: 1 },
-            ];
-            $.each(data, function (i) {
-                data[i].Selected = false;
-            })
-            commit(types.GET_PROJECT_LIST, data);
+            axios.get(api.GET_PROJECT_LIST).then(function (result) {
+                let _data = result.data;
+                if (_data.Code == 0) {
+                    let data = _data.Result;
+                    $.each(data, function (i) {
+                        data[i].Selected = false;
+                    })
+                    commit(types.GET_PROJECT_LIST, data);
+                    res.call();
+                }
+                else {
+                    alert(_data.Message);
+                }
+
+            }, function (err) {
+                console.log(err);
+            });
+
+
         });
     },
     deleteProject({ commit, state }) {

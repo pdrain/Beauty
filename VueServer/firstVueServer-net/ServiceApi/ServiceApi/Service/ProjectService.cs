@@ -56,8 +56,16 @@ namespace ServiceApi.Service
             ProjectCatDao projectCatDao = new ProjectCatDao();
             try
             {
-                ProjectCat cat = projectCatDao.GetProjectCat(id);
-                return new ApiResult() { Code = 0, Result = cat };
+                if (id == 0)
+                {
+                    return new ApiResult() { Code = 0, Result = new ProjectCat() };
+                }
+                else
+                {
+
+                    ProjectCat cat = projectCatDao.GetProjectCat(id);
+                    return new ApiResult() { Code = 0, Result = cat };
+                }
             }
             catch (Exception ex)
             {
@@ -90,8 +98,16 @@ namespace ServiceApi.Service
 
             try
             {
-                var list = projectDao.GetProject(id);
-                return new ApiResult() { Code = 0, Result = list };
+                if (id == 0) {
+                    
+                    return new ApiResult() { Code = 0, Result = new BeautyItem() };
+                }
+                else
+                {
+                    var project = projectDao.GetProject(id);
+                    return new ApiResult() { Code = 0, Result = project };
+
+                }
             }
             catch (Exception ex)
             {

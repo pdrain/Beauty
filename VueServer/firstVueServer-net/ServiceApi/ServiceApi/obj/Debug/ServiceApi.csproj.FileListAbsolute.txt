@@ -145,3 +145,4 @@ F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceAp
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\zh-Hant\System.Spatial.resources.dll
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\obj\Debug\ServiceApi.dll
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\obj\Debug\ServiceApi.pdb
+F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\obj\Debug\ServiceApi.csprojResolveAssemblyReference.cache

@@ -19,6 +19,10 @@ export const USER_SUBSCRIBERS="/api/user-mysubscribers.json";
 export const SUBMIT_ORDER='/api/order';
 
 
+export const DICT_CATELOG="/api/catalogs.json"
+export const DICT_CATELOG_ARTICLE="/api/articles"
+
+
 
 
 
