@@ -10,8 +10,9 @@ import login from './modules/login'
 import projects from './modules/projects'
 import product from './modules/product'
 import submitorder from './modules/submitorder'
+import dictionary from './modules/dictionary'
 
 Vue.use(Vuex);
 export default new Vuex.Store({
-    modules: { loading, login,projects,product,submitorder }
+    modules: { loading, login,projects,product,submitorder ,dictionary}
 })

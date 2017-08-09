@@ -29,6 +29,7 @@ const MySubscribers = resolve => require(['../components/MySubscribers'], resolv
 const ErrorPage = resolve => require(['../components/Error'], resolve)
 const SubmitOrder = resolve => require(['../components/SubmitOrder'], resolve)
 const Dictionray = resolve => require(['../components/Dictionary'], resolve)
+const DictionrayArticle = resolve => require(['../components/Article'], resolve)
 const NotFontPage= resolve => require(['../components/404'], resolve)
 
 
@@ -56,6 +57,7 @@ const router = new VueRouter({
         { path: '/user/mypoints', component: MyPoints },
         { path: '/user/mysubscribers', component: MySubscribers },
         { path: '/dict', component: Dictionray },
+        { path: '/dict/article', component: DictionrayArticle },
         { path: '/error/:msg', component: ErrorPage },
         { path: '/404', component: NotFontPage },
         { path: '/', redirect: '/404' }
@@ -66,9 +68,6 @@ const router = new VueRouter({
 
 
 router.beforeEach((to, from, next) => {
-
-
-
 
     let ua = window.navigator.userAgent.toLowerCase();
     if (ua.indexOf('micromessenger') > 1) {

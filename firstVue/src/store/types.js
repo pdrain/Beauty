@@ -26,3 +26,8 @@ export const SUBMIT_ORDER="submit_order";
 export const GET_USER_INFO="get_user_info";
 
 
+export const GET_DICTIONARY ="get_dictionary"
+export const GET_DICTIONARY_CHILD ="get_dictionary_child"
+export const GET_DICTIONARY_ARTICLE ="get_dictionary_article"
+
+
