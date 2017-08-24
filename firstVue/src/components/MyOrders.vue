@@ -1,7 +1,7 @@
 <template>
-    <div class="my-subscribers">
-        <UserHeader title='我的预约'></UserHeader>
-
+    <div class="my-orders">
+        <UserHeader  title="我的订单"></UserHeader>
+      
         <OrderList :data="subcribeData"></OrderList>
         <UserFooter></UserFooter>
     </div>
@@ -13,7 +13,7 @@ import UserFooter from './UserFooter'
 import OrderList from '../components/orders/OrderList'
 
 export default {
-    components: { UserHeader,UserFooter, OrderList },
+    components: { UserHeader, UserFooter, OrderList },
     data() {
         return {
             msg: 'Welcome to User Center!',
@@ -43,6 +43,5 @@ export default {
 <style scoped lang="less">
 @import '../assets/index.less';
 
-.my-subscribers{height: 100%;background: #fff;}
-
+.my-orders{height: 100%; background: #fff;}
 </style>

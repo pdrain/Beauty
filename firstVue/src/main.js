@@ -8,15 +8,15 @@ import Store from "./store"  // 引入store 对象
 import VueResource from 'vue-resource'
 import VueMaterial from 'vue-material'
 
-//import wx from 'weixin-js-sdk' 
+//import wx from 'weixin-js-sdk'
 
 
 Vue.use(VueResource);
 Vue.use(VueMaterial);
 
 Vue.directive('title', {
-  inserted: function (el, binding) {;
-    document.title = binding.value;;
+  inserted: function (el, binding) {
+    document.title = binding.value;
   }
 })
 
@@ -30,8 +30,7 @@ new Vue({
 
 
 
-           
 
 
-           
-           
+
+

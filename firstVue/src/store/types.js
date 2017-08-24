@@ -24,6 +24,7 @@ export const SUBMIT_ORDER="submit_order";
 
 
 export const GET_USER_INFO="get_user_info";
+export const GET_WX_USER_INFO="get_wx_user_info"
 
 
 export const GET_DICTIONARY ="get_dictionary"
