@@ -64,6 +64,7 @@ export default {
 .hmn-dict {
   line-height: 40px;
   height: 100%;
+ background: #fff;
 }
 
 .navi {
@@ -86,7 +87,7 @@ export default {
   flex: 0;
   float: left;
   width: 75%;
-  height: 100%;
+  // height: 100%;
   background: #fff;
   text-align: left;
   padding: 0px 5px;

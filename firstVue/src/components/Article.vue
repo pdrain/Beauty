@@ -43,6 +43,11 @@
             <h1>术后锦囊</h1>
             <article v-html="detail.AfterIdear.content"></article>
         </section>
+        <p>&nbsp;</p>
+        <div class="subscriber">
+            * 费用已实际发生金额为准
+            <div class="subscribe">马上预约</div>
+        </div>
     </div>
 </template>
 
@@ -64,6 +69,7 @@ export default {
         this.$store.dispatch('getArticleDetail', id)
     },
     mounted() {
+        debugger
         console.log(JSON.stringify(this.detail))
     },
     methods:{
@@ -115,5 +121,19 @@ section .releated li{
 section  img{
     width:100% !important;
 }
+
+.subscriber{
+    height: 35px;
+    width: 100%;
+    line-height: 35px;
+    border-top: 1px #f0f0f0 solid;
+    position: fixed;
+    bottom: 0px;
+    background: #fff;
+    text-align: left;
+    color: #ccc;
+    text-indent: 10px;
+}
+.subscribe{width: 80px; float: right;text-align: center; background: #ff00fb; color:#fff;}
 </style>
 
