@@ -1,0 +1,7 @@
+F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\BeautyProject.Dao\bin\Debug\BeautyProject.Dao.dll
+F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\BeautyProject.Dao\bin\Debug\BeautyProject.Dao.pdb
+F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\BeautyProject.Dao\bin\Debug\BeautyProjectModes.dll
+F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\BeautyProject.Dao\bin\Debug\BeautyProjectModes.pdb
+F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\BeautyProject.Dao\obj\Debug\BeautyProject.Dao.csprojResolveAssemblyReference.cache
+F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\BeautyProject.Dao\obj\Debug\BeautyProject.Dao.dll
+F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\BeautyProject.Dao\obj\Debug\BeautyProject.Dao.pdb

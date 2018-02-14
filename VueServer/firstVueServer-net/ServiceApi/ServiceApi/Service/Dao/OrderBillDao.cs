@@ -1,4 +1,5 @@
-﻿using ServiceApi.Models;
+﻿
+using BeautyProjectModes;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -21,7 +22,7 @@ namespace ServiceApi.Service.Dao
             parameters.Add(new SqlParameter() { ParameterName = "OrderID", Value = orderBill.OrderID, SqlDbType = SqlDbType.Int });
             parameters.Add(new SqlParameter() { ParameterName = "Name", Value = orderBill.Name, SqlDbType = SqlDbType.Int });
             parameters.Add(new SqlParameter() { ParameterName = "BillDate", Value = orderBill.BillDate, SqlDbType = SqlDbType.Int });
-            parameters.Add(new SqlParameter() { ParameterName = "VipID", Value = orderBill.VipID, SqlDbType = SqlDbType.DateTime });
+            parameters.Add(new SqlParameter() { ParameterName = "UserID", Value = orderBill.UserID, SqlDbType = SqlDbType.DateTime });
             parameters.Add(new SqlParameter() { ParameterName = "Amount", Value = orderBill.Amount, SqlDbType = SqlDbType.Float });
             parameters.Add(new SqlParameter() { ParameterName = "Remark", Value = orderBill.Remark, SqlDbType = SqlDbType.Float });
             parameters.Add(new SqlParameter() { ParameterName = "CreateUser", Value = orderBill.CreateUser, SqlDbType = SqlDbType.Int });
@@ -44,7 +45,7 @@ namespace ServiceApi.Service.Dao
             parameters.Add(new SqlParameter() { ParameterName = "OrderID", Value = orderBill.OrderID, SqlDbType = SqlDbType.Int });
             parameters.Add(new SqlParameter() { ParameterName = "Name", Value = orderBill.Name, SqlDbType = SqlDbType.Int });
             parameters.Add(new SqlParameter() { ParameterName = "BillDate", Value = orderBill.BillDate, SqlDbType = SqlDbType.Int });
-            parameters.Add(new SqlParameter() { ParameterName = "VipID", Value = orderBill.VipID, SqlDbType = SqlDbType.DateTime });
+            parameters.Add(new SqlParameter() { ParameterName = "UserID", Value = orderBill.UserID, SqlDbType = SqlDbType.DateTime });
             parameters.Add(new SqlParameter() { ParameterName = "Amount", Value = orderBill.Amount, SqlDbType = SqlDbType.Float });
             parameters.Add(new SqlParameter() { ParameterName = "Remark", Value = orderBill.Remark, SqlDbType = SqlDbType.Float });
             parameters.Add(new SqlParameter() { ParameterName = "CreateUser", Value = orderBill.CreateUser, SqlDbType = SqlDbType.Int });
