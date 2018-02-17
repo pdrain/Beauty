@@ -1,4 +1,5 @@
 import * as types from '../types'
+import cookieHelper from '../../utils/cookiehekper'
 
 const state = {
     token: null
@@ -10,19 +11,22 @@ const getters = {
 }
 
 const actions = {
-    doLogin({ commit,state }, params) {
-        commit(types.LOGIN, params)
+    doLogin ({ commit, state }, params) {
+        cookieHelper.setCookie({
+            name:'token',
+            value:'hello----world'
+        })
     },
-    doLogout({ commit }) {
+    doLogout ({ commit }) {
         commit(types.LOGOUT);
     }
 }
 
-const mutations  = {
+const mutations = {
     [types.LOGIN]: (state, params) => {
         state.token = params.token;
-      params.cb.call(this,true);
-        
+        params.cb.call(this, true);
+
     },
     [types.LOGOUT]: (state) => {
         state.token = null;

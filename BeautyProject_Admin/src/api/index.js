@@ -10,20 +10,17 @@ export const GET_SALES="";
 export const GET_SALES_APPLY="";
 
 
-//美容项目分类:api/ProjectCat/5
-export const GET_PROJECT_CAT="api/ProjectCat";
+
 //美容项目分类列表
-export const GET_PROJECT_CAT_LIST="api/ProjectCat";
-//删除美容项目分类
-export const DELETE_PROJECT_CAT="api/projectcat/delete/{0}";
-//保存美容项目分类
-export const SAVE_PROJECT_CAT="api/projectcat/save";
+export const GET_PROJECT_CAT_LIST="api2/project/getProjectCatbyparentid";
+
+
 //美容项目
-export const GET_PROJECT="api/Project";
+export const GET_PROJECT="api2/Project/getprojectdetail";
 //删除美容项目
 export const DELETE_PROJECT="api/Project/delete/{0}";
 //美容项目列表
-export const GET_PROJECT_LIST="api/projectlist";
+export const GET_PROJECT_LIST="api2/project/getprojectdetail";
 
 
 
@@ -41,3 +38,20 @@ export const DELETE_PRODUCT="api/product/delete/{0}";
 export const GET_PRODUCT_LIST="api/productlist";
 
 
+
+
+//--客户预约开始--------------------------------------------------------------
+
+//获取客户预约
+export const GET_SUBSCRIBERS="api2/order/getsubscribers"
+
+//受理客户预约
+export const ACCEPT_SUBSCRIBERS="api2/order/acceptsubscribers"
+
+//拒绝客户预约
+export const REFUSE_SUBSCRIBERS="api2/order/refusesubscribers"
+
+//取消客户预约
+export const CANCEL_SUBSCRIBERS="api2/order/cancelsubscribers"
+
+//--客户预约结束--------------------------------------------------------------

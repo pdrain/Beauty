@@ -27,13 +27,14 @@ export default {
   mounted() {
 
     document.querySelector('.body').style.height = (document.body.clientHeight - document.querySelector('.header').style.height) + 'px';
-
+    
   }
 }
 </script>
 
 <style>
 @import './assets/css.css';
+@import './assets/icons-css/font-awesome.min.css';
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -62,7 +63,6 @@ export default {
 
 .home .content {
   width: 85%;
-  height: 100%;
   float: left;
 }
 </style>

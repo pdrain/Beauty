@@ -2,31 +2,44 @@ import axios from '../../http'
 import * as types from '../types'
 import * as api from '../../api'
 import $ from 'jquery'
+import { debug } from 'util';
 
 const state = {
-    projectCat: {},
     projectCatList: [],
-    project: {},
-    projectList: []
+    projectCatsType: {},
+    projectList: [],
+    project: {}
 }
 
 const getters = {
-    ProjectCat: state => state.projectCat,
+
+    ProjectCatsType: state => state.projectCatsType,
     ProjectCatList: state => state.projectCatList,
     Project: state => state.project,
     ProjectList: state => state.projectList
 }
 
 const actions = {
-    getProjectCats({ commit, state }) {
+    //项目目录
+    getProjectCats ({ commit, state }) {
         return new Promise(function (res, rej) {
-
-            axios.get(api.GET_PROJECT_CAT_LIST).then(function (result) {
+            axios.post(api.GET_PROJECT_CAT_LIST, { guid: '' }).then(function (result) {
 
                 let _data = result.data;
                 if (_data.Code == 0) {
-                    commit(types.GET_PROJECT_CAT_LIST, _data.Result)
-                    res.call();
+                    let data = _data.Result;
+                    $.each(data, function (i) {
+                        data[i].Selected = false;
+                    })
+                    
+
+                    if (data.length > 0) {
+                        data[0].Selected = true;
+                        commit(types.GET_PROJECT_CAT_LIST, data)
+                        res.call(this, data[0].Guid);
+                    }else{
+                        commit(types.GET_PROJECT_CAT_LIST, [])
+                    }
                 }
                 else {
                     alert(_data.Message);
@@ -40,11 +53,42 @@ const actions = {
         });
 
     },
-    getProjectCat({ commit, state }, catId) {
+    //项目
+    getProjectCatTypeList ({ commit, state }, guid) {
         return new Promise(function (res, rej) {
-            
+            axios.post(api.GET_PROJECT_CAT_LIST, { guid: guid }).then(function (result) {
+
+                let _data = result.data;
+                if (_data.Code == 0) {
+                    let data = _data.Result;
+                    $.each(data, function (i) {
+                        data[i].Selected = false;
+                    })
+                    if (data.length > 0) {
+                        data[0].Selected = true;
+                        commit(types.GET_PROJECT_CATTYPE_LIST, data)
+                        res.call(this, data[0].Guid);
+                    }else{
+                        commit(types.GET_PROJECT_CATTYPE_LIST, [])
+                    }
+                }
+                else {
+                    alert(_data.Message);
+                }
+
+
+            }, function (err) {
+
+                console.log(err);
+            });
+        });
+
+    },
+    saveProjectCatType ({ commit, state }, catId) {
+        return new Promise(function (res, rej) {
+
             let url = api.GET_PROJECT_CAT + '/' + catId;
-            axios.get(url).then(function (result) {
+            axios.post(url).then(function (result) {
 
 
                 let _data = result.data;
@@ -62,7 +106,7 @@ const actions = {
         });
 
     },
-    deleteProjectCat({ commit, state }, catId) {
+    deleteProjectCatType ({ commit, state }, catId) {
         return new Promise(function (res, rej) {
             axios.get(api.GET_PROJECT_CAT_LIST).then(function (res) {
                 let _data = result.data;
@@ -80,44 +124,14 @@ const actions = {
             });
         });
     },
-    saveProjectCat({ commit, state }) {
-        return new Promise(function (res, rej) {
-            axios.get(api.SAVE_PROJECT_CAT).then(function (res) {
-                res.call();
-            }, function (err) {
-                console.log(err);
-            });
-        });
-
-    },
-    getProject({ commit, state }, pId) {
-        return new Promise(function (res, rej) {
-            //TODO 调用service
-            let url = api.GET_PROJECT + '/' + pId;
-            axios.get(url).then(function (result) {
-
-                var _data = result.data;
-                if (_data.Code == 0) {
-                    _data.Result.Name="ssssss"
-                    commit(types.GET_PROJECT, _data.Result);
-                    res.call();
-                } else {
-                    alert(_data.Message);
-                }
-            }, function (err) {
-                console.log(err);
-            });
-
-
-        });
-    },
-    getProjectList({ commit, state }) {
+    //项目列表
+    getProjectList ({ commit, state }, guid) {
         return new Promise(function (res, rej) {
 
-            axios.get(api.GET_PROJECT_LIST).then(function (result) {
+            axios.post(api.GET_PROJECT_LIST, { guid: guid }).then(function (result) {
                 let _data = result.data;
                 if (_data.Code == 0) {
-                    let data = _data.Result;
+                    let data = _data.Result||[];
                     $.each(data, function (i) {
                         data[i].Selected = false;
                     })
@@ -134,8 +148,8 @@ const actions = {
 
 
         });
-    },
-    deleteProject({ commit, state }) {
+    },   
+    deleteProject ({ commit, state }) {
         return new Promise(function (res, rej) {
 
             let selectedItem = state.projectList.filter((item) => item.Selected === true)
@@ -148,26 +162,15 @@ const actions = {
 
         });
     },
-    singleProjectSelect({ commit, state }, pId) {
-        let _data = state.projectList;
-        $.each(_data, (i) => {
-
-            if (pId !== _data[i].ID) {
-                _data[i].Selected = false;
-            }
-
-        });
-        commit(types.GET_PROJECT_LIST, _data);
-    },
-    saveProject({ commit, state }) {
+    saveProject ({ commit, state },projectDetail) {
         let validate = function () {
-            if (state.project.Name === '' || state.project.Name === undefined) {
+            if (!projectDetail.Name) {
                 return { value: false, msg: '产品名称不能为空！' }
             }
-            if (state.project.DisplayImg === '' || state.project.DisplayImg === undefined) {
+            if (!projectDetail.DisplayImg) {
                 return { value: false, msg: '请选择产品显示图片！' }
             }
-            if (state.project.ShortDesc === '' || state.project.ShortDesc === undefined) {
+            if (!projectDetail.ShortDesc) {
                 return { value: false, msg: '产品简介不能为空！' }
             }
         }
@@ -186,18 +189,20 @@ const actions = {
 }
 
 const mutations = {
-    [types.GET_PROJECT_CAT_LIST](state, data) {
+    [types.GET_PROJECT_CAT_LIST] (state, data) {
         state.projectCatList = data;
 
     },
-    [types.GET_PROJECT_CAT](state, data) {
-        state.projectCat = data;
+    [types.GET_PROJECT_CATTYPE_LIST] (state, data) {
+        state.projectCatsType = data;
+
     },
-    [types.GET_PROJECT](state, data) {
+
+    [types.GET_PROJECT] (state, data) {
         state.project = data;
 
     },
-    [types.GET_PROJECT_LIST](state, data) {
+    [types.GET_PROJECT_LIST] (state, data) {
 
         state.projectList = data;
 

@@ -18,6 +18,7 @@ export const SALES_APPLY_LIST_GET='getApplySalesList';
 
 //美容项目
 export const GET_PROJECT_CAT_LIST="get_project_cat_list";
+export const GET_PROJECT_CATTYPE_LIST="get_project_cattype_list"
 export const GET_PROJECT_CAT="get_project_cat";
 
 export const GET_PROJECT_LIST="get_project_list";
