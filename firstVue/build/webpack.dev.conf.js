@@ -1,3 +1,4 @@
+var path=require('path')
 var utils = require('./utils')
 var webpack = require('webpack')
 var config = require('../config')
@@ -5,6 +6,7 @@ var merge = require('webpack-merge')
 var baseWebpackConfig = require('./webpack.base.conf')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+var TransferWebpackPlugin = require('transfer-webpack-plugin');
 
 // add hot-reload related code to entry chunks
 Object.keys(baseWebpackConfig.entry).forEach(function (name) {
@@ -30,6 +32,10 @@ module.exports = merge(baseWebpackConfig, {
       template: 'index.html',
       inject: true
     }),
-    new FriendlyErrorsPlugin()
+    new FriendlyErrorsPlugin(),
+    //把指定文件夹xia的文件复制到指定的目录
+    // new TransferWebpackPlugin([
+    //   {from: 'mock',to:'mock'}
+    // ], path.resolve(__dirname,"../src/assets"))
   ]
 })

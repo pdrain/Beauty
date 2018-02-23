@@ -1,25 +1,52 @@
 <template>
     <div class="project-detail" v-title="'项目明细'">
-        <header>
-            <SearchBox></SearchBox>
+      <img class="banner" src="../assets/banner-1.jpg" />
+        <header class=" bd1">
+            
+             <h1>{{detail ==null?'': detail.Name}}</h1>
+            <div class="title">
+                <span class="fl">项目：{{detail ==null?'': detail.ParentName}}</span>
+                <span class="fr">{{detail ==null?'': detail.BookNum}}人预定</span>
+            </div>
         </header>
         <div class="content">
-            <div class="left">
-                <img src="../assets/none.jpg" />
-            </div>
-            <div class="right">
-                <div class="title">{{detail==null?'':detail.Name}}</div>
-                <div class="short-desc">{{detail==null?'':detail.ShorDesc}}</div>
-                <div class="price">预付款：{{detail==null?'':detail.Imprest}}</div>
-            </div>
-           
-            <div class="desc">
-                <h2>介绍</h2>
-                <p v-html="detail==null?'':formatHtml(detail.Description)"></p>
-            </div>
-             <div class="clr"></div>
+          <div class="desc bd1">
+              <h2>介绍</h2>
+              <p v-html="detail==null?'':formatHtml(detail.Description)"></p>
+              <section class="archive">
+                <div class="title">XXX小档案</div>
+                <ul class="items">
+                  <li>
+                    <label for="">1</label>
+                    <span>2222</span>
+                  </li>
+                  <li>
+                    <label for="">1</label>
+                    <span>3333</span>
+                  </li>
+                </ul>
+              </section>
+
+          </div>
+          <section>
+              
+              <h2>预约须知</h2>
+              <div>
+                <p>预约需要支付98元的定金</p>
+                <p>预约成功后，客服将在24小时内联系您确认预约事项</p>
+                <p>预约消费后，定金将从订单费用中抵扣</p>
+                <br>
+              </div>
+          </section>
+          <section v-if="hospital">
+              
+              <h2>医院介绍</h2>
+              <div>
+                {{hospital.Name}}
+                <br>
+              </div>
+          </section>
         </div>
-      
         <div class="comments">
             <h1>评论({{commentsCount}})</h1>
             <div v-if="comments.length==0" class="msg">暂无评论</div>
@@ -42,132 +69,170 @@
 
 
 <script>
-import SearchBox from './SearchBox';
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
-    data() {
-        return {
-            projectId:0,
-            commentsCount: 100,
-            comments: []
-        }
-    },
-    computed: mapGetters({
-        detail: 'ProjectDetail'
-    }),
-    components: { SearchBox },
-    created() {
-
-        //检查参数是否完整
-        let projectId = this.$route.query.id;
-        if (!projectId && typeof projectId != 'number') {
-            let msg = encodeURI('抱歉！您访问的页面走丢了。');
-            this.$router.replace('error/' + msg + '');
-
-        }
-        else{
-            this.$set(this.$data,'projectId',projectId);
-            this.$store.dispatch('queryProjectsDetail',projectId);
-        }
-
-    },
-    methods:{
-        formatHtml:function(html){
-
-            return unescape(html);
-        }
-
+  data() {
+    return {
+      projectId: 0,
+      commentsCount: 100,
+      comments: []
+    };
+  },
+  computed: mapGetters({
+    detail: "ProjectDetail",
+    hospital:"HospitalDetail"
+  }),
+  created() {
+    //检查参数是否完整
+    let projectId = this.$route.query.id;
+    if (!projectId && typeof projectId != "number") {
+      let msg = encodeURI("抱歉！您访问的页面走丢了。");
+      this.$router.replace("error/" + msg + "");
+    } else {
+      this.$set(this.$data, "projectId", projectId);
+      this.$store.dispatch("queryProjectsDetail", projectId);
+      //let hospitalId = this.$route.query.hospitalId;
+      //this.$store.dispatch("queryHospitalDetail",hospitalId)
     }
-}
+  },
+  mounted(){
+    
+  },
+  methods: {
+    formatHtml: function(html) {
+      return unescape(html);
+    }
+  }
+};
 </script>
 
 
 <style scoped lang="less">
-@import '../assets/index.less';
+@import "../assets/index.less";
 
 .project-detail {
-    width: 100%;
-    height: 100%;
-    background: #fff;
-}
-
-.project-detail h1 {
-    margin: 0px;
-    padding: 0px;
-    line-height: 35px;
-    font-size: @h1-font-size;
-    color: @h1-font-color;
-    font-family: 'Microsoft Yahei';
-    font-weight: normal;
-    text-align: left;
-    text-indent: 10px;
-    border-bottom: 1px @project-detail-border-color solid;
-}
-
-.project-detail .content,
-.project-detail .comments,
-.project-detail .related {
-    background: @project-detail-bg;
-    border-bottom: 1px @project-detail-border-color solid;
-    margin-top: 8px;
-    clear: both;
-}
-
-.project-detail .content {height: auto;}
-.project-detail .content .left{width: 35%; float: left; padding-top: 10px;}
-.project-detail .content .left img{width: 90%; margin: auto; }
-.project-detail .content .right{width: 65%; float:left; padding-top: 10px; text-align: left;}
-.project-detail .content .right .title{height: 25px;color:@project-detail-content-title;}
-.project-detail .content .right .short-desc{height: 40px; color:@project-detail-content-subtitle;}
-.project-detail .content .right .price{height: 25px; color: @project-detail-content-hot;}
-.project-detail .content .desc{width: 95%; margin-top: 10px; margin: auto;}
-.project-detail .content .desc h2{font-weight: normal; font-size: 14px; border-bottom:1px  @project-detail-border-color dashed; margin: 0px; padding: 0px; clear: both; line-height: 35px; text-align: left}
-.project-detail .content .desc p{text-align: left; line-height: 25px; font-size: 12px; color :#666;}
-
-.project-detail .comments .more {
-    height: @project-detail-row-height;
-    line-height: @project-detail-row-height;
-    text-align: center;
-    border-top: 1px @project-detail-border-color solid;
-    color: @font-hot-color;
-}
-
-.project-detail .comments .msg {
-    line-height: @project-detail-row-height;
+  width: 100%;
+  height: 100%;
+  
 }
 
 .project-detail header {
-    width: 100%;
-    height: @project-detail-header-height;
+  height: 4.5rem;
+   margin-bottom:.5rem;
+   margin-top: -.3rem;
+   padding-left: .6rem;
+  padding-right: .6rem;
+  padding-top:1rem;
+  background: #fff;
+}
+
+.project-detail  img.banner {
+  width: 100%;
+  height: 8rem;
+  
+}
+
+.project-detail h1,.project-detail h2 {
+  margin: 0px;
+  padding: 0px;
+  line-height: 35px;
+  font-size: @h1-font-size;
+  color: @h1-font-color;
+  font-family: "Microsoft Yahei";
+  font-weight: normal;
+  text-align: left;
+}
+
+.project-detail h2{
+    font-size: @h2-font-size;
+    color: @h2-font-color;
+    border-bottom: 1px #ccc dashed;
+    margin-bottom:1rem;
+}
+
+.project-detail .title {
+  height: 2.2rem;
+  line-height: 2.2rem;
+  
+  box-sizing: border-box;
+ 
+}
+
+.project-detail .content,.project-detail .comments,.project-detail .related{
+  padding-left: .6rem;
+  padding-right: .6rem;
+  line-height: 1.5rem;
+  text-align: left;
+  margin-bottom:.8rem;
+  background: #fff;
+}
+
+.project-detail .desc{
+  margin-bottom: .6rem;
+  padding-bottom: 1rem;
+}
+.project-detail .desc .archive{
+  width: 100%;
+  margin-top:2rem;
+}
+.project-detail .desc .archive .title{
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+}
+.project-detail .desc .archive li{
+  height: 2rem;
+  line-height: 2rem;
+  display:flex;
+  border-bottom:1px @border-normal-color solid;
+}
+.project-detail .desc .archive li:first-child{
+  border-top:1px @border-normal-color solid;
+}
+.project-detail .desc .archive li label{
+  border-right:1px @border-normal-color solid;
+  width: 5rem;
+  height: 100%;
+  text-align: right;
+  padding:0rem .5rem;
+}
+
+.project-detail .desc .archive li span{
+  height: 100%;
+  text-align: left;
+  padding:0rem .5rem;
+}
+.project-detail .related{
+  margin-bottom: 4rem;
 }
 
 .project-detail footer {
-    width: 100%;
-    height: @project-detail-footer-height;
-    line-height: @project-detail-footer-height;
-    background: @project-detail-footer-bg;
-    position: fixed;
-    bottom: 0px;
-    border-top: 1px @project-detail-footer-border-color solid;
+  width: 100%;
+  height: @footer-height;
+  line-height: @footer-height;
+  background: @project-detail-footer-bg;
+  position: fixed;
+  bottom: 0px;
+  border-top: 1px @project-detail-footer-border-color solid;
 }
 
 .project-detail footer a {
-    height: 100%;
-    min-width: 80px;
-    display: inline-block;
-    text-decoration: none;
+  height: 100%;
+  min-width: 80px;
+  display: inline-block;
+  text-decoration: none;
 }
 
 .project-detail footer a.menu {
-    color: @project-detail-menu-fontcolor;
-    float: left;
+  color: @project-detail-menu-fontcolor;
+  float: left;
 }
 
 .project-detail footer a.subscriber {
-    background: @project-detail-button-bgcolor;
-    color: @project-detail-button-fontcolor;
-    float: right;
+  background: @project-detail-button-bgcolor;
+  color: @project-detail-button-fontcolor;
+  float: right;
 }
 </style>
 

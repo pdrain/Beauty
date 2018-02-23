@@ -10,7 +10,7 @@ import router from '../router'
 
 // axios 配置
 axios.defaults.timeout = 5000;
-//axios.defaults.baseURL = 'http://localhost';
+//axios.defaults.baseURL = 'http://localhost:8080';
 axios.defaults.baseURL = '';
 
 // http request 拦截器
@@ -19,6 +19,7 @@ axios.interceptors.request.use(
         if (store.state.token) {  // 判断是否存在token，如果存在的话，则每个http header都加上token
             config.headers.Authorization = `token ${store.state.token}`;
         }
+        
         return config;
     },
     err => {

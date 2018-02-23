@@ -13,7 +13,9 @@ import submitorder from './modules/submitorder'
 import dictionary from './modules/dictionary'
 import user from './modules/user'
 
+import hospital from './modules/hospital'
+
 Vue.use(Vuex);
 export default new Vuex.Store({
-    modules: { loading, login,projects,product,submitorder ,dictionary,user}
+    modules: { loading, login,projects,product,submitorder ,dictionary,user,hospital}
 })

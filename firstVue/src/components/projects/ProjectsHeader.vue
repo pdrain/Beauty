@@ -1,6 +1,6 @@
 <template>
   <div class="cats">
-    <div class="item"   v-for="cat in cats" @click="chooseCat(cat.ID)">
+    <div class="item"   v-for="cat in cats" @click="chooseCat(cat.Guid)" :key="cat.ID">
        <span class="caticons icon-box" v-bind:class="cat.IconClass">&nbsp;</span>
             <label>{{cat.Name}}</label>
     </div>
@@ -46,16 +46,19 @@ export default {
     }
   },
   computed: mapGetters({
-    currentCat: 'ProjectCurrentCat',
     cats: 'ProjectCats',
   }),
   mounted() {
+    let self = this;
     //组件装载完成后获取分类数据;
-    this.$store.dispatch('quereProjectCats');
+    self.$store.dispatch('queryProjectCats').then(function(parentGuid){
+      
+      self.$store.dispatch("chooseProjectCat", parentGuid);
+    });
   },
   updated() {    
     //分类加载完成后加载默认数据
-     this.$store.dispatch("chooseProjectCat", this.currentCat);
+     //this.$store.dispatch("chooseProjectCat", this.currentCat);
   },
   methods: {
     chooseCat: function (catId) {

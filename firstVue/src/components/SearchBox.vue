@@ -28,7 +28,7 @@ export default {
   }),  
    mounted() {
     //组件装载完成后获取分类数据
-    this.$store.dispatch('quereProjectCats');
+    this.$store.dispatch('queryProjectCats');
   },
   methods:{
     showCats:function(){        

@@ -7,12 +7,12 @@
         </tr>
         <tr>
           <td class='row'>
-            <input type='text' placeholder="登录账号" />
+            <input type='text' placeholder="登录账号"  v-model="login.account"/>
           </td>
         </tr>
         <tr>
           <td class='row'>
-            <input type='text' placeholder="登录密码" />
+            <input type='password' placeholder="登录密码"  v-model="login.password"/>
           </td>
         </tr>
         <tr>
@@ -32,17 +32,20 @@
 
 <script>
 export default {
+data(){
+  return{
+    login:{account:'',password:''}
+  }
+},
   methods: {
     doLogin: function () {
-      this.$store.dispatch("doLogin", {
-        token: 1, cb: function (result) {
-          if (result) {
+      let _this = this;
+      _this.$store.dispatch("doLogin", {account:_this.login.account,password:_this.login.password}).then(function(result){
+        if (result) {
             
-            let redirect_url = this.$route.query.redirect;
-            this.$router.replace(redirect_url)
+            let redirect_url = _this.$route.query.redirect;
+            _this.$router.replace(redirect_url)
           }
-
-        }.bind(this)
       });
 
     }
@@ -51,7 +54,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .login {
   width: 100%;
   height: 100%;
@@ -83,5 +86,10 @@ export default {
 .login-form table .row {
   height: 40px;
   vertical-align: middle;
+}
+
+button{
+  cursor: pointer;
+  
 }
 </style>

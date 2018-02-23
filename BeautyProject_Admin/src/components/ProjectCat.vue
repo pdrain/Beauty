@@ -41,7 +41,7 @@
                                 </span>
                                 </li>
                                 <li class="blcok">
-                                    <input type="text" v-show="addCatType" placeholder="项目分类名称">
+                                    <input type="text" v-show="addCatType" placeholder="项目分类名称" v-model="projectCatType.name">
                                     <a class="fa fa-hand-o-up"  v-show="!addCatType" @click="eventAddCatType">&nbsp;&nbsp;添加项目分类</a>
                                     
                                     <a class="fa fa-save" v-show="addCatType" @click="saveProjectCatType">&nbsp;&nbsp;保存</a>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -52,9 +52,9 @@
                     <td>
                         <ul>
                             <li v-if="projectList.length==0">暂无项目分类</li>
-                                <li  v-if="projectList.length>0" :class="item.Selected?'active':''"  v-for="item in projectList" v-bind:key="item.ID"  @click="chooseProjectCatTypeList(catsType,item)">
-                                    <span class="w80">{{item.Name}}</span>
-                                <span class="w20">
+                                <li  v-if="projectList.length>0" :class="item.Selected?'active':''"  v-for="item in projectList" v-bind:key="item.ID"  @click="chooseProjectDetail(item.ID)">
+                                    <span class="w80">{{item.ProjectName}}</span>
+                                <span class="w20" >
                                      <a class="opt fa fa-pencil fa-fw"></a>
                                 <a class="opt fa fa-trash-o fa-lg" @click="deleteProject"></a>
                                 </span>
@@ -77,35 +77,38 @@
                             <ul class="form" >
                             <li>
                                 <label>项目名称：</label>
-                                <span><input type="text" v-model="project.name"></span>
+                                <span><input type="text" v-model="project.Name"></span>
                             </li>
                              <li>
                                 <label>项目简介：</label>
                                 <span>
-                                    <textarea name="" id="" cols="1" rows="4"  v-model="project.desc"></textarea>
+                                    <textarea name="" id="" cols="1" rows="4"  v-model="project.Desc"></textarea>
                                 </span>
                             </li>
                               <li>
                                 <label>适宜人群：</label>
-                                <span><input type="text"  v-model="project.fitperson"></span>
+                                <span><input type="text"  v-model="project.FitPersons"></span>
                             </li>
                              <li>
                                 <label>手术手段：</label>
-                                <span><textarea name="" id="" cols="1" rows="4"    v-model="project.operativeState"></textarea></span>
+                                <span><textarea name="" id="" cols="1" rows="4"    v-model="project.OperationWay"></textarea></span>
                             </li>
                              <li>
                                 <label>手术疗程：</label>
-                                <span><textarea name="" id="" cols="1" rows="4"    v-model="project.operativeProcess"></textarea></span>
+                                <span><textarea name="" id="" cols="1" rows="4"    v-model="project.OperationProcess"></textarea></span>
                             </li>
                             <li>
                                 <label>治疗时长：</label>
-                                <span><textarea name="" id="" cols="1" rows="4"    v-model="project.operativeTimeSpan"></textarea></span>
+                                <span><textarea name="" id="" cols="1" rows="4"    v-model="project.OperationTimeSpan"></textarea></span>
                             </li>
-                        
+                         <li>
+                                <label>治疗效果：</label>
+                                <span><textarea name="" id="" cols="1" rows="4"    v-model="project.OperationEffect"></textarea></span>
+                            </li>
                               <li>
                                 <label>是否住院：</label>
                                 <span>
-                                    <select name="" id=""    v-model="project.isStateInHospital">
+                                    <select name="" id=""    v-model="project.IsInHospital">
                                         <option value="Y">是</option>
                                         <option value="N">否</option>
                                     </select>
@@ -113,15 +116,15 @@
                             </li>
                              <li>
                                 <label>术后休息：</label>
-                                <span><textarea name="" id="" cols="1" rows="4"    v-model="project.restInfo"></textarea></span>
+                                <span><textarea name="" id="" cols="1" rows="4"    v-model="project.HaveRest"></textarea></span>
                             </li>
                              <li>
                                 <label>优点：</label>
-                                <span><textarea name="" id="" cols="1" rows="4"     v-model="project.advantage"></textarea></span>
+                                <span><textarea name="" id="" cols="1" rows="4"     v-model="project.GoodPoint"></textarea></span>
                             </li>
                              <li>
                                 <label>缺点：</label>
-                                <span><textarea name="" id="" cols="1" rows="4"    v-model="project.defect"></textarea></span>
+                                <span><textarea name="" id="" cols="1" rows="4"    v-model="project.BadPoint"></textarea></span>
                             </li>
                             <li style="height:50px;">&nbsp;</li>
                         </ul>
@@ -139,33 +142,43 @@
 <script>
 import $ from "jquery";
 import { mapGetters } from "vuex";
-import VueDialog from './Common/dialog'
+import VueDialog from "./Common/dialog";
 
 export default {
   data() {
     return {
       addCatType: false,
       addProject: false,
-      project:{ name:"",
-                desc:"",
-                fitperson:"",
-                operativeState:"",
-                operativeProcess:"",
-                operativeTimeSpan:"",
-                isStateInHospital:"N",
-                restInfo:"",
-                advantage:"",
-                defect:""}
+      project: {
+         ID:0,
+        ParentCat: "",
+        Name: "",
+        Desc: "",
+        OperationWay: "",
+        OperationProcess: "",
+        FitPersons: "",
+        OperationTimeSpan: "",
+        OperationEffect: "",
+        ChaiXian: "",
+        HaveRest: "",
+        IsInHospital: "N",
+        GoodPoint: "",
+        BadPoint: ""
+      },
+      projectCatType:{
+        guid:'',
+        parentGuid:'',
+        name:''
+      }
     };
   },
- components: { VueDialog },
+  components: { VueDialog },
   computed: mapGetters({
-    list: "ProjectCatList",         //项目目录
-    catsType: "ProjectCatsType",    //项目目录分类
-    projectList: "ProjectList",     //项目列表
-    
-    
-    projectDetail:{}
+    list: "ProjectCatList", //项目目录
+    catsType: "ProjectCatsType", //项目目录分类
+    projectList: "ProjectList", //项目列表
+
+    projectDetail: {}
   }),
   created() {
     let _this = this;
@@ -179,7 +192,6 @@ export default {
     });
   },
   mounted() {
-   
     $(".edit-area").height(
       $(".body")
         .parent()
@@ -189,59 +201,152 @@ export default {
   methods: {
     chooseProjectCat: function(group, item) {
       let _this = this;
+      _this.eventCancelProject();
       group.forEach(element => {
         element.Selected = false;
       });
 
       item.Selected = true;
-      _this.$store.dispatch("getProjectCatTypeList", item.Guid).then(function(guid){
-         //项目列表
-        _this.$store.dispatch("getProjectList", guid);
-      });
+      _this.$store
+        .dispatch("getProjectCatTypeList", item.Guid)
+        .then(function(guid) {
+          //项目列表
+          _this.$store.dispatch("getProjectList", guid);
+        });
     },
-    chooseProjectCatTypeList:function(catsTypeList, item){
+    chooseProjectCatTypeList: function(catsTypeList, item) {
+      this.eventCancelProject();
       catsTypeList.forEach(element => {
         element.Selected = false;
       });
 
       item.Selected = true;
-      this.$store.dispatch("getProjectList", item.Guid).then(function(){
+
+      this.addCatType = true;
+      this.projectCatType={
+        guid:item.Guid,
+        parentGuid:item.CatGuid,
+        name:item.Name
+      };
+
+      this.queryProjectList(item.Guid);
+
+      
+    },
+    
+    queryProjectList(guid){
+      this.$store.dispatch("getProjectList", guid);
+    },
+    queryProjectCatTypeList(guid) {
+      this.$store.dispatch("getProjectCatTypeList", guid).then(function() {
         // 获取产品detail
       });
-     
     },
-    deleteProjectCat:function(){
-
+    deleteProjectCat: function() {},
+    deleteProjectCatType: function() {},
+    deleteProject: function() {},
+    saveProjectCatType: function(name) {
+      let _this = this;
+      console.log("save project cat type");
+      let param = {
+        Guid:_this.projectCatType.guid,
+        ParentGuid: this.getCurrentProjectCatGuid(),
+        Name: _this.projectCatType.name
+      };
+      _this.$store.dispatch("saveProjectCatType", param).then(function() {
+        _this.eventCancelCatType();
+         _this.queryProjectCatTypeList(param.ParentGuid);
+      });
     },
-    deleteProjectCatType:function(){
-      
+    chooseProjectDetail(id){
+      let _this=this;
+       _this.$store.dispatch("getProjectDetail", id).then(function(data) {
+         _this.addProject = true;
+         debugger
+         _this.project = {
+                          ID:data.ID,
+                          ParentCat: data.CatGuid,
+                          Name: data.ProjectName,
+                          Desc: data.ProjectContent,
+                          OperationWay: data.ShouShuWay,
+                          OperationProcess: data.ShouShuLiaoCheng,
+                          FitPersons: data.ZhiLiaoRenQun,
+                          OperationTimeSpan: data.ZhiLiaoShiChang,
+                          OperationEffect: data.ZhiLiaoXiaoGuo,
+                          ChaiXian: data.ChaiXianShijian,
+                          HaveRest: data.ShuHouXiuXi,
+                          IsInHospital: data.IsZhuYuan,
+                          GoodPoint: data.YouDian,
+                          BadPoint: data.QuanDian,
+                        };
+      });
     },
-    deleteProject:function(){
-      
-    },
-    saveProjectCatType:function(name){
-      console.log('save project cat type')
-      //this.$store.dispatch("saveProject", this.projectDetail);
-    },
-    saveProject:function(){
-      console.log('save project ')
-      console.log(JSON.stringify(this.project))
-      //this.$store.dispatch("saveProjectCatType", this.projectDetail);
+    saveProject: function() {
+      let _this =this;
+      console.log("save project ");
+      console.log(JSON.stringify(this.project));
+      _this.$store.dispatch("saveProject", this.project).then(function() {
+        _this.eventCancelProject();
+      });
     },
     eventAddCatType: function() {
       this.addCatType = true;
+      this.projectCatType={
+        guid:'',
+        parentGuid:'',
+        name:''
+      };
     },
     eventCancelCatType: function() {
       this.addCatType = false;
     },
     eventAddProject: function() {
+      this.project.ParentCat = this.getCurrentProjectCatTypeGuid();
+      console.log(this.project.ParentCat);
       this.addProject = true;
     },
     eventCancelProject: function() {
       this.addProject = false;
-      this.project ={ name:"",desc:"",fitperson:"",operativeState:"",operativeProcess:"",operativeTimeSpan:"",isStateInHospital:"N",restInfo:"",advantage:"",defect:""}
+      this.project = {
+        ID:0,
+        ParentCat: "",
+        Name: "",
+        Desc: "",
+        OperationWay: "",
+        OperationProcess: "",
+        FitPersons: "",
+        OperationTimeSpan: "",
+        OperationEffect: "",
+        ChaiXian: "",
+        HaveRest: "",
+        IsInHospital: "N",
+        GoodPoint: "",
+        BadPoint: ""
+      };
+    },
+    ///获取当前美容项目分类
+    getCurrentProjectCatTypeGuid() {
+      let _this = this;
+      let guid = "";
+      _this.catsType.forEach(function(i) {
+        if (i.Selected) {
+          guid = i.Guid;
+        }
+      });
+      return guid;
+    },
+    ///获取当前美容目录
+    getCurrentProjectCatGuid() {
+      let _this = this;
+      let guid = "";
+      _this.list.forEach(function(i) {
+        if (i.Selected) {
+          guid = i.Guid;
+        }
+      });
+      _this.projectCatType.parentGuid=guid;
+      return guid;
     }
-    
   }
 };
 </script>
@@ -321,13 +426,14 @@ div.blcok {
   width: 99.5%;
   text-align: center;
   color: #ff00e6;
-  position: absolute;
+  /*position: absolute;*/
   bottom: 0px;
   height: 30px;
   line-height: 30px;
-  border-top:1px #ccc solid;
-  background: #fff;
+  border-bottom: 1px #ccc solid;
+  background: #ddfdfc;
   z-index: 9;
+  cursor: pointer;
 }
 
 ul.form li {

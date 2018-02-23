@@ -1,7 +1,7 @@
 import * as types from '../types'
 import axios from '../../http'
 import * as api from '../../api'
-import util from 'util'
+import util, { debug } from 'util'
 
 const state = {
     currentCat: 0,//默认项目分类
@@ -19,8 +19,12 @@ const getters = {
 
 
 const actions = {
-    quereProjectCats({ commit, state }) {
-        commit(types.QUEREY_PROJECT_CATS);
+    queryProjectCats({ commit, state }) {
+        return new Promise(function(resolve){
+            commit(types.QUEREY_PROJECT_CATS,resolve);
+           
+        });
+        
     },
     chooseProjectCat({ commit, state }, catId) {
         commit(types.QUEREY_PROJECT_LIST, catId);
@@ -31,12 +35,16 @@ const actions = {
 }
 
 const mutations = {
-    [types.QUEREY_PROJECT_CATS](state) {
+    [types.QUEREY_PROJECT_CATS](state,resolve) {
 
-        axios.get(api.PROJECT_CAT).then(response => {debugger
+        axios.post(api.PROJECT_CAT,{guid:''},{
+            'headers':{
+                'Content-Type':'application/json'
+            }}).then(response => {
             if (response.data.Code == 0) {
                 state.cats = response.data.Result;
-                state.currentCat = state.cats[0].ID;
+                state.currentCat = state.cats[0].Guid;
+                resolve(state.currentCat);
             }
             else {
                 alert(response.data.Message);
@@ -46,8 +54,10 @@ const mutations = {
     [types.QUEREY_PROJECT_LIST](state, catId) {
 
         state.currentCat = catId;
-        let _url_project_list = util.format(api.PROJECT_LIST, state.currentCat);
-        axios.get(_url_project_list).then(response => {
+        axios.post(api.PROJECT_LIST,{guid:catId},{
+            'headers':{
+                'Content-Type':'application/json'
+            }}).then(response => {
 
             if (response.data.Code == 0) {
                 let result = response.data.Result;
@@ -59,10 +69,11 @@ const mutations = {
         })
     },
     [types.QUEREY_PROJECT_DETAIL](state, projectId) {
-        //获取项目明细        
-        let _url_project_detail = util.format(api.PROJECT_DETAIL, projectId);
-
-        axios.get(_url_project_detail).then(response => {
+        //获取项目明细   
+        axios.post(api.PROJECT_DETAIL,{id:projectId},{
+            'headers':{
+                'Content-Type':'application/json'
+            }}).then(response => {
             if (response.data.Code == 0) {
                 state.detail = response.data.Result;
             }

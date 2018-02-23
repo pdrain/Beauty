@@ -59,9 +59,12 @@ const mutations = {
     },
      [types.QUEREY_PROJECT_DETAIL](state, projectId) {
         //获取项目明细        
-        let _url_project_detail = util.format(api.PROJECT_DETAIL, projectId);
+        //let _url_project_detail = util.format(api.PROJECT_DETAIL, projectId);
       
-        axios.get(_url_project_detail).then(response => {
+        axios.post(api.PROJECT_DETAIL,{id:projectId},{
+            'headers':{
+                'Content-Type':'application/json'
+            }}).then(response => {
             
             state.submitProjectDetail = response.data;
         })

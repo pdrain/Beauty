@@ -1,4 +1,6 @@
+import axios from '../../http'
 import * as types from '../types'
+import * as api from '../../api'
 import cookieHelper from '../../utils/cookiehekper'
 
 const state = {
@@ -12,10 +14,22 @@ const getters = {
 
 const actions = {
     doLogin ({ commit, state }, params) {
-        cookieHelper.setCookie({
-            name:'token',
-            value:'hello----world'
+        return new Promise(function (res, rej) {
+            let  data  = {
+                "Account": params.account,
+                "Password": params.password
+              }
+            axios.post(api.DO_ADMIN_LOGIN, data).then(function (result) {
+                debugger
+                cookieHelper.setCookie({
+                    name:'token',
+                    value:'hello----world'
+                })
+
+                res.call(this,true)
+            })
         })
+        
     },
     doLogout ({ commit }) {
         commit(types.LOGOUT);

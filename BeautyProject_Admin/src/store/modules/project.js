@@ -23,7 +23,7 @@ const actions = {
     //项目目录
     getProjectCats ({ commit, state }) {
         return new Promise(function (res, rej) {
-            axios.post(api.GET_PROJECT_CAT_LIST, { guid: '' }).then(function (result) {
+            axios.post(api.GET_PROJECT_CATS).then(function (result) {
 
                 let _data = result.data;
                 if (_data.Code == 0) {
@@ -56,7 +56,7 @@ const actions = {
     //项目
     getProjectCatTypeList ({ commit, state }, guid) {
         return new Promise(function (res, rej) {
-            axios.post(api.GET_PROJECT_CAT_LIST, { guid: guid }).then(function (result) {
+            axios.post(api.GET_PROJECT_CAT_LIST, { ParentGuid: guid }).then(function (result) {
 
                 let _data = result.data;
                 if (_data.Code == 0) {
@@ -84,16 +84,12 @@ const actions = {
         });
 
     },
-    saveProjectCatType ({ commit, state }, catId) {
+    
+    saveProjectCatType ({ commit, state }, param) {
         return new Promise(function (res, rej) {
-
-            let url = api.GET_PROJECT_CAT + '/' + catId;
-            axios.post(url).then(function (result) {
-
-
+            axios.post(api.ADD_PROJECT_CAT_TYPE,param).then(function (result) {
                 let _data = result.data;
                 if (_data.Code == 0) {
-                    commit(types.GET_PROJECT_CAT, _data.Result)
                     res.call();
                 }
                 else {
@@ -124,11 +120,31 @@ const actions = {
             });
         });
     },
+      //项目列表
+      getProjectDetail ({ commit, state }, id) {
+        return new Promise(function (res, rej) {
+
+            axios.post(api.GET_PROJECT, { Id: id }).then(function (result) {
+                let _data = result.data;
+                if (_data.Code == 0) {
+                    res.call(this,_data.Result);
+                }
+                else {
+                    alert(_data.Message);
+                }
+
+            }, function (err) {
+                console.log(err);
+            });
+
+
+        });
+    },  
     //项目列表
     getProjectList ({ commit, state }, guid) {
         return new Promise(function (res, rej) {
 
-            axios.post(api.GET_PROJECT_LIST, { guid: guid }).then(function (result) {
+            axios.post(api.GET_PROJECT_LIST, { CatGuid: guid }).then(function (result) {
                 let _data = result.data;
                 if (_data.Code == 0) {
                     let data = _data.Result||[];
@@ -163,29 +179,28 @@ const actions = {
         });
     },
     saveProject ({ commit, state },projectDetail) {
-        let validate = function () {
-            if (!projectDetail.Name) {
-                return { value: false, msg: '产品名称不能为空！' }
-            }
-            if (!projectDetail.DisplayImg) {
-                return { value: false, msg: '请选择产品显示图片！' }
-            }
-            if (!projectDetail.ShortDesc) {
-                return { value: false, msg: '产品简介不能为空！' }
-            }
-        }
+        
         return new Promise(function (res, rej) {
-            let validateResult = this.validate();
-            if (!validateResult.value) {
-                rej.call(this, validateResult.msg);
-            } else {
-                //TODO 调用service
-                res.call();
-            }
+            
+               //TODO 调用service
+               axios.post(api.ADD_PROJECT, projectDetail).then(function (result) {
+                let _data = result.data;
+                if (_data.Code == 0) {
+                    
+                    //commit(types.ADD_PROJECT, data);
+                    res.call();
+                }
+                else {
+                    alert(_data.Message);
+                }
 
-        });
+            }, function (err) {
+                console.log(err);
+            }); 
+                
+            
+        })
     }
-
 }
 
 const mutations = {
@@ -206,6 +221,8 @@ const mutations = {
 
         state.projectList = data;
 
+    },
+    [types.ADD_PROJECT](state, data) {
     },
 
 }

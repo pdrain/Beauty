@@ -1,32 +1,36 @@
 <template>
     <div v-title="'提交订单'" class="submitorder">
-        <div class="content">
-            <div class="left">
-                <img src="../assets/none.jpg" />
-            </div>
-            <div class="right">
-                <div class="title">{{detail==null?'':detail.Name}}</div>
-                <div class="desc">{{detail==null?'':detail.ShorDesc}}</div>
-                <div class="price">预付款：￥{{detail==null?'':detail.Imprest}}</div>
-            </div>
-        </div>
-        <div class="service-package"><label class="title">服务包</label><span class="info">暂无其他服务</span></div>
-        <div class="split-pay"><label class="title">尾款分期付款</label><span class="info">暂不支持分期</span></div>
-        <div class="salesoff">
-            <ul>
-                <li><label class="title">美容券</label><span class="info">暂无优惠券</span></li>
-            </ul>
-        </div>
-        <div class="contact">
-            <ul>                
-                <li><label class="title">联系人</label><input type="text" v-model="user.contactor"/></li>
-                <li><label class="title">联系手机</label><input type="text" v-model="user.mobile"/></li>
-                <li><label class="title">介绍人手机</label><input type="text" v-model="user.intrudcer"/></li>
-            </ul>
-        </div>
-        <div class="remark">*请填写正确的介绍人手机，可以获取介绍人专属优惠。</div>
+        <header class="bd1">美丽预约</header>
+       <div class="contact-info">
+           <ul>
+               <li>
+                   <label for="">联系人</label>
+                   <input type="text" placeholder="请输入联系人" v-model="contactInfo.contactor" /></li>
+               <li>
+                   <label for="">联系电话</label>
+                   <input type="text" placeholder="请输入联系电话" v-model="contactInfo.phoneNum" /></li>               
+           </ul>
+           <div class="calendar" v-if="calendar">
+               <div class="header">{{calendar.year}}年{{calendar.month}}月 <a class="next-month" @click="chooseNextMonth()">下个月></a></div>
+               <div class="date">
+                  <div class="title">
+                       <span>日</span>
+                       <span>一</span>
+                       <span>二</span>
+                       <span>三</span>
+                       <span>四</span>
+                       <span>五</span>
+                       <span>六</span>
+                  </div>
+                  
+                   <div class="days" >
+                       <span :class="{'active':selectedDate==day}" v-for="(day,index) in calendar.days" :key="day" v-html="day" @click="chooseDate(day)"></span>
+                   </div>
+               </div>
+           </div>
+       </div>
         <footer>
-            <span class="price">预付款：￥{{detail==null?'':detail.Imprest}}</span>
+            <span class="price">支付定金：<span>￥&nbsp;</span><span>{{contactInfo.bookFee}}</span>&nbsp;&nbsp;元</span>
             <button @click="submitOrder">提交订单</button>
         </footer>
     </div>
@@ -38,14 +42,26 @@ import { mapGetters } from 'vuex'
 export default {
   data(){
       return {
-          projectId:0
+          projectId:0,
+          calendar:{year:'',month:'',days:[ ]},
+          contactInfo:{contactor:'',phoneNum:'',bookDate:'',bookFee:0}
       }
   },
-    computed: mapGetters({
-        detail: 'SubmitProjectDetail',
-        user:'UserInfo'
-  }),
+    computed: {
+        ...mapGetters({
+            detail: 'SubmitProjectDetail',
+            user:'UserInfo'
+        }),
+        selectedDate:function() {
+            let day = new Date().getDate();
+            if(!this.contactInfo.bookDate){
+                return day;
+            }
+            return new Date(this.contactInfo.bookDate).getDate()
+        }
+    },
   created(){
+      this.initCalendar();
      
      //检查参数是否完整
       let projectId=this.$route.query.projectId;
@@ -66,8 +82,41 @@ export default {
   methods:{
     submitOrder:function () {
          this.$store.dispatch('submitOrder');
-    }
+    },
+    initCalendar:function() {
+        let date = new Date();
+        this.calendar.year = date.getFullYear()
+        this.calendar.month = date.getMonth()+1;
 
+        let firstDay = new Date(this.calendar.year,this.calendar.month,1)
+        let lastDay = new Date(firstDay.getTime()-1000*60*60*24).getDate()
+
+       
+        for(let i=1; i<=lastDay;i++){
+            if(i==1){
+                let today = new Date().getDay()
+                for(let d=1;d<today;d++ ){
+                    this.calendar.days.push('&nbsp;')
+                }
+            }
+            this.calendar.days.push(i)
+        }
+        let lastweekDay = new Date(this.calendar.year+'-'+this.calendar.month+'-'+lastDay).getDay();
+        
+        for(let d=lastweekDay;d<6;d++){
+            this.calendar.days.push('&nbsp;')
+        }
+    },
+    // 选择下个月
+    chooseNextMonth:function() {
+        
+    },
+    // 选择日期
+    chooseDate:function(day) {
+        if(day=='&nbsp;') return;
+        let selectDate = this.calendar.year+'-'+this.calendar.month+'-'+day;
+        this.contactInfo.bookDate=selectDate;
+    }
   }
 }
 </script>
@@ -75,28 +124,115 @@ export default {
 
 
 <style lang="less">
-@import '../assets/index.less';
+@import "../assets/index.less";
 
-.submitorder{width: 100%;height: 100%; }
-.submitorder .content{height: 110px; border-bottom:1px @submitorder-border solid; background: @submitorder-bg;}
-.submitorder .left{width: 35%; height: 100%; float: left;}
-.submitorder .left img{width: 90%; margin: auto; height: auto; padding-top: 10px;}
-.submitorder .right{width: 65%; height: 100%; float: left; padding-top: 10px; text-align: left; line-height: @submitorder-small-lineheight;}
-.submitorder .right .title{ font-size: @submitorder-titlefont; color:@submitorder-font-title-color}
-.submitorder .right .desc{height: 45px; font-size: @submitorder-contentfont; color:@submitorder-font-content-color}
-.submitorder .right .price{ font-size: @submitorder-contentfont;color:@submitorder-hotfont-color;}
-.submitorder .service-package,.submitorder .split-pay,.submitorder .contact,.submitorder .salesoff{line-height: @submitorder-lineheight; text-align: left;  background: @submitorder-bg; margin-bottom: 10px; min-height: @submitorder-lineheight}
-.submitorder .ervice-package{border-top:1px @submitorder-border solid;}
-.submitorder label.title{color:@submitorder-font-title-color; font-size: @submitorder-font-title; margin-left: 10px;}
-.submitorder span.info{float:right;color:@submitorder-font-content-color; font-size: @submitorder-font-content; margin-right: 10px;}
-.submitorder .contact input[type='text']{float: right; width: 120px; height: 20px; line-height: 20px; margin-top: 5px; margin-right: 5px; border-radius: 10px; border:1px solid @submitorder-border; text-indent: 10px;}
-.submitorder .contact ul ,.submitorder .salesoff ul{margin: 0px;padding: 0px;}
-.submitorder .remark{width: 100%;  text-align: center; color:@submitorder-font-title-color;font-size: @submitorder-contentfont}
+.submitorder {
+  width: 100%;
+  height: 100%;
+}
+.submitorder header {
+  height: 4rem;
+  line-height: 4rem;
+  font-size: 2rem;
+  background: #fff;
+  margin-bottom: .5rem;
+}
+.submitorder .contact-info ul {
+  width: 100%;
+}
+.submitorder .contact-info ul li {
+  height: 35px;
+  line-height: 35px;
 
+  border-top: 1px #dad7d7 solid;
+  background: #fff;
+  display: flex;
+}
+.submitorder .contact-info ul li  label{
+    width: 6rem;
+    text-align: left;
+    text-indent: .6rem;
+}
 
-footer{width: 100%; height: @submitorder-lineheight; border-top:1px solid @submitorder-border; background: @submitorder-bg; position: fixed;bottom:0px;}
-footer button{width: 100px; float: right; line-height:  @submitorder-lineheight; border:0px; background: @submitorder-button-bgcolor; color:@submitorder-button-color;}
-footer .price{height:@submitorder-lineheight; line-height:  @submitorder-lineheight;display: block; float: left;  font-size:  @submitorder-font-content; margin-left: 10px }
+.submitorder .contact-info ul li:last-child {
+  border-bottom: 1px #dad7d7 solid;
+}
+.submitorder .contact-info ul li input {
+  width: 100%;
+  box-sizing: border-box;
+  height: 343x;
+  line-height: 33px;
+  text-indent: 10px;
+  border: none;
+}
+
+.submitorder .calendar {
+  width: 100%;
+  background: #fff;
+}
+.submitorder .calendar .header {
+  height: 35px;
+  line-height: 35px;
+  text-align: left;
+  text-indent: 10px;
+}
+.submitorder .calendar .header .next-month {
+  float: right;
+  margin-right: 8px;
+}
+.submitorder .calendar .date {
+  width: 100%;
+  border-spacing: 1px;
+  background: #ccc;
+}
+.submitorder .calendar .date .title,
+.submitorder .calendar .date .days {
+  background: #fff;
+  line-height: 35px;
+}
+.submitorder .calendar .date span {
+  width: 14.56%;
+  float: left;
+  border: 1px #ccc solid;
+  box-sizing: border-box;
+  margin-left: -1px;
+}
+
+.submitorder .calendar .date .days span {
+  background: #fff;
+  margin-top: -1px;
+}
+.submitorder .calendar .date .days span.active {
+  background: #fdaefc;
+  color: #fff;
+}
+
+footer {
+  width: 100%;
+  border-top: 1px solid @submitorder-border;
+  background: @submitorder-bg;
+   height: @footer-height;
+  line-height: @footer-height;
+  position: fixed;
+  bottom: 0px;
+}
+footer button {
+  width: 100px;
+  float: right;
+  line-height: @submitorder-lineheight;
+  border: 0px;
+  background: @submitorder-button-bgcolor;
+  color: @submitorder-button-color;
+  border-radius: 0;
+}
+footer .price {
+  height: @submitorder-lineheight;
+  line-height: @submitorder-lineheight;
+  display: block;
+  float: left;
+  font-size: @submitorder-font-content;
+  margin-left: 10px;
+}
 </style>
 
 

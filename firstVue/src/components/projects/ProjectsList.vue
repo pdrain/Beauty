@@ -1,6 +1,6 @@
 <template>
   <div class="projects">
-    <div class="item" v-for="item in list">
+    <div class="item" v-for="item in list" :key="item.ID">
       <router-link :to="{ path: '/projects-detail', query: { id: item.ID }}">
       <div class="left">
         <img src="../../assets/none.jpg" />

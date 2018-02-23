@@ -30,6 +30,7 @@ module.exports = {
     proxyTable: {
                           '/api': {
                             target: 'http://service.meilituibian.cn:9000/',
+                            //target: 'http://localhost:14159/',
                             changeOrigin: true
                             //pathRewrite: { '^/api': ''}
                           }

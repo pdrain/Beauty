@@ -1,26 +1,39 @@
 //用户登录
-export const DO_ADMIN_LOGIN="";
+export const DO_ADMIN_LOGIN="api2/User/Login";
 
-//客户预约
-export const GET_ORDERS="";
 
-//业务员
-export const GET_SALES="";
-//业务员申请
-export const GET_SALES_APPLY="";
+//获取所有业务员
+export const GET_SALES="api2/project/GetSales";
+//获取新申请业务员
+export const GET_SALES_APPLY="api2/project/GetNewApplySales";
 
 
 
+//美容项目目录
+export const GET_PROJECT_CATS="api2/project/GetProjectCats";
+//美容项目目录分类
+export const GET_PROJECT_CAT="api2/Project/GetProjectCatType"
 //美容项目分类列表
-export const GET_PROJECT_CAT_LIST="api2/project/getProjectCatbyparentid";
+export const GET_PROJECT_CAT_LIST="api2/project/GetProjectCatTypeList";
+//新增美容项目分类
+export const ADD_PROJECT_CAT_TYPE="api2/Project/AddProjectCatType"
+//新增美容项目分类
+export const UPDATE_PROJECT_CAT_TYPE="api2/Project/UpdateProjectCatType"
+//删除美容项目目录
+export const DELETE_PROJECT_CAT="api2/Project/DeleteProjectCat"
 
 
-//美容项目
+//美容项目详情
 export const GET_PROJECT="api2/Project/getprojectdetail";
-//删除美容项目
-export const DELETE_PROJECT="api/Project/delete/{0}";
 //美容项目列表
-export const GET_PROJECT_LIST="api2/project/getprojectdetail";
+export const GET_PROJECT_LIST="api2/project/GetProjectDetailList";
+//新增美容项目
+export const ADD_PROJECT="api2/Project/AddProjectDetail"
+//更新美容项目
+export const UPDATE_PROJECT="api2/Project/UpdateProjectDetail"
+//删除美容项目
+export const DELETE_PROJECT="api/Project/deleteProjectDetail";
+
 
 
 
@@ -30,6 +43,7 @@ export const GET_PRODUCT_CAT="api/ProductCat/{0}";
 export const GET_PRODUCT_CAT_LIST="api/ProductCat";
 //删除美容产品分类
 export const DELETE_PRODUCT_CAT="api/productcat/delete/{0}";
+
 //美容产品
 export const GET_PRODUCT="api/product/{0}";
 //删除美容产品
@@ -55,3 +69,7 @@ export const REFUSE_SUBSCRIBERS="api2/order/refusesubscribers"
 export const CANCEL_SUBSCRIBERS="api2/order/cancelsubscribers"
 
 //--客户预约结束--------------------------------------------------------------
+
+
+//客户预约
+export const GET_ORDERS="";

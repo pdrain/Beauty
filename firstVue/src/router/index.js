@@ -38,7 +38,12 @@ const DictionrayArticle = resolve => require(['../components/Article'], resolve)
 const AboutUs = resolve => require(['../components/AboutUs'], resolve)
 const Upgrade = resolve => require(['../components/Upgrade'], resolve)
 
+const PartnerHospital = resolve => require(['../components/partner-hospital'], resolve)
+const PartnerHospitalDetail = resolve => require(['../components/partner-hospital-detail'], resolve)
+
+
 const NotFontPage = resolve => require(['../components/404'], resolve)
+
 
 
 Vue.use(VueRouter)
@@ -64,6 +69,9 @@ const router = new VueRouter({
         { path: '/user/aboutus', component: AboutUs },
         { path: '/user/upgrade', component: Upgrade },
         { path: '/user/coupon', component: Coupon },
+        { path:'/partner-hospital',component:PartnerHospital},
+        { path:'/partner-hospital-detail',component:PartnerHospitalDetail},
+        
 
         { path: '/dict', component: Dictionray },
         { path: '/dict/article', component: DictionrayArticle },

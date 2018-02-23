@@ -31,4 +31,7 @@ export const GET_DICTIONARY ="get_dictionary"
 export const GET_DICTIONARY_CHILD ="get_dictionary_child"
 export const GET_DICTIONARY_ARTICLE ="get_dictionary_article"
 
+export const QUEREY_HOSPITAL_LIST ="query_hospital_list"
+export const QUEREY_HOSPITAL_DETAIL ="query_hospital_detail"
+
 
