@@ -1,5 +1,6 @@
-﻿using ServiceApi.Models;
-using ServiceApi.Service.Dao;
+﻿using BeautyProject.Dao;
+using BeautyProjectModes;
+using ServiceApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,61 +10,20 @@ namespace ServiceApi.Service
 {
     public class ProjectService
     {
-        public ApiResult SaveProjectCat(ProjectCat cat)
-        {
-            ProjectCatDao projectCatDao = new ProjectCatDao();
-            bool resultFlag = false;
-            string msg = string.Empty;
-            if (cat.ID == 0)
-            {
-                resultFlag = projectCatDao.Insert(cat);
-                if (!resultFlag)
-                {
-                    msg = "添加美容项目分类失败。";
-                }
-            }
-            else
-            {
-                resultFlag = projectCatDao.Update(cat);
-                if (!resultFlag)
-                {
-                    msg = "更新美容项目分类失败。";
-                }
-            }
-            return new ApiResult() { Code = resultFlag ? 0 : 1, Message = msg };
-        }
 
-        public ApiResult DeleteProject(int id)
+
+        public ApiResult GetProjectCat(string guid)
         {
-            ProjectCatDao projectCatDao = new ProjectCatDao();
+            ProjectDao projectDao = new ProjectDao();
             try
             {
-                bool result = projectCatDao.Delete(id);
-                if (!result)
-                {
-                    throw new Exception("删除失败。");
-                }
-                return new ApiResult() { Code = 0 };
-            }
-            catch (Exception ex)
-            {
-                return new ApiResult() { Code = 1, Message = ex.Message };
-            }
-        }
-
-        public ApiResult GetProjectCat(int id)
-        {
-            ProjectCatDao projectCatDao = new ProjectCatDao();
-            try
-            {
-                if (id == 0)
+                if (string.IsNullOrEmpty(guid))
                 {
                     return new ApiResult() { Code = 0, Result = new ProjectCat() };
                 }
                 else
                 {
-
-                    ProjectCat cat = projectCatDao.GetProjectCat(id);
+                    ProjectCat cat = projectDao.GetProjectCatById(guid);
                     return new ApiResult() { Code = 0, Result = cat };
                 }
             }
@@ -77,12 +37,12 @@ namespace ServiceApi.Service
 
         public ApiResult GetProjectCats()
         {
-            ProjectCatDao projectCatDao = new ProjectCatDao();
+            ProjectDao projectDao = new ProjectDao();
 
 
             try
             {
-                var list = projectCatDao.GetProjectCats();
+                var list = projectDao.GetProjectCats();
                 return new ApiResult() { Code = 0, Result = list };
             }
             catch (Exception ex)
@@ -90,6 +50,23 @@ namespace ServiceApi.Service
                 return new ApiResult() { Code = 1, Message = ex.Message };
             }
         }
+
+        public ApiResult GetProjectCatByParentId(string guid)
+        {
+            ProjectDao projectDao = new ProjectDao();
+
+
+            try
+            {
+                var list = projectDao.GetProjectCatByParentId(guid);
+                return new ApiResult() { Code = 0, Result = list };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResult() { Code = 1, Message = ex.Message };
+            }
+        }
+
 
 
         public ApiResult GetProject(int id)
@@ -98,16 +75,22 @@ namespace ServiceApi.Service
 
             try
             {
-                if (id == 0) {
-                    
-                    return new ApiResult() { Code = 0, Result = new BeautyItem() };
-                }
-                else
-                {
-                    var project = projectDao.GetProject(id);
-                    return new ApiResult() { Code = 0, Result = project };
+                ProjectDetail detail = projectDao.GetProjectDetail(id);
+                return new ApiResult() { Code = 0, Result = detail };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResult() { Code = 1, Message = ex.Message };
+            }
+        }
+        public ApiResult GetProjectList(string guid)
+        {
+            ProjectDao projectDao = new ProjectDao();
 
-                }
+            try
+            {
+                List<ProjectDetail> details = projectDao.GetProjectDetailList(guid);
+                return new ApiResult() { Code = 0, Result = details };
             }
             catch (Exception ex)
             {
@@ -115,14 +98,25 @@ namespace ServiceApi.Service
             }
         }
 
-        public ApiResult GetProjectList()
+
+        /// <summary>
+        /// 新增项目目录分类
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public ApiResult AddProjectCatType(string parentGuid, string name)
         {
             ProjectDao projectDao = new ProjectDao();
 
             try
             {
-                var list = projectDao.GetProjectList();
-                return new ApiResult() { Code = 0, Result = list };
+                ProjectCat projectCat = new ProjectCat();
+                projectCat.Guid = Guid.NewGuid().ToString();
+                projectCat.ParentGuid = parentGuid;
+                projectCat.Name = name;
+                projectDao.Insert(projectCat);
+                return new ApiResult() { Code = 0 };
             }
             catch (Exception ex)
             {
@@ -130,15 +124,62 @@ namespace ServiceApi.Service
             }
         }
 
-        public ApiResult GetProjectList(int catId)
+        /// <summary>
+        /// 更新项目目录分类
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public ApiResult UpdateProjectCatType(string guid, string name)
         {
-
             ProjectDao projectDao = new ProjectDao();
 
             try
             {
-                var list = projectDao.GetProjectList(catId);
-                return new ApiResult() { Code = 0, Result = list };
+                ProjectCat cat = projectDao.GetProjectCatById(guid);
+                projectDao.Update(cat);
+                return new ApiResult() { Code = 0 };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResult() { Code = 1, Message = ex.Message };
+            }
+        }
+
+        /// <summary>
+        /// 更新项目明细
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ApiResult UpdateProjectDetail(int id)
+        {
+            ProjectDao projectDao = new ProjectDao();
+
+            try
+            {
+                ProjectDetail detail = projectDao.GetProjectDetail(id);
+                projectDao.UpdateDetail(detail);
+                return new ApiResult() { Code = 0 };
+            }
+            catch (Exception ex)
+            {
+                return new ApiResult() { Code = 1, Message = ex.Message };
+            }
+        }
+
+        /// <summary>
+        /// 新增项目
+        /// </summary>
+        /// <param name="projectDetail"></param>
+        /// <returns></returns>
+        public ApiResult CreateProjectDetail(ProjectDetail projectDetail)
+        {
+            ProjectDao projectDao = new ProjectDao();
+
+            try
+            {
+                projectDao.InsertDetail(projectDetail);
+                return new ApiResult() { Code = 0 };
             }
             catch (Exception ex)
             {

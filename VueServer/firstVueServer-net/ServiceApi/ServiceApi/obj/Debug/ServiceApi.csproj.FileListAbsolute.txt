@@ -75,6 +75,8 @@ D:\学习\VueJS\VueServer\firstVueServer-net\ServiceApi\ServiceApi\obj\Debug\Ser
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\ServiceApi.dll
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\ServiceApi.pdb
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\Antlr3.Runtime.dll
+F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\BeautyProject.Dao.dll
+F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\BeautyProjectModes.dll
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\EntityFramework.dll
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\Microsoft.Data.Edm.dll
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\Microsoft.Data.OData.dll
@@ -98,6 +100,8 @@ F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceAp
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\System.Web.WebPages.dll
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\System.Web.WebPages.Razor.dll
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\WebGrease.dll
+F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\BeautyProject.Dao.pdb
+F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\BeautyProjectModes.pdb
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\EntityFramework.xml
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\Newtonsoft.Json.xml
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\System.Net.Http.xml
@@ -143,6 +147,6 @@ F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceAp
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\ru\System.Spatial.resources.dll
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\zh-Hans\System.Spatial.resources.dll
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\bin\zh-Hant\System.Spatial.resources.dll
+F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\obj\Debug\ServiceApi.csprojResolveAssemblyReference.cache
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\obj\Debug\ServiceApi.dll
 F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\obj\Debug\ServiceApi.pdb
-F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\ServiceApi\obj\Debug\ServiceApi.csprojResolveAssemblyReference.cache

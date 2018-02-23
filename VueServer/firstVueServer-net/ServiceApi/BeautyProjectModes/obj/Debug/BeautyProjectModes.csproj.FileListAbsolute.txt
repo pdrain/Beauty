@@ -1,0 +1,4 @@
+F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\BeautyProjectModes\bin\Debug\BeautyProjectModes.dll
+F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\BeautyProjectModes\bin\Debug\BeautyProjectModes.pdb
+F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\BeautyProjectModes\obj\Debug\BeautyProjectModes.dll
+F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\BeautyProjectModes\obj\Debug\BeautyProjectModes.pdb
