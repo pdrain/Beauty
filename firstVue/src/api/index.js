@@ -1,26 +1,41 @@
 
-export const DO_LOGIN='/api2/User/Login';
+export const DO_LOGIN='/api/users/login';
+export const REGISTER='/api/users/save';
 export const NEWS='/api/news';
 export const WEIXIN_AUTH='/api/weixin/Auth';
 
-
 export const PRODUCT_CAT="/api/productcat";
-
-
 export const PRODUCT_LIST="/api/productlist/";
 
-export const PROJECT_CAT="/api2/Project/GetProjectCatByParentId/";
+//获取微信用户信息
+export const GET_WX_INFO="/api/users/wx/"
 
-export const PROJECT_LIST="/api2/Project/GetProjectCatByParentId/";
+//美容项目分类
+export const PROJECT_CAT="/api/categories";
+//美容项目列表
+export const PROJECT_LIST="/api/projects/list/category/";
+//详情接口
+export const PROJECT_DETAIL="/api/projects/";
+//提交预约
+export const SUBMIT_ORDER='/api/order/save'
 
-export const PROJECT_DETAIL="/api2/project/GetProjectDetail/";
+//查新订单
+export const QUERY_ORDERS="/api/order/";
+//查询预约
+
+//业绩查询
+//api/order/performances/openid
+export const USER_PERFOMANCES="/api/order/performances/"
+
+//客户列表
+//api/users/children／openid
+export const USER_CLIENTS="/api/users/children/?openId="
 
 export const USER_INFO="/api/user-info";
 export const USER_POINTS="/api/user-mypoints";
 export const USER_SUBSCRIBERS="/api/user-mysubscribers";
 
 
-export const SUBMIT_ORDER='/api/order';
 
 
 export const DICT_CATELOG="/api/catalogs.json"

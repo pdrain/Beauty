@@ -13,6 +13,7 @@
             <dl v-for="item in CouponList" :key="item">
                 <dd></dd>
             </dl>
+            正在建设中...
         </div>
         <UserFooter></UserFooter>
     </div>
@@ -20,7 +21,7 @@
 
 <script>
 import UserHeader from './UserHeader'
-import UserFooter from './UserFooter'
+import UserFooter from './Footer'
 export default {
     components: { UserHeader, UserFooter },
     data() {

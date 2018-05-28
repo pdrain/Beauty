@@ -28,7 +28,7 @@ module.exports = {
           assetsSubDirectory: 'static',
           assetsPublicPath: '/',
           proxyTable: {
-                          '/api2': {
+                          '/api': {
                             target: 'http://service.meilituibian.cn:9000/',
                             changeOrigin: true
                             //pathRewrite: { '^/api': ''}

@@ -10,21 +10,37 @@
         <table>
             <tr>
                 <td>
-                    <router-link to="/user/myorders">我的订单</router-link>
+                    <router-link to="/user/myorders">我的预约</router-link>
+                </td>
+               
+                  <td>
+                    <router-link to="/user/client">我的客户</router-link>
                 </td>
                 <td>
-                    <router-link to="/user/mysubscribers">我的预约</router-link>
+                    <router-link to="/user/achievement">我的业绩</router-link>
+                </td>
+               <td>
+                    <router-link to="/mypoints">我的积分</router-link>
+                </td>
+            </tr>
+            
+<tr>
+                <td>
+                    <router-link to="/partners/login">美业老师登录</router-link>
                 </td>
                 <td>
-                    <router-link to="/user/mypoints">我的积分</router-link>
+                    <router-link to="/partners/reg">创建企业用户</router-link>
                 </td>
                 <td>
-                    <router-link to="/user/coupon">优惠券</router-link>
+                    <router-link to="/user/upgrade">我要升级</router-link>
                 </td>
+                <td>
+                    <router-link to="/user/aboutus">加盟协议</router-link>
+                </td>
+                
             </tr>
         </table>
         <table>
-
             <tr>
                 <td>
                     <router-link to="/user/userrights">用户保障</router-link>
@@ -36,16 +52,32 @@
                     <router-link to="/user/aboutus">关于我们</router-link>
                 </td>
                 <td>
-                    <router-link to="/user/upgrade">我要升级</router-link>
+                    <router-link to="/user/upgrade">合作机构</router-link>
+                </td>
+            </tr>
+            <tr>
+                
+                <td>
+                    <router-link to="/user/coupon">优惠券</router-link>
+                </td>
+                <td>
+                    <router-link to="/user/setting">设置</router-link>
+                </td>
+                <td>
+                   &nbsp;
+                </td>
+                <td>
+                    &nbsp;
                 </td>
             </tr>
         </table>
+
 
         <div class="adv">
             广告
         </div>
 
-        <UserFooter></UserFooter>
+        <c-footer></c-footer>
     </div>
 </template>
 
@@ -56,11 +88,11 @@
 import { mapGetters } from 'vuex'
 import * as types from '../store/types'
 import UserHeader from './UserHeader'
-import UserFooter from './UserFooter'
+import Footer from './Footer'
 
 
 export default {
-    components: { UserHeader ,UserFooter},
+    components: { UserHeader ,'c-footer':Footer},
     data() {
         return {
             msg: 'Welcome to User Center!'
@@ -72,7 +104,7 @@ export default {
         UserInfo: 'WXInfo'
     }),
     created() {
-        this.$store.dispatch('getWXUserInfo')
+        this.$store.dispatch('getWXUserInfo','')
     },
     mounted() {
 
@@ -145,6 +177,9 @@ header .icon img {
     vertical-align: middle;
     background: @user-bg;
     height: 80px;
+}
+.usercenter table td:active{
+    background-color:#f0f0f0;
 }
 
 .usercenter table td a {

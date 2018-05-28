@@ -9,7 +9,7 @@
 <script  type="application/ecmascript">
 
 import UserHeader from './UserHeader'
-import UserFooter from './UserFooter'
+import UserFooter from './Footer'
 import OrderList from '../components/orders/OrderList'
 
 export default {

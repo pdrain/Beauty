@@ -43,6 +43,7 @@ export default {
   font-size: 14px;
   font-weight: normal;
   background: #f0f0f0;
+  
 }
 
 .userheader h1 span {

@@ -29,9 +29,24 @@ const getters = {
 
 const actions = {
     getWXUserInfo ({ commit, state }, code) {
-        let wx = new WX()
-        let userInfo = wx.getUserInfo(code)
+
+        let userInfo = WX.getUserInfo(code)
         commit(types.GET_WX_USER_INFO, userInfo)
+    },
+    getMyClient ({ commit, state }, openId) {
+        return new Promise(function (resolve, reject) {
+            let url = api.USER_CLIENTS + openId
+            axios.get(url).then(response => {
+                if (response.status == 200) {
+                    let data = response.data;
+                    resolve(data)
+                } else {
+                    if (reject && typeof (reject) == 'function') {
+                        reject();
+                    }
+                }
+            })
+        })
     }
 }
 

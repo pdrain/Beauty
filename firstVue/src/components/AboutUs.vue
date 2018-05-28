@@ -12,7 +12,7 @@
 
 <script>
 import UserHeader from './UserHeader'
-import UserFooter from './UserFooter'
+import UserFooter from './Footer'
 export default{
     components:{UserHeader,UserFooter}
 }
@@ -21,16 +21,17 @@ export default{
 <style>
 .aboutus {height: 100%; background: #fff;}
 .aboutus h1 {
-    font-size: 16px;
+    font-size: 2rem;
     color: #666;
 }
 
 .aboutus article {
-    font-size: 16px;
+    font-size: 0.6rem;
     color: #666;
-    line-height: 35px;
+    line-height: 1.2rem;
     text-align: left;
-    text-indent: 40px;
+    text-indent: 1.2rem;
+    padding: 0.5rem;
 }
 </style>
 

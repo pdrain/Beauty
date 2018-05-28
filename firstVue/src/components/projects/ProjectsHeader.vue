@@ -15,18 +15,7 @@
 .cats{background: @cat-bgcolor; height: @cat-list-height;  border-bottom:1px @cat-border-color solid; overflow-x:auto; overflow-y: hidden; }
 
 .cats  .item{display: block; float: left; width: @cat-item-width;  padding: 0px; height: 50%; cursor: pointer; padding-top: 6px; font-size: 14px; }
-.caticons{background: url("../../assets/cat_icons.png") no-repeat;}
-.caticons.all{ background-position:-5px 7px;}
-.caticons.micro{ background-position:-5px -213px;}
-.caticons.skin{ background-position:-5px -253px;}
-.caticons.lunkuo{ background-position:-5px -104px;}
-.caticons.node{ background-position:-5px -36px;}
-.caticons.body{ background-position:-5px -140px;}
-.caticons.teeth{ background-position:-5px -348px;}
-.caticons.xiong{ background-position:-5px -70px;}
-.caticons.hair{ background-position:-5px -300px;}
-.caticons.eye{ background-position:-5px 5px;}
-.caticons.remark{ background-position:0px -380px;}
+
 .cats  .item .icon-box{display: block;width: 40px; height: 40px; border-radius: 20px; border:1px #ccc solid;margin: auto;}
 </style>
 

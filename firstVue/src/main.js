@@ -8,8 +8,19 @@ import Store from "./store"  // 引入store 对象
 import VueResource from 'vue-resource'
 import VueMaterial from 'vue-material'
 
+require('swiper/dist/css/swiper.css')
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+Vue.use(VueAwesomeSwiper)
+
 //import wx from 'weixin-js-sdk'
 
+import VueLazyload from 'vue-lazyload'
+Vue.use(VueLazyload, {
+  preLoad: 1.3,
+  error: 'dist/error.png',
+  loading: 'dist/loading.gif',
+  attempt: 1
+})
 
 Vue.use(VueResource);
 Vue.use(VueMaterial);

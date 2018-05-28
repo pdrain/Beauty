@@ -5,13 +5,13 @@
            <ul>
                <li>
                    <label for="">联系人</label>
-                   <input type="text" placeholder="请输入联系人" v-model="contactInfo.contactor" /></li>
+                   <input type="text" placeholder="请输入联系人" v-model="order.userName" /></li>
                <li>
                    <label for="">联系电话</label>
-                   <input type="text" placeholder="请输入联系电话" v-model="contactInfo.phoneNum" /></li>               
+                   <input type="text" placeholder="请输入联系电话" v-model="order.phone" /></li>               
            </ul>
            <div class="calendar" v-if="calendar">
-               <div class="header">{{calendar.year}}年{{calendar.month}}月 <a class="next-month" @click="chooseNextMonth()">下个月></a></div>
+               <div class="header"> <a class="pre-month" @click="choosePreMonth()">&lt;上个月</a>{{calendar.year}}年{{calendar.month}}月 <a class="next-month" @click="chooseNextMonth()">下个月&gt;</a></div>
                <div class="date">
                   <div class="title">
                        <span>日</span>
@@ -24,13 +24,15 @@
                   </div>
                   
                    <div class="days" >
-                       <span :class="{'active':selectedDate==day}" v-for="(day,index) in calendar.days" :key="day" v-html="day" @click="chooseDate(day)"></span>
+                       <span :class="{'active':selectedDate==day}" v-for="(day,index) in calendar.days" :key="index" v-html="day" @click="chooseDate(day)"></span>
                    </div>
                </div>
            </div>
        </div>
         <footer>
-            <span class="price">支付定金：<span>￥&nbsp;</span><span>{{contactInfo.bookFee}}</span>&nbsp;&nbsp;元</span>
+            <!-- <span class="price">支付定金：<span>￥&nbsp;</span><span>{{contactInfo.bookFee}}</span>&nbsp;&nbsp;元</span> -->
+            <router-link class="menu" :to="{ path: '/'}">首页</router-link>
+            <span  class="price">预约后，我们将尽快联系您！</span>
             <button @click="submitOrder">提交订单</button>
         </footer>
     </div>
@@ -44,7 +46,14 @@ export default {
       return {
           projectId:0,
           calendar:{year:'',month:'',days:[ ]},
-          contactInfo:{contactor:'',phoneNum:'',bookDate:'',bookFee:0}
+          order : {
+            openId:'1111',
+            projectId:'',
+            userName:'',
+            projectName:'',
+            phone:'',
+            subscribeDate:''
+        }
       }
   },
     computed: {
@@ -53,38 +62,51 @@ export default {
             user:'UserInfo'
         }),
         selectedDate:function() {
-            let day = new Date().getDate();
-            if(!this.contactInfo.bookDate){
+            let _date = new Date();
+            let day = _date.getDate();
+            if(!_date){
                 return day;
             }
-            return new Date(this.contactInfo.bookDate).getDate()
+            return new Date(this.order.subscribeDate).getDate()
         }
     },
   created(){
-      this.initCalendar();
+      let _this = this;
+      _this.initCalendar();
      
      //检查参数是否完整
-      let projectId=this.$route.query.projectId;
-      if(!projectId && typeof projectId !='number'){  
+      _this.projectId   =this.$route.query.projectId;
+      
+      if(!_this.projectId && typeof _this.projectId !='number'){  
             let msg=encodeURI('抱歉！您访问的页面走丢了。');
-            this.$router.replace('error/'+msg+'');
-           
+            _this.$router.replace('error/'+msg+'');
       }
       else{
-          this.$set(this.$data,'projectId',projectId);
-           this.$store.dispatch('querySubmitProjectsDetail',projectId);
-           this.$store.dispatch('getUserInfo',1);
-        
+           _this.$store.dispatch('querySubmitProjectsDetail',_this.projectId).then(function(data){
+                _this.order.projectId  = data.projectId;
+                _this.order.projectName  = data.categoryName;
+           });
       }
 
     
   },
   methods:{
     submitOrder:function () {
-         this.$store.dispatch('submitOrder');
+        let _this = this;
+        if(_this.order.subscribeDate==''){
+            alert('预约日期不能为空。');
+            return false;
+        }
+         _this.$store.dispatch('submitOrder',_this.order).then(function (res) {
+             alert('预约成功，即将返回首页。');
+             _this.$router.push('/')
+         });
     },
-    initCalendar:function() {
+    initCalendar:function(datetime) {
         let date = new Date();
+        if(datetime){
+            date=datetime;
+        }
         this.calendar.year = date.getFullYear()
         this.calendar.month = date.getMonth()+1;
 
@@ -109,13 +131,44 @@ export default {
     },
     // 选择下个月
     chooseNextMonth:function() {
+        var nextMonth=null;
+        if(this.calendar.month===12){
+            console.log(1)
+            nextMonth = new Date((this.calendar.year+1)+'-01-01');
+        }else{
+            console.log(2)
+             nextMonth = new Date(this.calendar.year+'-'+(this.calendar.month+1)+'-01');
+        }
+        console.log(this.calendar.month===12);
         
+        this.calendar={year:'',month:'',days:[ ]};
+        this.initCalendar(nextMonth);
+        this.chooseDate(1);
+    },
+    // 选择上个月
+    choosePreMonth:function() {
+        var nextMonth=null;
+        if(this.calendar.month===1){
+            console.log(1)
+            nextMonth = new Date((this.calendar.year-1)+'-12-01');
+        }else{
+            console.log(2)
+             nextMonth = new Date(this.calendar.year+'-'+(this.calendar.month-1)+'-01');
+        }
+        console.log(this.calendar.month===12);
+        
+        this.calendar={year:'',month:'',days:[ ]};
+        this.initCalendar(nextMonth);
+        this.chooseDate(1);
     },
     // 选择日期
     chooseDate:function(day) {
+        
         if(day=='&nbsp;') return;
         let selectDate = this.calendar.year+'-'+this.calendar.month+'-'+day;
-        this.contactInfo.bookDate=selectDate;
+        
+        this.order.subscribeDate=selectDate;
+        console.log(this.order.subscribeDate);
     }
   }
 }
@@ -135,7 +188,7 @@ export default {
   line-height: 4rem;
   font-size: 2rem;
   background: #fff;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 .submitorder .contact-info ul {
   width: 100%;
@@ -148,10 +201,10 @@ export default {
   background: #fff;
   display: flex;
 }
-.submitorder .contact-info ul li  label{
-    width: 6rem;
-    text-align: left;
-    text-indent: .6rem;
+.submitorder .contact-info ul li label {
+  width: 6rem;
+  text-align: left;
+  text-indent: 0.6rem;
 }
 
 .submitorder .contact-info ul li:last-child {
@@ -173,8 +226,12 @@ export default {
 .submitorder .calendar .header {
   height: 35px;
   line-height: 35px;
-  text-align: left;
+  text-align: center;
   text-indent: 10px;
+}
+.submitorder .calendar .header .pre-month {
+  float: left;
+  margin-right: 8px;
 }
 .submitorder .calendar .header .next-month {
   float: right;
@@ -191,7 +248,7 @@ export default {
   line-height: 35px;
 }
 .submitorder .calendar .date span {
-  width: 14.56%;
+  width: 14.54%;
   float: left;
   border: 1px #ccc solid;
   box-sizing: border-box;
@@ -211,7 +268,7 @@ footer {
   width: 100%;
   border-top: 1px solid @submitorder-border;
   background: @submitorder-bg;
-   height: @footer-height;
+  height: @footer-height;
   line-height: @footer-height;
   position: fixed;
   bottom: 0px;
@@ -226,12 +283,20 @@ footer button {
   border-radius: 0;
 }
 footer .price {
-  height: @submitorder-lineheight;
-  line-height: @submitorder-lineheight;
+  height: 40px;
+  line-height: 40px;
   display: block;
   float: left;
   font-size: @submitorder-font-content;
   margin-left: 10px;
+}
+
+footer a.menu {
+  float: left;
+  text-decoration: none;
+  margin-left: 5px;
+  color: #ff00fb;
+  cursor: pointer;
 }
 </style>
 

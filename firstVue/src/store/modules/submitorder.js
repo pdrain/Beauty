@@ -9,65 +9,80 @@ const state = {
 }
 
 const getters = {
-    SubmitProjectDetail:state=>state.submitProjectDetail,
+    SubmitProjectDetail: state => state.submitProjectDetail,
     UserInfo: state => state.userInfo
 
 }
 
 const actions = {
-     querySubmitProjectsDetail({ commit, state }, projectId) {
-        commit(types.QUEREY_PROJECT_DETAIL, projectId);
+    querySubmitProjectsDetail ({ commit, state }, projectId) {
+        //获取项目明细        
+        return new Promise(function (resolve) {
+            let url = api.PROJECT_DETAIL + projectId;
+            axios.get(url).then(response => {
+                
+                let data = {};
+                if (response.status == 200) {
+                    data = response.data;
+                }
+                resolve(data)
+            });
+        });
     },
-    getUserInfo({ commit, state }, userId) {
+    getUserInfo ({ commit, state }, userId) {
         commit(types.GET_USER_INFO, userId);
     },
-    submitOrder({commit, state}) {
-        commit(types.SUBMIT_ORDER);
+    submitOrder ({ commit, state },order) {
+        return new Promise(function(resolve){
+            axios.post(api.SUBMIT_ORDER, order).then(response => {
+                resolve(response)
+            })
+        });
     }
 
 }
 
 const mutations = {
 
-    [types.SUBMIT_ORDER](state) {
+    [types.SUBMIT_ORDER] (state, order) {
 
-        let order="BeautyItemID="+state.submitProjectDetail.ID+"&"+
-            "BeautyItemName="+state.submitProjectDetail.Name+"&"+
-            "Price="+state.submitProjectDetail.Price+"&"+
-            "Imprest="+state.submitProjectDetail.Imprest+"&"+
-            "VipID="+1+"&"+
-            "VipName="+'test'+"&"+
-            "Mobile="+state.userInfo.mobile+"&";
+        // let order = "BeautyItemID=" + state.submitProjectDetail.ID + "&" +
+        //     "BeautyItemName=" + state.submitProjectDetail.Name + "&" +
+        //     "Price=" + state.submitProjectDetail.Price + "&" +
+        //     "Imprest=" + state.submitProjectDetail.Imprest + "&" +
+        //     "VipID=" + 1 + "&" +
+        //     "VipName=" + 'test' + "&" +
+        //     "Mobile=" + state.userInfo.mobile + "&";
 
-       
+        // let order = {
+        //     openId:'',
+        //     projectId:'',
+        //     userName:'',
+        //     projectName:'',
+        //     phone:'',
+        //     address:''
+        // }
 
-        axios.post(api.SUBMIT_ORDER, order,{
-            'headers':{
-                'Content-Type':'application/x-www-form-urlencoded'
+
+
+        axios.post(api.SUBMIT_ORDER, order, {
+            'headers': {
+                'Content-Type': 'application/x-www-form-urlencoded'
             }
         }).then(response => {
 
         })
     },
-    [types.GET_USER_INFO](state, userId) {
-      //  getUserInfo(state, userId);
-      state.userInfo={
-          contactor:'1111',
-          mobile:'2222',
-          intrudcer:'3333'
-      };
+    [types.GET_USER_INFO] (state, userId) {
+        //  getUserInfo(state, userId);
+        state.userInfo = {
+            contactor: '1111',
+            mobile: '2222',
+            intrudcer: '3333'
+        };
     },
-     [types.QUEREY_PROJECT_DETAIL](state, projectId) {
-        //获取项目明细        
-        //let _url_project_detail = util.format(api.PROJECT_DETAIL, projectId);
-      
-        axios.post(api.PROJECT_DETAIL,{id:projectId},{
-            'headers':{
-                'Content-Type':'application/json'
-            }}).then(response => {
-            
-            state.submitProjectDetail = response.data;
-        })
+    [types.QUEREY_PROJECT_DETAIL] (state, projectId) {
+
     }
 
 }

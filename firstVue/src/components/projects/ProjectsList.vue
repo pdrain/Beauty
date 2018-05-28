@@ -43,6 +43,9 @@ export default {
   },
   computed: mapGetters({
     list: 'ProjectList'
-  })
+  }),
+  created(){
+    this.$store.dispatch("");
+  }
 }
 </script>

@@ -1,16 +1,14 @@
 <template>
-<div v-title="'美容产品'">
-  <VHeader></VHeader>
-  <VList></VList>
+<div v-title="'积分商城'">
+  <br/>
+    程序猿哥哥正在加班建设中...
 </div>
 
 </template>
 
 <script>
-import VHeader from './shop/ShopHeader'
-import VList from './SHOP/ProductList'
+
 export default {
   name: 'shop',
-  components:{VHeader,VList}
 }
 </script>

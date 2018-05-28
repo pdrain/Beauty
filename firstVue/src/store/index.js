@@ -12,10 +12,12 @@ import product from './modules/product'
 import submitorder from './modules/submitorder'
 import dictionary from './modules/dictionary'
 import user from './modules/user'
+import home from './modules/home'
+import order from './modules/order'
 
 import hospital from './modules/hospital'
 
 Vue.use(Vuex);
 export default new Vuex.Store({
-    modules: { loading, login,projects,product,submitorder ,dictionary,user,hospital}
+    modules: { loading, login,home, projects,product,submitorder ,dictionary,user,hospital,order}
 })

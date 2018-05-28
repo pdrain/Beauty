@@ -1,7 +1,7 @@
 <template>
   <div>
     <UserHeader  title="我的积分"></UserHeader>
-
+积分系统正在努力建设中....
       </div>
 </template>
 <script  type="application/ecmascript">
