@@ -89,7 +89,7 @@ const router = new VueRouter({
         { path: '/user/upgrade', component: UserUpgrade },
         { path: '/user/client', component: UserClient },
         { path: '/user/achievement', component: UserAchievement },
-        
+
         { path: '/partners/login', component: partnerlogin },
         { path: '/partners/reg', component: partnerreg },
 
@@ -112,35 +112,30 @@ const router = new VueRouter({
 
 
 router.beforeEach((to, from, next) => {
-    window.OpenId='1111';
+
     //先判断用户是否已经授权
     let params = querystring.parse(location.search.replace('?', ''))
-    
-    if (params.code) {
-        //获取用户信息
-        //WX.getUserInfo(params.code)
-        to.params.code = params.code;
-    } else {
-        //微信授权
-        // let ua = window.navigator.userAgent.toLowerCase();
-        // if (ua.indexOf('micromessenger') >= 0) {
-        //     WX.doAuth()
-        //     //location.href ='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx8f561aa33d77f65a&redirect_uri=http://www.meilituibian.cn&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect'
-        //     return;
-        // }
-    }
 
-    // if (to.meta.requireAuth) {  // 判断该路由是否需要登录权限)
-    //     console.log(2)
-    //     let token_code = from.query.code;
-    //     if (token_code) {
-    //         to.query.code = token_code
-    //         next()
-    //     } else {
-    //         new WX('http://www.meilituibian.cn/#/user').doAuth()
-    //     }
-    // }
-    next();
+    if (!params.code) {
+        //微信授权
+        let ua = window.navigator.userAgent.toLowerCase();
+        if (ua.indexOf('micromessenger') >= 0) {
+            WX.doAuth(location.origin + '/#' + to.fullPath)
+        }
+
+    }
+    //获取用户信息
+    WX.getUserInfo(params.code).then(function () {
+        if (window.UserInfo) {
+
+            next();
+        } else {
+            WX.doAuth(location.origin + '/#' + to.fullPath)
+        }
+    })
+
+
+
 
 })
 

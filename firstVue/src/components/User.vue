@@ -4,7 +4,7 @@
             <div class="icon">
                 <img :src="UserInfo.headimgurl" />
             </div>
-            <div class="nick">张三</div>
+            <div class="nick">{{UserInfo.nickname}}</div>
         </header>
        
         <table>
@@ -95,14 +95,14 @@ export default {
     components: { UserHeader ,'c-footer':Footer},
     data() {
         return {
-            msg: 'Welcome to User Center!'
-
+            msg: 'Welcome to User Center!',
+            UserInfo:window.UserInfo
         }
 
     },
-    computed: mapGetters({
-        UserInfo: 'WXInfo'
-    }),
+    // computed: mapGetters({
+    //     UserInfo: 'WXInfo'
+    // }),
     created() {
         this.$store.dispatch('getWXUserInfo','')
     },

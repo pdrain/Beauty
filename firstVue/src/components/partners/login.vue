@@ -86,7 +86,7 @@ export default {
 }
 
 .login-form li input {
-  height: 1.2rem;
+  height: 1.1rem;
   width: 10rem;
   float: left;
   margin-top: 0.04rem;
