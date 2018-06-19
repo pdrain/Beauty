@@ -3,9 +3,13 @@ import VueRouter from 'vue-router'
 
 import store from '../store'
 import axios from '../http'
+import * as api from '../api'
 import querystring from 'querystring'
 
+
 import WX from '../config/WeXin'
+import { mapGetters } from 'vuex'
+
 
 /*
 import Login from '../components/Login'
@@ -58,7 +62,7 @@ const NewsDetail = resolve => require(['../components/NewsDetail'], resolve)
 
 const NotFontPage = resolve => require(['../components/404'], resolve)
 
-
+const ucp = resolve => require(['../components/ucp'], resolve)
 
 Vue.use(VueRouter)
 
@@ -104,39 +108,73 @@ const router = new VueRouter({
         { path: '/dict/article', component: DictionrayArticle },
         { path: '/error/:msg', component: ErrorPage },
         { path: '/404', component: NotFontPage },
-        { path: '/', redirect: '/404' }
-
+        { path: '/', redirect: '/404' },
+        { path: '/ucp', component: ucp }
     ],
 
 });
-
+//获取Parent OpenID
+var getParentOpenId =function(name){
+    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+    var r = window.location.search.substr(1).match(reg);
+    console.log(JSON.stringify(r))
+    if (r != null) {
+        console.log(JSON.stringify(r[2]))
+        return unescape(r[2]);
+    }
+    return '';
+}
 
 router.beforeEach((to, from, next) => {
+    let _this = this;
+    
+    var parentOpenId= getParentOpenId('parent')
+    
+    // debugger
+    next();
+    return false;
+
 
     //先判断用户是否已经授权
     let params = querystring.parse(location.search.replace('?', ''))
 
     if (!params.code) {
         //微信授权
-        let ua = window.navigator.userAgent.toLowerCase();
-        if (ua.indexOf('micromessenger') >= 0) {
-            WX.doAuth(location.origin + '/#' + to.fullPath)
-        }
-
+        let wxAuthorizeUrl = location.origin + '/?parent='+parentOpenId+'#' + to.fullPath 
+        WX.doAuth(wxAuthorizeUrl)
     }
-    //获取用户信息
-    WX.getUserInfo(params.code).then(function () {
-        if (window.UserInfo) {
 
-            next();
+
+    //获取用户信息
+    WX.getUserInfo(params.code).then(function (userInfo) {
+        console.log(userInfo)
+        if (userInfo.errcode) {
+            let wxAuthorizeUrl = location.origin + '/?parent='+parentOpenId+'#' + to.fullPath 
+            console.log('认证地址：' + wxAuthorizeUrl);
+            WX.doAuth(wxAuthorizeUrl)
+
         } else {
-            WX.doAuth(location.origin + '/#' + to.fullPath)
+            //用户登录
+            console.log(userInfo)
+            let url = api.DO_LOGIN + userInfo.openid + '&parent=' + parentOpenId+'&nickName='+userInfo.nickname
+            axios.get(url).then(response => {
+                if (response.data.code == 0) {
+                    //localStorage.setItem('userinfo', JSON.stringify(userInfo))
+                    let _userInfo = response.data.data;
+                    _userInfo.WX = userInfo;
+                    localStorage.setItem('userinfo', JSON.stringify(_userInfo))
+                }
+            });
+            //初始化JSSDK
+            try {
+                var signUrl = encodeURIComponent(location.href.split('#')[0])
+                WX.initJSSDK(userInfo.access_token, signUrl).then(function () { });
+            } catch (e) {
+                console.log(e)
+            }
+            next();
         }
     })
-
-
-
-
 })
 
 

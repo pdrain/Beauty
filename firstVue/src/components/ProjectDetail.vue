@@ -101,6 +101,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import wx from  '../config/WeXin'
 
 export default {
   data() {
@@ -139,15 +140,24 @@ export default {
           ); //缺点
         });
     }
+
+    _this.initShareInfo();
   },
   mounted() {},
   methods: {
+    initShareInfo() {
+      let shareOpt = {
+        title: "医美改变人生",
+        desc: "双眼皮、隆鼻、瘦脸、美胸一切就是那么简单"
+      };
+      wx.initShare(shareOpt);
+    },
     formatHtml: function(html) {
       return unescape(html);
     },
     extractItems: function(items) {
       let list = [];
-      if(!items) return list;
+      if (!items) return list;
       items.forEach(function(item) {
         if (typeof item == "object") {
           for (var p in item) {

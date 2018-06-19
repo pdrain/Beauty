@@ -4,7 +4,7 @@
             <dd v-for="item in data" :key="item.name">
                 <router-link :to="{ path: '/projects-detail', query: { id: item.projectId }}">
                 <div class="title">
-                    订单号：
+                    订单号：{{item.orderNo}}
                 </div>
                 <div class="left">
                     <span>预约日期：{{item.subscribeDate}}</span>

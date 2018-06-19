@@ -1,20 +1,19 @@
 <template>
    <div  class="login-form" v-title='"用户升级"'>
-       <h1>
-           业务员升级
-       </h1>
+      <u-header title="业务员升级"></u-header>
       <ul>
+          
+          <li class="tp0">
+               <label>真是姓名：</label>
+             <input type="text" v-model="account.phone" placeholder="请输入真是姓名">
+          </li>
+           <li class="tp0">
+               <label>常用联系方式：</label>
+              <input type="text" v-model="account.phone" placeholder="请输入常用联系方式">
+          </li>
           <li class='line1'>
               <label>证件号码：</label>
               <input type="text" v-model="account.phone" placeholder="请输入身份证号码">
-          </li>
-          <li class="tp0">
-               <label>身份证正面：</label>
-              <img srf=''>
-          </li>
-           <li class="tp0">
-               <label>身份证反面：</label>
-               <img srf=''>
           </li>
           <li class="tp0">
                <label>升级级别：</label>
@@ -31,26 +30,29 @@
           </li>
            
       </ul>
-       <button class='btn-login'>立即注册</button>
+       <button class='btn-login'>提交申请</button>
        <dl>
          <dd class="tp0">
               <div>
                 <h2>升级须知</h2>
                 <dl>
-                  <dd>1、啊大煞风景啊；设计的发生的发生</dd>
-                  <dd>2、啊大煞风景啊；设计的发生的发生</dd>
-                  <dd>3、啊大煞风景啊；设计的发生的发生</dd>
-                  <dd>4、啊大煞风景啊；设计的发生的发生</dd>
-                  <dd>5、啊大煞风景啊；设计的发生的发生</dd>
+                  <dd>1、升级完全取决于个人意愿，我任何强制和费用</dd>
+                  <dd>2、为了保证自己的利益，首次升级为业务员时请完整填写个人真实信息</dd>
+                  <dd>3、本平台保证所有个人信息绝对隐私</dd>
+                  <dd>4、请认真阅读本平台的升级协议，以了解升级后的相关权益</dd>
                 </dl>
               </div>
           </dd>
        </dl>
+       <u-footer></u-footer>
   </div>
 </template>
 
 <script>
+import Header from "./UserHeader";
+import UserFooter from "./Footer";
 export default {
+  components: { "u-header": Header, "u-footer": UserFooter },
   data() {
     return {
       account: {
@@ -79,7 +81,7 @@ export default {
   list-style: none;
   height: 1.5rem;
   line-height: 1.5rem;
-  border: 0.05rem #666 solid;
+  border: 0.05rem #ccc dashed;
   background: #fff;
   text-align: left;
 }
@@ -91,7 +93,7 @@ export default {
   width: 4rem;
   height: 100%;
   display: block;
-  border-right: 0.05rem #666 solid;
+  border-right: 0rem #666 solid;
   float: left;
 }
 

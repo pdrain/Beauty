@@ -14,8 +14,23 @@
 </template>
 
 <script>
+export default {
+  data() {
+      return{
+          articleId:''
+      }
+  },
+  created() {},
+  methods: {
+    getNewsDetail() {
+      let _this = this;
+      this.$store.dispatch("getNewsList", 1, 3).then(function(data) {
+        _this.newsList = data.list;
+      });
+    }
+  }
+};
 </script>
 
 <style>
-
 </style>

@@ -8,7 +8,10 @@
                    <input type="text" placeholder="请输入联系人" v-model="order.userName" /></li>
                <li>
                    <label for="">联系电话</label>
-                   <input type="text" placeholder="请输入联系电话" v-model="order.phone" /></li>               
+                   <input type="text" placeholder="请输入联系电话" v-model="order.phone" /></li>    
+                   <li>
+                   <label for="">预约日期</label>
+                   <input type="text" placeholder="请选择联系电话" v-model="order.subscribeDate" readonly/></li>            
            </ul>
            <div class="calendar" v-if="calendar">
                <div class="header"> <a class="pre-month" @click="choosePreMonth()">&lt;上个月</a>{{calendar.year}}年{{calendar.month}}月 <a class="next-month" @click="chooseNextMonth()">下个月&gt;</a></div>
@@ -44,10 +47,12 @@ import { mapGetters } from 'vuex'
 export default {
   data(){
       return {
+         
           projectId:0,
           calendar:{year:'',month:'',days:[ ]},
           order : {
-            openId:'1111',
+            openId:'',
+            parentOpenId:'',
             projectId:'',
             userName:'',
             projectName:'',
@@ -58,8 +63,7 @@ export default {
   },
     computed: {
         ...mapGetters({
-            detail: 'SubmitProjectDetail',
-            user:'UserInfo'
+            detail: 'SubmitProjectDetail'
         }),
         selectedDate:function() {
             let _date = new Date();
@@ -72,6 +76,7 @@ export default {
     },
   created(){
       let _this = this;
+
       _this.initCalendar();
      
      //检查参数是否完整
@@ -90,6 +95,11 @@ export default {
 
     
   },
+  mounted(){
+    //   let  user = JSON.parse(localStorage.getItem('userinfo'));
+    //   this.order.openId=user.openid;
+    //   this.order.userName=user.nickname,
+  },
   methods:{
     submitOrder:function () {
         let _this = this;
@@ -97,6 +107,19 @@ export default {
             alert('预约日期不能为空。');
             return false;
         }
+         if(_this.order.userName==''){
+            alert('请填写预约联系人');
+            return false;
+        }
+         if(_this.order.phone==''){
+            alert('请填写预约联系电话。');
+            return false;
+        }
+          let  user = JSON.parse(localStorage.getItem('userinfo'));
+        _this.order.openId = user.openId;
+        _this.order.parentOpenId = user.parent;
+        //_this.order.userName = user.nickname;
+
          _this.$store.dispatch('submitOrder',_this.order).then(function (res) {
              alert('预约成功，即将返回首页。');
              _this.$router.push('/')

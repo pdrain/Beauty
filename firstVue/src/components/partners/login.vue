@@ -104,6 +104,7 @@ export default {
   background: #ff00fb;
   font-size: 0.6rem;
   color: #fff;
+  border:0px;
 }
 </style>
 

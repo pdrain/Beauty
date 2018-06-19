@@ -44,7 +44,7 @@ export default {
     },
     //获取业绩
     getAchievements() {
-      this.$store.dispatch('queryUserPerformance',window.OpenId).then(function(){
+      this.$store.dispatch('queryUserPerformance',window.UserInfo.openId).then(function(){
 
       });
     }

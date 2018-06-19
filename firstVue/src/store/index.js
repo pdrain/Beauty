@@ -17,7 +17,9 @@ import order from './modules/order'
 
 import hospital from './modules/hospital'
 
+import news from './modules/news'
+
 Vue.use(Vuex);
 export default new Vuex.Store({
-    modules: { loading, login,home, projects,product,submitorder ,dictionary,user,hospital,order}
+    modules: { loading, login,home, projects,product,submitorder ,dictionary,user,hospital,order,news}
 })

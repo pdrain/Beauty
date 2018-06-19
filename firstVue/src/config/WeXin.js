@@ -3,6 +3,7 @@ import url from 'url'
 import axios from '../http'
 import querystring from 'querystring'
 import * as api from '../api'
+import jssdk from 'weixin-js-sdk'
 
 const AppId = 'wx8f561aa33d77f65a';
 const secret = '2cf868bb6675f052ce94b68f9848f5a1';
@@ -33,46 +34,22 @@ class WeXinAuth {
 
     //获取微信用户信息
     getUserInfo (code) {
-        // let userInfo = {
-        //     "subscribe": 1,
-        //     "openid": "o6_bmjrPTlm6_2sgVt7hMZOPfL2M",
-        //     "nickname": "Band",
-        //     "sex": 1,
-        //     "language": "zh_CN",
-        //     "city": "广州",
-        //     "province": "广东",
-        //     "country": "中国",
-        //     "headimgurl": "http://wx.qlogo.cn/mmopen/g3MonUZtNHkdmzicIlibx6iaFqAc56vxLSUfpb6n5WKSYVY0ChQKkiaJSgQ1dZuTOgvLLrhJbERQQ4eMsv84eavHiaiceqxibJxCfHe/0",
-        //     "subscribe_time": 1382694957,
-        //     "unionid": " o6_bmasdasdsad6_2sgVt7hMZOPfL",
-        //     "remark": "",
-        //     "groupid": 0,
-        //     "tagid_list": [128, 2]
-        // }
-        // return userInfo;
+
         var _this = this;
         return new Promise(function (resolve, reject) {
             let url = api.GET_WX_INFO + '?' + _this._getWXInfoQueryString(code)
             axios.get(url).then(response => {
-                console.log(response);
-                if (response.status == 200) {
+                let _userinfo = null;
+                if (response.data.code == 0) {
                     if (!response.data.errcode) {
-                        window.UserInfo = response.data;
-                    } else {
-                        window.UserInfo = null;
+                        _userinfo = response.data.data;
                     }
                 }
-                resolve();
+                resolve(_userinfo);
             });
         });
 
-        // axios.get(url).then(response => {
-        //     debugger
-        //     // Success
-        // }, err => {
-        //     // Fail
-        //     debugger
-        // });
+
     }
     //授权地址参数
     _getQueryString () {
@@ -98,27 +75,64 @@ class WeXinAuth {
     //-----------------------------------------------------------------
 
     //获取jssdk 初始化配置
-    queryJsConfig (param, callback) {
-        var config = {
-            debug: true,
-            appId: AppId,
-            timestamp: '',
-            nonceStr: '',
-            signature: '',
-            jsApiList: [
-                'onMenuShareTimeline',
-                'onMenuShareAppMessage'
-            ]
-        }
+    initJSSDK (access_token, targetUrl) {
+        let _this = this;
+        return new Promise(function (resolve, reject) {
+            let _timestamp = parseInt((new Date().getTime()) / 1000)
+            let _nonceStr = _this._newGuid();
+            let url = api.GET_INIT_JSSDK_INFO + '?accessToken=' + access_token + '&url=' + targetUrl + '&nonceStr=' + _nonceStr + '&timestamp=' + _timestamp
 
-        let _timestamp = new Date().getTime();
-        let _nonceStr = this._newGuid();
+            axios.get(url).then(response => {
+                if (response.data.code == 0) {
+                    var cig = {
+                        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                        appId: AppId + '', // 必填，公众号的唯一标识--->用户的微信公众号appid
+                        timestamp: _timestamp, // 必填，生成签名的时间戳--->系统自己生成的时间戳。
+                        nonceStr: _nonceStr + '', // 必填，生成签名的随机串--->系统本地生成的UUID。
+                        signature: response.data.data.signature + '',// 必填，签名，见附录1
+                        jsApiList: [
+                            'onMenuShareTimeline',
+                            'onMenuShareAppMessage'
+                        ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2--->一大串CC+CV
+                    }
+                    console.log(targetUrl)
+                    jssdk.config(cig);
 
-        if (callback && typeof (callback) == 'function') {
-            callback(null, config)
-        }
+                    resolve()
+                }
+
+            });
+        })
+
     }
 
+    //分享初始化
+    initShare (option) {
+        setTimeout(() => {
+            var search = location.search;
+            if (search) {
+                var userinfo = JSON.parse(localStorage.getItem('userinfo'));
+                search += "&parent=" + userinfo.WX.openid;
+            }
+            let sharelink = location.origin + "/?parent=" + search + "#/"
+            jssdk.onMenuShareAppMessage({
+                title: option.title || "画眉鸟美丽联盟",
+                desc: option.desc || "每时每刻遇见美丽的自己",
+                link: sharelink,
+                imgUrl: "http://www.meilituibian.cn/static/img/share-icon.jpg",
+                success: function (res) {
+                    //分享成功回调
+                }
+            });
+        }, 500);
+
+    }
+    //禁用分享
+    hiddenShare(){
+        jssdk.hideMenuItems({
+            menuList: ["menuItem:share:timeline", "menuItem:copyUrl", "menuItem:share:appMessage", "menuItem:share:qq", "menuItem:share:weiboApp", "menuItem:favorite", "menuItem:share:facebook", "menuItem:share:QZone", "menuItem:editTag", "menuItem:delete", "menuItem:copyUrl", "menuItem:originPage", "menuItem:readMode", "menuItem:openWithQQBrowser", "menuItem:openWithSafari", "menuItem:share:email", "menuItem:share:brand"] // 要隐藏的菜单项，只能隐藏“传播类”和“保护类”按钮
+        });
+    }
     //生产GUID
     _newGuid = function () {
         var guid = "";
@@ -131,7 +145,17 @@ class WeXinAuth {
         return guid;
     }
 
-
+    //获取Parent OpenID
+    getParentOpenId(name){
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
+        var r = window.location.search.substr(1).match(reg);
+        console.log(JSON.stringify(r))
+        if (r != null) {
+            console.log(JSON.stringify(r[2]))
+            return unescape(r[2]);
+        }
+        return '';
+    }
 }
 
 export default new WeXinAuth()

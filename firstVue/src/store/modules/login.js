@@ -3,7 +3,6 @@ import * as api from '../../api'
 import axios from '../../http'
 
 const state = {
-    user: null,
     token: null
 }
 
@@ -12,8 +11,8 @@ const getters = {
 }
 
 const actions = {
-    doLogin ({ commit }, { token, user }) {
-        commit(types.LOGIN, { token, user })
+    doLogin ({ commit,state }, userinfo) {
+        
     },
     doLogout ({ commit }) {
         commit(types.LOGOUT);
@@ -23,7 +22,7 @@ const actions = {
             let url = api.DO_LOGIN;
             let param = { phone: account.username, password: account.password }
             axios.post(url, param).then(response => {
-                
+
                 let data = {};
                 if (response.status == 200) {
                     data = response.data;

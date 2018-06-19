@@ -5,7 +5,8 @@ import util from 'util'
 import WX from '../../config/WeXin'
 
 const state = {
-    wxInfo: {}
+    wxInfo: {},
+    //userInfo:{}
     // orders: {},
     // comments: {},
     // agrees: {},
@@ -18,6 +19,7 @@ const state = {
 
 const getters = {
     WXInfo: state => state.wxInfo,
+    //UserInfo: state => state.userInfo,
     // Orders: state => state.orders,
     // Comments: state => state.comments,
     // Agrees: state => state.agrees,
@@ -28,17 +30,13 @@ const getters = {
 }
 
 const actions = {
-    getWXUserInfo ({ commit, state }, code) {
 
-        let userInfo = WX.getUserInfo(code)
-        commit(types.GET_WX_USER_INFO, userInfo)
-    },
     getMyClient ({ commit, state }, openId) {
         return new Promise(function (resolve, reject) {
             let url = api.USER_CLIENTS + openId
             axios.get(url).then(response => {
-                if (response.status == 200) {
-                    let data = response.data;
+                if (response.data.code == 0) {
+                    let data = response.data.data;
                     resolve(data)
                 } else {
                     if (reject && typeof (reject) == 'function') {
@@ -51,9 +49,7 @@ const actions = {
 }
 
 const mutations = {
-    [types.GET_WX_USER_INFO] (state, data) {
-        state.wxInfo = data
-    }
+   
 }
 
 export default {

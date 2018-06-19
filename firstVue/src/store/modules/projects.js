@@ -19,8 +19,8 @@ const actions = {
             let url = api.PROJECT_LIST + '?cids=' + ids
             axios.get(url).then(response => {
                 let data = [];
-                if (response.data.length > 0) {
-                    data = response.data;
+                if (response.data.code==0 && response.data.data.length > 0) {
+                    data = response.data.data;
                 }
                 resolve(data)
             });
@@ -31,8 +31,8 @@ const actions = {
             let url = api.PROJECT_DETAIL+id;
             axios.get(url).then(response => {
                 let data = {};
-                if (response.status==200) {
-                    data = response.data;
+                if (response.data.code==0) {
+                    data = response.data.data;
                 }
                 resolve(data)
             });

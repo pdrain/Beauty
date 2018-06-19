@@ -62,12 +62,11 @@
         <h2 class="title">
           <span>&nbsp;</span>
           美丽资讯
-          <a class="more">更多</a>
+          <a class="more" @click="moreNewsList">更多</a>
         </h2>
           <ul>
-              <li @click="gotoNewsDetail(1)"><newslistitem></newslistitem></li>
-               <li @click="gotoNewsDetail(1)"><newslistitem></newslistitem> </li>
-               <li @click="gotoNewsDetail(1)"> <newslistitem></newslistitem></li>
+              <li @click="gotoNewsDetail(1)" v-for="(item,index) in newsList" :key="index" :articleinfo="item"><newslistitem></newslistitem></li>
+               <li v-if="newsList.length==0"> 暂无推荐文章</li>
           </ul>
       </div>
       <c-footer></c-footer>
@@ -83,8 +82,11 @@ import { swiper, swiperSlide } from "vue-awesome-swiper";
 import { mapGetters } from "vuex";
 import { defaultCipherList } from "constants";
 
+import jssdk from "weixin-js-sdk";
+import wx from  '../config/WeXin'
+
 export default {
-  components: { newslistitem, swiper, swiperSlide ,'c-footer':Footer},
+  components: { newslistitem, swiper, swiperSlide, "c-footer": Footer },
   data() {
     return {
       swiperOption: {
@@ -96,7 +98,8 @@ export default {
         }
       },
       hotCats: [], //热门项目
-      recommendCats: [] //推荐项目
+      recommendCats: [], //推荐项目
+      newsList: [] //推荐资讯
     };
   },
   computed: {},
@@ -104,8 +107,18 @@ export default {
   created() {
     let _this = this;
     _this.initCategories();
+    _this.getNewsList();
+    _this.initShareInfo();
   },
+  mounted() {},
   methods: {
+    initShareInfo() {
+      let shareOpt = {
+        title: "画眉鸟美丽联盟",
+        desc: "每时每刻遇见美丽的自己"
+      };
+      wx.initShare(shareOpt)
+    },
     gotoProjectList(item) {
       let sCids = [];
       item.second.forEach(function(sItem) {
@@ -117,14 +130,23 @@ export default {
 
       this.$router.push("/projects/?cIds=" + sCids.join(","));
     },
+    getNewsList() {
+      let _this = this;
+      this.$store.dispatch("getNewsList", 1, 3).then(function(data) {
+        _this.newsList = data.list;
+      });
+    },
     gotoNewsDetail(newsId) {
       let url = "/news/detail/?newsId=" + newsId;
       this.$router.push(url);
     },
+    moreNewsList() {
+      this.$router.push("/news/");
+    },
     //初始化分类列表
     initCategories() {
       let _this = this;
-      _this.$store.dispatch("getAllCategories").then(function(data) {
+      _this.$store.dispatch("getAllCategories").then(function(data) {debugger
         let _cats = data.data;
         var result = [];
 

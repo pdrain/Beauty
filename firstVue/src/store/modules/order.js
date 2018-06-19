@@ -18,8 +18,8 @@ const actions = {
             let url = api.QUERY_ORDERS + openId
             axios.get(url).then(response => {
 
-                if (response.status == 200) {
-                    let data = response.data;
+                if (response.data.code == 0) {
+                    let data = response.data.data;
                     resolve(data)
                 } else {
                     if (reject && typeof (reject) == 'function') {
@@ -40,8 +40,8 @@ const actions = {
         return new Promise(function (resolve, reject) {
             let url = api.USER_PERFOMANCES + openId
             axios.get(url).then(response => {
-                if (response.status == 200) {
-                    let data = response.data;
+                if (response.data.code == 0) {
+                    let data = response.data.data;
                     resolve(data)
                 } else {
                     if (reject && typeof (reject) == 'function') {

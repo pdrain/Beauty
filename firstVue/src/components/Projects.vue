@@ -28,6 +28,7 @@ import URL from "url";
 import Footer from "./Footer";
 import { mapGetters } from "vuex";
 import SearchBox from "./SearchBox";
+import wx from  '../config/WeXin'
 
 export default {
   name: "Projects",
@@ -39,10 +40,18 @@ export default {
   },
   created() {
     this.initProjectList();
+    this.initShareInfo();
   },
   computed: {},
   components: { SearchBox ,'c-footer':Footer},
   methods: {
+    initShareInfo() {
+      let shareOpt = {
+        title: "医美改变人生",
+        desc: "双眼皮、隆鼻、瘦脸、美胸一切就是那么简单"
+      };
+      wx.initShare(shareOpt)
+    },
     initProjectList() {
       let _this = this;
       let _cids = _this.getQueryString("cIds");

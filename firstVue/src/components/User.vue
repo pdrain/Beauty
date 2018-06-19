@@ -2,15 +2,15 @@
     <div v-title="'用户中心'" class="usercenter">
         <header>
             <div class="icon">
-                <img :src="UserInfo.headimgurl" />
+                <img v-if=" UserInfo" :src="UserInfo.WX.headimgurl" />
             </div>
-            <div class="nick">{{UserInfo.nickname}}</div>
+            <div class="nick" v-if=" UserInfo">{{UserInfo.nickname}}</div>
         </header>
        
         <table>
             <tr>
                 <td>
-                    <router-link to="/user/myorders">我的预约</router-link>
+                    <router-link to="/user/myorders">我的订单</router-link>
                 </td>
                
                   <td>
@@ -89,25 +89,30 @@ import { mapGetters } from 'vuex'
 import * as types from '../store/types'
 import UserHeader from './UserHeader'
 import Footer from './Footer'
-
+import wx from  '../config/WeXin'
 
 export default {
     components: { UserHeader ,'c-footer':Footer},
     data() {
         return {
             msg: 'Welcome to User Center!',
-            UserInfo:window.UserInfo
+            UserInfo:JSON.parse(localStorage.getItem('userinfo'))
         }
 
     },
-    // computed: mapGetters({
-    //     UserInfo: 'WXInfo'
-    // }),
+   
     created() {
-        this.$store.dispatch('getWXUserInfo','')
+        
     },
     mounted() {
-
+        console.log(this.UserInfo)
+        //wx.hiddenShare()
+    },
+    updated(){
+         console.log(this.UserInfo)
+    },
+    watch:{
+        
     },
     methods: {
     }

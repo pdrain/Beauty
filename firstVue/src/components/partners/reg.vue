@@ -1,8 +1,7 @@
 <template>
    <div  class="login-form" v-title='"美容店注册"'>
-       <h1>
-           美容店注册
-       </h1>
+      <u-header title="注册美容店"></u-header>
+      
       <ul>
           <li class='line1'>
               <label>账号：</label>
@@ -34,20 +33,24 @@
           </li>
       </ul>
        <button class='btn-login'>立即注册</button>
+       <u-footer></u-footer>
   </div>
 </template>
 
 <script>
+import Header from "../UserHeader";
+import UserFooter from "../Footer";
 export default {
+  components: { "u-header": Header, "u-footer": UserFooter },
   data() {
     return {
       account: {
-          phone:'',
-          nickName:'',
-          contracttor:'',
-          contracttor:'',
-          contractNo:'',
-          address:''
+        phone: "",
+        nickName: "",
+        contracttor: "",
+        contracttor: "",
+        contractNo: "",
+        address: ""
       }
     };
   },
@@ -67,7 +70,7 @@ export default {
   list-style: none;
   height: 1.5rem;
   line-height: 1.5rem;
-  border: 0.05rem #666 solid;
+  border-bottom: 0.05rem #ccc dashed;
   background: #fff;
 }
 .login-form li.tp0 {
@@ -78,7 +81,7 @@ export default {
   width: 3rem;
   height: 100%;
   display: block;
-  border-right: 0.05rem #666 solid;
+  /* border-right: 0.05rem #ccc dashed; */
   float: left;
 }
 
@@ -109,6 +112,7 @@ export default {
   background: #ff00fb;
   font-size: 0.6rem;
   color: #fff;
+  border:0px;
 }
 </style>
 

@@ -11,16 +11,19 @@ const getters = {
 }
 const actions = {
 
-    getAllCategories({ commit, state }){
+    getAllCategories ({ commit, state }) {
         return new Promise(function (resolve, reject) {
-            if(state.categories.length==0){
+            if (state.categories.length == 0) {
                 axios.get(api.PROJECT_CAT).then(response => {
                     //commit(types.QUEREY_PROJECT_CATS, response);
                     //resolve()
-                    state.categories = response;
-                    resolve(state.categories)
+                    
+                    if (response.data.code == 0) {
+                        state.categories = response.data;
+                        resolve(state.categories)
+                    }
                 });
-            }else{
+            } else {
                 resolve(state.categories);
             }
         });
@@ -29,7 +32,7 @@ const actions = {
 
 const mutations = {
     [types.QUEREY_PROJECT_CATS] (state, data) {
-       // state.categories = data
+        // state.categories = data
     }
 }
 

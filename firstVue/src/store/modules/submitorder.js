@@ -22,8 +22,8 @@ const actions = {
             axios.get(url).then(response => {
                 
                 let data = {};
-                if (response.status == 200) {
-                    data = response.data;
+                if (response.data.code == 0) {
+                    data = response.data.data;
                 }
                 resolve(data)
             });
@@ -74,12 +74,7 @@ const mutations = {
         })
     },
     [types.GET_USER_INFO] (state, userId) {
-        //  getUserInfo(state, userId);
-        state.userInfo = {
-            contactor: '1111',
-            mobile: '2222',
-            intrudcer: '3333'
-        };
+       
     },
     [types.QUEREY_PROJECT_DETAIL] (state, projectId) {
 
