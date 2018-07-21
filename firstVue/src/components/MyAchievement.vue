@@ -32,11 +32,16 @@ export default {
   data() {
     return {
       clientType: 0, //客户类别
-      clientList: []
+      clientList: [],
+      UserInfo:''
     };
   },
   mounted() {
-    this.getAchievements();
+    let _this = this;
+    _this.$store.dispatch("getLostorageUserInfo").then(function(uInfo) {
+      _this.UserInfo = uInfo;
+      _this.getAchievements();
+    });
   },
   methods: {
     switchCLientType(_type) {
@@ -44,7 +49,7 @@ export default {
     },
     //获取业绩
     getAchievements() {
-      this.$store.dispatch('queryUserPerformance',window.UserInfo.openId).then(function(){
+      this.$store.dispatch('queryUserPerformance',this.UserInfo.openId).then(function(){
 
       });
     }

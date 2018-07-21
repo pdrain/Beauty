@@ -1,7 +1,7 @@
 <template>
-  <div v-title='title'>
+  <div  v-title='title'>
       <u-header  backurl="/user" :title="title"></u-header>
-      <div class='user-service' v-html="info"></div>
+      <article class='user-rights' v-html="info"></article>
       <c-footer></c-footer>
   </div>
 </template>
@@ -13,19 +13,19 @@ export default {
   components: { "u-header": Header, "c-footer": Footer },
   data() {
     return {
-      infoId: 2,
-      info:'',
+      infoId: 6,
+      info: "",
       title:''
     };
   },
   mounted() {
-      this.getInfor();
+    this.getInfor();
   },
   methods: {
     getInfor: function() {
-        let _this =this;
+      let _this = this;
       this.$store.dispatch("getBaseInfo", this.infoId).then(function(res) {
-       _this.info = res.content||''
+        _this.info =res.content || "";
         _this.title=res.title
       });
     }
@@ -33,10 +33,10 @@ export default {
 };
 </script>
 
+
 <style scoped lang='less'>
-.user-service {
+.user-rights {
   background: #fff;
   min-height: 15rem;
 }
 </style>
-

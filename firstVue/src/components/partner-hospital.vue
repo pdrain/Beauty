@@ -1,26 +1,30 @@
 <template>
   <div>
     <header>合作医院</header>
-    <div class="hospital-item" @click="goToDetail()">
-        <div class="desc">ss</div>
+    <div v-html='info'>
+        
     </div>
-    <div class="hospital-item" @click="goToDetail()">
-
-      <div class="desc">ss</div>
-    </div>
+   
   </div>
 </template>
 
 <script>
-
 export default {
   data() {
-    return {}
+    return {
+      infoId: 14,
+      info: ""
+    };
   },
-  mounted() {},
+  mounted() {
+    this.getInfor();
+  },
   methods: {
-    goToDetail() {
-      this.$router.push('/partner-hospital-detail')
+    getInfor: function() {
+      let _this = this;
+      this.$store.dispatch("getBaseInfo", this.infoId).then(function(res) {
+        _this.info = res.content || "";
+      });
     }
   }
 };

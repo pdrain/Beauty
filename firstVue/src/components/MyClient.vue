@@ -36,11 +36,15 @@ export default {
       clientType: 0, //客户类别
       personalClientList: [],
       businessClientList: [],
-      UserInfo: JSON.parse(localStorage.getItem("userinfo"))
+      UserInfo: ''//JSON.parse(localStorage.getItem("userinfo"))
     };
   },
   mounted() {
-    this.getClientList();
+    let _this = this;
+    _this.$store.dispatch("getLostorageUserInfo").then(function(uInfo) {
+      _this.UserInfo = uInfo;
+      _this.getClientList();
+    });
   },
   methods: {
     switchCLientType(_type) {

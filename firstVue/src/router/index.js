@@ -51,7 +51,9 @@ const UserAchievement = resolve => require(['../components/MyAchievement'], reso
 
 const partnerlogin = resolve => require(['../components/partners/login'], resolve)
 const partnerreg = resolve => require(['../components/partners/reg'], resolve)
-
+const partnersHospitals = resolve => require(['../components/partners/hospitals'], resolve)
+const joinAgreement = resolve => require(['../components/partners/agreement'], resolve)
+const UpgradAgreement = resolve => require(['../components/UpgradAgreement'], resolve)
 
 const PartnerHospital = resolve => require(['../components/partner-hospital'], resolve)
 const PartnerHospitalDetail = resolve => require(['../components/partner-hospital-detail'], resolve)
@@ -93,9 +95,12 @@ const router = new VueRouter({
         { path: '/user/upgrade', component: UserUpgrade },
         { path: '/user/client', component: UserClient },
         { path: '/user/achievement', component: UserAchievement },
+        { path: '/user/agreement', component: joinAgreement },
+        { path: '/user/upgrade-agreement', component: UpgradAgreement },
 
         { path: '/partners/login', component: partnerlogin },
         { path: '/partners/reg', component: partnerreg },
+        { path: '/partners/hospitals', component: partnersHospitals },
 
         { path: '/partner-hospital', component: PartnerHospital },
         { path: '/partner-hospital-detail', component: PartnerHospitalDetail },
@@ -114,7 +119,7 @@ const router = new VueRouter({
 
 });
 //获取Parent OpenID
-var getParentOpenId =function(name){
+var getParentOpenId = function (name) {
     var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
     var r = window.location.search.substr(1).match(reg);
     console.log(JSON.stringify(r))
@@ -126,13 +131,15 @@ var getParentOpenId =function(name){
 }
 
 router.beforeEach((to, from, next) => {
-    let _this = this;
-    
-    var parentOpenId= getParentOpenId('parent')
-    
     // debugger
-    next();
-    return false;
+    if (location.host.indexOf('127.0.0.1') >= 0) {
+        next();
+        return false;
+    }
+
+    let _this = this;
+
+    var parentOpenId = getParentOpenId('parent')
 
 
     //先判断用户是否已经授权
@@ -140,7 +147,7 @@ router.beforeEach((to, from, next) => {
 
     if (!params.code) {
         //微信授权
-        let wxAuthorizeUrl = location.origin + '/?parent='+parentOpenId+'#' + to.fullPath 
+        let wxAuthorizeUrl = location.origin + '/?parent=' + parentOpenId + '#' + to.fullPath
         WX.doAuth(wxAuthorizeUrl)
     }
 
@@ -149,14 +156,14 @@ router.beforeEach((to, from, next) => {
     WX.getUserInfo(params.code).then(function (userInfo) {
         console.log(userInfo)
         if (userInfo.errcode) {
-            let wxAuthorizeUrl = location.origin + '/?parent='+parentOpenId+'#' + to.fullPath 
+            let wxAuthorizeUrl = location.origin + '/?parent=' + parentOpenId + '#' + to.fullPath
             console.log('认证地址：' + wxAuthorizeUrl);
             WX.doAuth(wxAuthorizeUrl)
 
         } else {
             //用户登录
             console.log(userInfo)
-            let url = api.DO_LOGIN + userInfo.openid + '&parent=' + parentOpenId+'&nickName='+userInfo.nickname
+            let url = api.DO_LOGIN + userInfo.openid + '&parent=' + parentOpenId + '&nickName=' + userInfo.nickname
             axios.get(url).then(response => {
                 if (response.data.code == 0) {
                     //localStorage.setItem('userinfo', JSON.stringify(userInfo))

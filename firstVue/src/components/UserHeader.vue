@@ -1,7 +1,7 @@
 <template>
   <div class="userheader">
     <div>
-      <a class="goback" href="javascript:history.go(-1)">&lt;</a>
+      <a v-if="backurl"  class="goback" @click="goBack"></a>
       <img src="../assets/company.jpg" />
     </div>
     <h1>
@@ -14,25 +14,45 @@
 <script>
 export default {
   props: {
-    title: ''
+    title: "",
+    backurl: ""
   },
-  mounted(){
-    
+  data(){
+    return{
+      redirectPath:''
+    }
+  },
+  mounted() {
+    this.redirectPath = this.backurl;
+    let targetBack = this.$route.query.back;
+    if (targetBack) {
+      this.redirectPath = targetBack;
+    }
+  },
+  methods: {
+    goBack: function() {
+      this.$router.push(this.redirectPath);
+    }
   }
-
-}
+};
 </script>
 
 
 
 
 <style scoped lang="less">
-@import '../assets/index.less';
+.goback {
+  background: url("../assets/left-arrow.png") !important;
+  background-repeat: no-repeat;
+  background-size: cover !important;
+  width: 1.2rem !important;
+  height: 1.2rem !important;
+}
+@import "../assets/index.less";
 .userheader img {
   width: 100%;
   height: 150px;
 }
-
 
 .userheader h1 {
   margin: 0px;
@@ -43,7 +63,6 @@ export default {
   font-size: 14px;
   font-weight: normal;
   background: #f0f0f0;
-  
 }
 
 .userheader h1 span {

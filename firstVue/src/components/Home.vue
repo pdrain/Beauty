@@ -50,10 +50,10 @@
         <div class="content">
           <swiper :option="swiperOption" ref="hospitalSwiper">
             <swiper-slide class="swiper-slide">aaa</swiper-slide>
-             <swiper-slide class="swiper-slide">aaa</swiper-slide>
-             <swiper-slide class="swiper-slide">aaa</swiper-slide>
-              <swiper-slide class="swiper-slide">aaa</swiper-slide>
-              <div class="swiper-pagination" slot="pagination"></div>
+            <swiper-slide class="swiper-slide">bbb</swiper-slide>
+            <swiper-slide class="swiper-slide">ccc</swiper-slide>
+            <swiper-slide class="swiper-slide">ddd</swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
           </swiper>
         </div>
       </div>
@@ -65,7 +65,8 @@
           <a class="more" @click="moreNewsList">更多</a>
         </h2>
           <ul>
-              <li @click="gotoNewsDetail(1)" v-for="(item,index) in newsList" :key="index" :articleinfo="item"><newslistitem></newslistitem></li>
+              <li @click="gotoNewsDetail(item.id)" v-for="(item,index) in newsList" :key="index" :articleinfo="item">
+                <newslistitem :articleinfo='item'></newslistitem></li>
                <li v-if="newsList.length==0"> 暂无推荐文章</li>
           </ul>
       </div>
@@ -90,12 +91,21 @@ export default {
   data() {
     return {
       swiperOption: {
-        slidesPerView: 3,
-        spaceBetween: 0,
-        pagination: {
-          el: ".swiper-pagination",
-          clickable: true
-        }
+         //autoplay: 3000,
+         //loop: true,
+        //notNextTick: true,
+        //slidesPerView: 3,
+        //spaceBetween: 0,
+        //pagination : '.swiper-pagination',
+        //  paginationClickable :true,
+          initialSlide :0,
+            pagination: '.swiper-pagination',
+            loop: true,
+            speed: 400,
+            autoplay: 2000,
+            autoplayDisableOnInteraction: false,
+            observer:true,//修改swiper自己或子元素时，自动初始化swiper
+            observeParents:true//修改swiper的父元素时，自动初始化swiper
       },
       hotCats: [], //热门项目
       recommendCats: [], //推荐项目
@@ -110,7 +120,9 @@ export default {
     _this.getNewsList();
     _this.initShareInfo();
   },
-  mounted() {},
+  mounted() {
+     let _this = this;
+  },
   methods: {
     initShareInfo() {
       let shareOpt = {

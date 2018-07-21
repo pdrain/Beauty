@@ -1,7 +1,7 @@
 
 <template>
     <div class="coupon">
-        <UserHeader title='优惠券'></UserHeader>
+        <UserHeader  backurl="/user" title='优惠券'></UserHeader>
 
         <div class="tab">
             <a class='active'>已领券</a>

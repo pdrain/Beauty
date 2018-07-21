@@ -1,6 +1,6 @@
 <template>
     <div class="my-subscribers">
-        <UserHeader title='我的预约'></UserHeader>
+        <UserHeader  backurl="/user" title='我的预约'></UserHeader>
 
         <OrderList :data="subcribeData"></OrderList>
         <UserFooter></UserFooter>

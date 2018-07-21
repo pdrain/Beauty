@@ -70,11 +70,12 @@ export default {
 }
 
 .login-form li label {
-  width: 3rem;
+  width: 3.5rem;
   height: 100%;
   display: block;
   border-right: 0.05rem #ccc solid;
   float: left;
+  text-align: right;
 }
 
 .line1 {

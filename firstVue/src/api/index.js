@@ -4,9 +4,15 @@ export const DO_LOGIN='/api/users/?open_id=';
 export const REGISTER='/api/users/save';
 export const NEWS='/api/news';
 export const WEIXIN_AUTH='/api/weixin/Auth';
+export const GET_BASE_INFO='api/infos/{infoId}'
 //业绩查询
 //api/order/performances/openid
 export const USER_PERFOMANCES="/api/order/performances/"
+
+//获取用户升级信息
+export const USER_GET_UPGRADEINFO="/api/users/upgrade/{openId}/info"
+//用户升级
+export const USER_DO_UPGRADE="/api/users/upgrade/{openId}/"
 
 //客户列表
 //api/users/children／openid

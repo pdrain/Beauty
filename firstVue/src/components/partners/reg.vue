@@ -1,6 +1,6 @@
 <template>
    <div  class="login-form" v-title='"美容店注册"'>
-      <u-header title="注册美容店"></u-header>
+      <u-header  backurl="/user"  title="注册美容店"></u-header>
       
       <ul>
           <li class='line1'>
@@ -9,11 +9,11 @@
           </li>
           <li class="tp0">
                <label>店名：</label>
-              <input type="text" v-model="account.nickName" placeholder="请输入美容店名称">
+              <input type="text" v-model="account.shopName" placeholder="请输入美容店名称">
           </li>
            <li class="tp0">
                <label>联系人：</label>
-              <input type="text" v-model="account.contracttor"  placeholder="请输入美容店联系人">
+              <input type="text" v-model="account.contact"  placeholder="请输入美容店联系人">
           </li>
           <li class="tp0">
                <label>联系电话：</label>
@@ -25,14 +25,14 @@
           </li>
            <li class="tp0">
                <label>纳税人编号：</label>
-              <input type="text" v-model="account.address"  placeholder="请输入纳税人编号">
+              <input type="text" v-model="account.taxpayerCode"  placeholder="请输入纳税人编号">
           </li>
-          <li class="tp0 line2">
+          <!-- <li class="tp0 line2">
                <label>营业执照：</label>
               <input type="text" v-model="account.address"  placeholder="请上传营业执照复印件">
-          </li>
+          </li> -->
       </ul>
-       <button class='btn-login'>立即注册</button>
+       <button class='btn-login' @click="doReg">立即注册</button>
        <u-footer></u-footer>
   </div>
 </template>
@@ -45,16 +45,62 @@ export default {
   data() {
     return {
       account: {
-        phone: "",
-        nickName: "",
-        contracttor: "",
-        contracttor: "",
+        openId:'',
+        phone: "",        //手机
+        shopName: "",     //店名
+        contact: "",
         contractNo: "",
-        address: ""
+        address: "",
+        taxpayerCode: ""
       }
     };
   },
-  mounted() {}
+  mounted() {
+    let userInfo = JSON.parse(localStorage.getItem('userinfo'));
+    this.account.openId ='11';// userInfo.openid;
+  },
+  methods:{
+    doReg:function(){
+      let _preCheck=this.regPreCheck();
+      if(!_preCheck){
+        return false;
+      }
+      this.$store.dispatch('savePartnerInfo',this.account).then(function(data){
+
+      },function(msg){
+        alert(msg)
+      });
+    },
+    regPreCheck:function(){
+      let _this = this;
+      let flag=true;
+        if(!_this.account.phone){
+          alert('请输入手机号作为登陆账号。');
+          return false;
+        }
+        if(!_this.account.shopName){
+          alert('请输入美容店名称。');
+          return false;
+        }
+        if(!_this.account.contact){
+          alert('请输入常用联系人。');
+          return false;
+        }
+        if(!_this.account.contractNo){
+          alert('请输入常用联系电话。');
+          return false;
+        }
+        if(!_this.account.address){
+          alert('请输入店铺地址。');
+          return false;
+        }
+        if(!_this.account.taxpayerCode){
+          alert('请输入店铺纳税人编号。');
+          return false;
+        }
+      return true;
+    },
+  }
 };
 </script>
 
@@ -78,11 +124,12 @@ export default {
 }
 
 .login-form li label {
-  width: 3rem;
+  width: 3.6rem;
   height: 100%;
   display: block;
   /* border-right: 0.05rem #ccc dashed; */
   float: left;
+  text-align:right;
 }
 
 .line1 {
@@ -94,7 +141,7 @@ export default {
 }
 
 .login-form li input {
-  height: 1.3rem;
+  height: 1.2rem;
   width: 10rem;
   float: left;
   margin-top: 0.04rem;
