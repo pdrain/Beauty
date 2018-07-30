@@ -47,7 +47,7 @@ export default {
 }
 .article-detail .body{
   padding: 0.5rem;
-  margin-bottom:2rem;
+  margin-bottom:4rem;
 }
 .article-detail h1 {
   text-align: left;

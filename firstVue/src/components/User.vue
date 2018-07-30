@@ -69,7 +69,7 @@
                     <router-link  class="icons partner" to="/partners/hospitals">合作机构</router-link>
                 </td>
                 <td>
-                    &nbsp;
+                     <router-link  class="icons welcome" to="/welcome">邀请好友</router-link>
                 </td>
             </tr>
         </table>
@@ -116,8 +116,7 @@ export default {
       _this.UserInfo = uInfo;
     });
   },
-  updated() {
-  },
+  updated() {},
   watch: {},
   methods: {}
 };
@@ -160,6 +159,9 @@ export default {
 }
 .icons.order {
   background-position: 0.4rem -0.4rem !important;
+}
+.icons.welcome{
+     background-position: 0.4rem -16.6rem !important;
 }
 
 header {

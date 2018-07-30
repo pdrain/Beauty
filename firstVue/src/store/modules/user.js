@@ -33,10 +33,11 @@ const actions = {
     getLostorageUserInfo({ commit, state }){
         return new Promise(function (resolve, reject) {
             let _userInfo; 
-            if(location.href.indexOf('127.0.0.1')>=0){
-                _userInfo={"password":null,"userId":1,"openId":"oeJvEwrIkEnDzIzp5huT4nEmt0HY","userName":null,"nickName":"背着PC去流浪","shopName":null,"contact":null,"taxpayerCode":null,"city":null,"province":null,"headUrl":null,"remark":null,"createTime":"2018-07-14","userType":0,"userTypeName":"普通用户","contractNo":null,"parent":"","phone":null,"address":null,"numberId":null,"status":0,"statusName":null,"businessLicense":null,"point":0,"jobTitle":0,"jotTitleName":"队员","updateTime":null,"WX":{"access_token":"11_rUthCp1nFBhz3DV2TxyWjRYmfQDZEmdZM80wONHeOwFKAsfvqLC_8xp6siTIxESn3I6dH6hRF9hogL_nh6iasw","country":"中国","province":"广东","city":"深圳","openid":"oeJvEwrIkEnDzIzp5huT4nEmt0HY","sex":1,"nickname":"背着PC去流浪","headimgurl":"http://thirdwx.qlogo.cn/mmopen/vi_32/KMhESiaQOl479MKjB61JHxFKq1320ZumLRIf1uXoYo1zs8pCYN5sg34yCAkciaquSzwnR0SicicoHFWiaHXyCI2y8GA/132","language":"zh_CN","privilege":[]}}
-            }else{
+            if(location.href.indexOf('www.meilituibian.cn')>=0){
                 _userInfo =  JSON.parse(localStorage.getItem('userinfo'));
+               
+            }else{
+                _userInfo={"password":null,"userId":1,"openId":"oeJvEwrIkEnDzIzp5huT4nEmt0HY","userName":null,"nickName":"背着PC去流浪","shopName":null,"contact":null,"taxpayerCode":null,"city":null,"province":null,"headUrl":null,"remark":null,"createTime":"2018-07-14","userType":0,"userTypeName":"普通用户","contractNo":null,"parent":"","phone":null,"address":null,"numberId":null,"status":0,"statusName":null,"businessLicense":null,"point":0,"jobTitle":0,"jotTitleName":"队员","updateTime":null,"WX":{"access_token":"11_rUthCp1nFBhz3DV2TxyWjRYmfQDZEmdZM80wONHeOwFKAsfvqLC_8xp6siTIxESn3I6dH6hRF9hogL_nh6iasw","country":"中国","province":"广东","city":"深圳","openid":"oeJvEwrIkEnDzIzp5huT4nEmt0HY","sex":1,"nickname":"背着PC去流浪","headimgurl":"http://thirdwx.qlogo.cn/mmopen/vi_32/KMhESiaQOl479MKjB61JHxFKq1320ZumLRIf1uXoYo1zs8pCYN5sg34yCAkciaquSzwnR0SicicoHFWiaHXyCI2y8GA/132","language":"zh_CN","privilege":[]}}
             }
             resolve(_userInfo)
         })

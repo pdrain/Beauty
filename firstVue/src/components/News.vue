@@ -7,7 +7,7 @@
       <div class="news">
        
           <ul>
-              <li @click="gotoNewsDetail(1)" v-for="(item,index) in newsList" :key='index' :articleinfo="item"><newslistitem></newslistitem></li>
+              <li @click="gotoNewsDetail(1)" v-for="(item,index) in newsList" :key='index' :articleinfo="item"><newslistitem :articleinfo="item"></newslistitem></li>
                <li v-if="newsList==0">暂无更多美丽资讯 </li>
           </ul>
       </div>

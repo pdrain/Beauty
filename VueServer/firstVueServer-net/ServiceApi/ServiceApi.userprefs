@@ -1,0 +1,15 @@
+﻿<Properties StartupConfiguration="{5C561EFF-9CC7-4BBE-A8F6-F94ACBD6F715}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BeautyProject.Dao/ProjectDao.cs">
+    <Files>
+      <File FileName="ServiceApi/Controllers/ProjectController.cs" Line="110" Column="63" />
+      <File FileName="BeautyProject.Dao/ProjectDao.cs" Line="141" Column="52" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.ServiceApi PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>

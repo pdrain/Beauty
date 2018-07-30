@@ -2,7 +2,7 @@
   <div class="content-body" v-title="'画眉鸟美容'">
    
       <div class="banner-adv">
-        <swiper :option="swiperOption" ref="hospitalSwiper">
+        <swiper :option="swiperOption" ref="topbanner">
             <swiper-slide class="swiper-slide">
                <img src="../assets/banner/banner_01.png" />
             </swiper-slide>
@@ -48,12 +48,12 @@
           合作机构
         </h2>
         <div class="content">
-          <swiper :option="swiperOption" ref="hospitalSwiper">
-            <swiper-slide class="swiper-slide">aaa</swiper-slide>
+           <swiper :option="swiperOption" ref="hospitalbanner">
+         <swiper-slide class="swiper-slide">aaa</swiper-slide>
             <swiper-slide class="swiper-slide">bbb</swiper-slide>
             <swiper-slide class="swiper-slide">ccc</swiper-slide>
             <swiper-slide class="swiper-slide">ddd</swiper-slide>
-            <div class="swiper-pagination" slot="pagination"></div>
+           
           </swiper>
         </div>
       </div>
@@ -84,35 +84,40 @@ import { mapGetters } from "vuex";
 import { defaultCipherList } from "constants";
 
 import jssdk from "weixin-js-sdk";
-import wx from  '../config/WeXin'
+import wx from "../config/WeXin";
 
 export default {
   components: { newslistitem, swiper, swiperSlide, "c-footer": Footer },
   data() {
     return {
       swiperOption: {
-         //autoplay: 3000,
-         //loop: true,
-        //notNextTick: true,
-        //slidesPerView: 3,
-        //spaceBetween: 0,
-        //pagination : '.swiper-pagination',
-        //  paginationClickable :true,
-          initialSlide :0,
-            pagination: '.swiper-pagination',
-            loop: true,
-            speed: 400,
-            autoplay: 2000,
-            autoplayDisableOnInteraction: false,
-            observer:true,//修改swiper自己或子元素时，自动初始化swiper
-            observeParents:true//修改swiper的父元素时，自动初始化swiper
+        notNextTick: false,
+        initialSlide: 0,
+
+        loop: true,
+        speed: 2000,
+        direction: "horizontal",
+        //autoplay: 1000,
+        autoplay: true,
+        
+        //autoplayDisableOnInteraction: true,
+        //observer: true,
+        //observeParents: true,
+        
       },
       hotCats: [], //热门项目
       recommendCats: [], //推荐项目
       newsList: [] //推荐资讯
     };
   },
-  computed: {},
+  computed: {
+    bannelSwiper() {
+      return this.$refs.topbanner.swiper;
+    },
+    hospitalSwiper() {
+      return this.$refs.hospitalbanner.swiper;
+    }
+  },
 
   created() {
     let _this = this;
@@ -121,7 +126,10 @@ export default {
     _this.initShareInfo();
   },
   mounted() {
-     let _this = this;
+    let _this = this;
+    this.bannelSwiper.autoplay.start();
+    this.hospitalSwiper.autoplay.start();
+    //this.swiper.slideTo(1, 1000, false);
   },
   methods: {
     initShareInfo() {
@@ -129,7 +137,7 @@ export default {
         title: "画眉鸟美丽联盟",
         desc: "每时每刻遇见美丽的自己"
       };
-      wx.initShare(shareOpt)
+      wx.initShare(shareOpt);
     },
     gotoProjectList(item) {
       let sCids = [];
@@ -158,7 +166,7 @@ export default {
     //初始化分类列表
     initCategories() {
       let _this = this;
-      _this.$store.dispatch("getAllCategories").then(function(data) {debugger
+      _this.$store.dispatch("getAllCategories").then(function(data) {
         let _cats = data.data;
         var result = [];
 

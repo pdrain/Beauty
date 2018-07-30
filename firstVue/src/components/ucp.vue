@@ -7,7 +7,9 @@
 <script>
 import querystring from 'querystring'
     export default{
-        data(){},
+        data(){
+            return {}
+        },
         created(){
             let params = this.$route.query.target
             console.log(params)

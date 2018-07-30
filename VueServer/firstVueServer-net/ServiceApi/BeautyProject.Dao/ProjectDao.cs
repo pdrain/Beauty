@@ -92,6 +92,8 @@ namespace BeautyProject.Dao
 
         }
 
+       
+
         public List<ProjectCat> GetProjectCats()
         {
             string sql = "select *  from ProjectCat";
@@ -207,6 +209,23 @@ namespace BeautyProject.Dao
             {
                 throw new Exception(string.Format("插入项目目录失败；guid:{0}", detail.CatGuid));
             }
+        }
+
+        public void DeleteProjectDetail(int Id)
+        {
+            try
+            {
+                string sql = "delete from  ProjectDetail where ID=@ID";
+                List<SqlParameter> parameters = new List<SqlParameter>();
+                parameters.Add(new SqlParameter() { ParameterName = "ID", Value = Id });
+
+                sqlHelper.ExecuteScalar(CommandType.Text, sql, parameters.ToArray());
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(string.Format("删除美容项目失败；ID={}", Id));
+            }
+           
         }
         
         public ProjectDetail GetProjectDetail(int id)

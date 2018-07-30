@@ -1,4 +1,9 @@
-F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\BeautyProjectModes\bin\Debug\BeautyProjectModes.dll
-F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\BeautyProjectModes\bin\Debug\BeautyProjectModes.pdb
-F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\BeautyProjectModes\obj\Debug\BeautyProjectModes.dll
-F:\水哥\BeautyProject\beauty\VueServer\firstVueServer-net\ServiceApi\BeautyProjectModes\obj\Debug\BeautyProjectModes.pdb
+F:/水哥/BeautyProject/beauty/VueServer/firstVueServer-net/ServiceApi/BeautyProjectModes/bin/Debug/BeautyProjectModes.dll
+F:/水哥/BeautyProject/beauty/VueServer/firstVueServer-net/ServiceApi/BeautyProjectModes/bin/Debug/BeautyProjectModes.pdb
+F:/水哥/BeautyProject/beauty/VueServer/firstVueServer-net/ServiceApi/BeautyProjectModes/obj/Debug/BeautyProjectModes.dll
+F:/水哥/BeautyProject/beauty/VueServer/firstVueServer-net/ServiceApi/BeautyProjectModes/obj/Debug/BeautyProjectModes.pdb
+/Users/chenjinchao/Documents/2-MyFiles/BeautyProject/beauty/VueServer/firstVueServer-net/ServiceApi/BeautyProjectModes/bin/Debug/BeautyProjectModes.dll
+/Users/chenjinchao/Documents/2-MyFiles/BeautyProject/beauty/VueServer/firstVueServer-net/ServiceApi/BeautyProjectModes/bin/Debug/BeautyProjectModes.pdb
+/Users/chenjinchao/Documents/2-MyFiles/BeautyProject/beauty/VueServer/firstVueServer-net/ServiceApi/BeautyProjectModes/obj/Debug/BeautyProjectModes.csproj.CoreCompileInputs.cache
+/Users/chenjinchao/Documents/2-MyFiles/BeautyProject/beauty/VueServer/firstVueServer-net/ServiceApi/BeautyProjectModes/obj/Debug/BeautyProjectModes.dll
+/Users/chenjinchao/Documents/2-MyFiles/BeautyProject/beauty/VueServer/firstVueServer-net/ServiceApi/BeautyProjectModes/obj/Debug/BeautyProjectModes.pdb

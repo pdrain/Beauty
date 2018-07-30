@@ -15,17 +15,29 @@
               <label>证件号码：</label>
               <input type="text" v-model="account.numberId" placeholder="请输入身份证号码">
           </li>
-         
-          <li class="tp0" v-if="upgradeInfo">
-               <label>升级级别：</label>
-              <span class="lev l1" v-if="userInfo.jobTitle+1==0">美业学员</span>
-              <span class="lev l2" v-if="userInfo.jobTitle+1==1">美业老师</span>
-              <span class="lev l3" v-if="userInfo.jobTitle+1==2">美业顾问</span>
-              <span class="lev l3" v-if="userInfo.jobTitle+1==3">美业导师</span>
+         <li class="tp0" v-if="upgradeInfo">
+              <label>当前级别：</label>
+              <span class="lev l0" v-if='userInfo.jobTitle+1==0' >见习导师</span>
+              <span class="lev l1" v-if='userInfo.jobTitle+1==1' >银牌导师</span>
+              <span class="lev l2"  v-if='userInfo.jobTitle+1==2'  >金牌导师</span>
+              <span class="lev l3"  v-if='userInfo.jobTitle+1==3'  >钻石导师</span>
           </li>
+          <li class="tp0 multiLine" v-if="upgradeInfo" >
+              <label>等级介绍：</label>
+              <span class="lev l0"  >见习导师</span>
+              <span style="display:block;line-height:0.8rem;">欢迎关注画眉鸟美丽联盟成为美丽见习导师！</span>
+              <span class="lev l1"  >银牌导师</span>
+              <span style="display:block;line-height:0.8rem;">只要你爱美丽，并喜欢帮助她人变美丽，并从中获得快乐，就可以成为我们的银牌导师！</span>
+              <span class="lev l2"  >金牌导师</span>
+              <span style="display:block;line-height:0.8rem;"> 连续6个月，每个月平均业绩达到300万即可升级成为金牌导师。</span>
+              <span class="lev l3"  >钻石导师</span>
+              <span style="display:block;line-height:0.8rem;">  连续6个月，每个月平均业绩达到600万即可升级成为钻石导师。</span>
+          </li>
+        
+          
           <li class="tp0">
                <label>升级协议：</label>
-              <input type='checkbox'>阅读升级 <a class='agreement' @click="readUpgradeAgreement">《协议》</a>。
+              <input type='checkbox' v-model="isRead">阅读升级 <a class='agreement' @click="readUpgradeAgreement">《协议》</a>。
           </li>
            
       </ul>
@@ -36,7 +48,7 @@
               <div>
                 <h2>升级须知</h2>
                 <dl>
-                  <dd>1、升级完全取决于个人意愿，我任何强制和费用</dd>
+                  <dd>1、升级完全取决于个人意愿，我公司不何强制加入和收取任何费用</dd>
                   <dd>2、为了保证自己的利益，首次升级为业务员时请完整填写个人真实信息</dd>
                   <dd>3、本平台保证所有个人信息绝对隐私</dd>
                   <dd>4、请认真阅读本平台的升级协议，以了解升级后的相关权益</dd>
@@ -61,13 +73,19 @@ export default {
         nickName: "",
         numberId: ""
       },
-      upgradeInfo: {}
+      upgradeInfo: {},
+      isRead: false
     };
   },
   mounted() {
     let _this = this;
     _this.$store.dispatch("getLostorageUserInfo").then(function(uInfo) {
+      //console.log(JSON.stringify(uInfo))
       _this.userInfo = uInfo;
+      _this.account.phone = _this.userInfo.phone;
+      _this.account.userName = _this.userInfo.userName;
+      _this.account.numberId = _this.userInfo.numberId;
+      //console.log(JSON.stringify(_this.account))
       _this.getUpgradeInfo();
     });
   },
@@ -81,12 +99,18 @@ export default {
         });
     },
     doUpgrade: function() {
-      if (!precheck()) {
+      let _this = this;
+      if (!this.precheck()) {
         return false;
       }
-      this.$store.dispatch("doUpgrade", this.userInfo.openId).then(function() {
-        debugger;
-      });
+      this.$store
+        .dispatch("doUpgrade", this.userInfo.openId)
+        .then(function(res) {
+          if (res.data.code == 0) {
+            alert("升级成功！");
+            _this.$router.push("/user");
+          }
+        });
     },
     precheck: function() {
       let _this = this;
@@ -103,10 +127,17 @@ export default {
         alert("请输入证件号码。");
         return false;
       }
+      if (!_this.isRead) {
+        alert("请输入阅读升级协议。");
+        return false;
+      }
       return true;
     },
     readUpgradeAgreement: function() {
-      this.$router.push({path: "/user/upgrade-agreement", query: {back: location.hash.replace('#','')}});
+      this.$router.push({
+        path: "/user/upgrade-agreement",
+        query: { back: location.hash.replace("#", "") }
+      });
     }
   }
 };
@@ -123,7 +154,7 @@ export default {
   padding: 0px;
   list-style: none;
   height: 1.5rem;
-  line-height: 1.5rem;
+  line-height: 1.6rem;
   margin-bottom: 0.03rem;
   background: #fff;
   text-align: left;
@@ -140,6 +171,10 @@ export default {
   display: block;
   border-right: 0rem #666 solid;
   float: left;
+}
+.login-form li.multiLine {
+  line-height: 1rem;
+  height: 12rem;
 }
 
 .line1 {
@@ -169,7 +204,7 @@ export default {
   background: #ff00fb;
   font-size: 0.6rem;
   color: #fff;
-  border:0px;
+  border: 0px;
 }
 .upgrade-detail {
   background: #fff;
@@ -199,6 +234,13 @@ export default {
   padding-left: 0.2rem;
   padding-right: 0.2rem;
   font-size: 0.1rem;
+}
+
+.login-form .lev.l0{
+  background: #f8e1f8;
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+  color: #fff;
 }
 .login-form .lev.l1 {
   background: #f5adf4;

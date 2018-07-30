@@ -61,6 +61,7 @@ const PartnerHospitalDetail = resolve => require(['../components/partner-hospita
 const News = resolve => require(['../components/News'], resolve)
 const NewsDetail = resolve => require(['../components/NewsDetail'], resolve)
 
+const WelCome =resolve => require(['../components/welcome'], resolve)
 
 const NotFontPage = resolve => require(['../components/404'], resolve)
 
@@ -108,6 +109,8 @@ const router = new VueRouter({
         { path: '/news', component: News },
         { path: '/news/detail', component: NewsDetail },
 
+        { path: '/welcome', component: WelCome },
+
 
         { path: '/dict', component: Dictionray },
         { path: '/dict/article', component: DictionrayArticle },
@@ -138,12 +141,13 @@ router.beforeEach((to, from, next) => {
     }
 
     let _this = this;
-
     var parentOpenId = getParentOpenId('parent')
-
-
     //先判断用户是否已经授权
     let params = querystring.parse(location.search.replace('?', ''))
+
+    if(params.redirect){
+        location.href = params.redirect
+    }
 
     if (!params.code) {
         //微信授权
