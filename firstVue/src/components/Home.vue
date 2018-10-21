@@ -1,23 +1,8 @@
 <template>
   <div class="content-body" v-title="'画眉鸟美容'">
    
-      <div class="banner-adv">
-        <swiper :option="swiperOption" ref="topbanner">
-            <swiper-slide class="swiper-slide">
-               <img src="../assets/banner/banner_01.png" />
-            </swiper-slide>
-             <swiper-slide class="swiper-slide">
-                <img src="../assets/banner/banner_01.png" />
-             </swiper-slide>
-             <swiper-slide class="swiper-slide">
-                <img src="../assets/banner/banner_01.png" />
-             </swiper-slide>
-              <swiper-slide class="swiper-slide">
-                 <img src="../assets/banner/banner_01.png" />
-              </swiper-slide>
-          </swiper>
-           
-      </div>
+        <top-banner :code='1001'></top-banner>
+         <c-footer></c-footer>
        <h2 class="title">
           <span>&nbsp;</span>
           热门项目
@@ -70,7 +55,7 @@
                <li v-if="newsList.length==0"> 暂无推荐文章</li>
           </ul>
       </div>
-      <c-footer></c-footer>
+     
   </div>
   
 </template>
@@ -79,6 +64,7 @@
 import Footer from "./Footer";
 import newslistitem from "./news/news-list-item";
 import { swiper, swiperSlide } from "vue-awesome-swiper";
+import topBanner from "./common/advertisment";
 
 import { mapGetters } from "vuex";
 import { defaultCipherList } from "constants";
@@ -87,7 +73,7 @@ import jssdk from "weixin-js-sdk";
 import wx from "../config/WeXin";
 
 export default {
-  components: { newslistitem, swiper, swiperSlide, "c-footer": Footer },
+  components: { newslistitem, swiper, swiperSlide, "c-footer": Footer ,topBanner},
   data() {
     return {
       swiperOption: {
@@ -111,9 +97,7 @@ export default {
     };
   },
   computed: {
-    bannelSwiper() {
-      return this.$refs.topbanner.swiper;
-    },
+ 
     hospitalSwiper() {
       return this.$refs.hospitalbanner.swiper;
     }
@@ -127,7 +111,6 @@ export default {
   },
   mounted() {
     let _this = this;
-    this.bannelSwiper.autoplay.start();
     this.hospitalSwiper.autoplay.start();
     //this.swiper.slideTo(1, 1000, false);
   },

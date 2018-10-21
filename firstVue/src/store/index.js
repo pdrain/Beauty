@@ -19,7 +19,9 @@ import hospital from './modules/hospital'
 
 import news from './modules/news'
 
+import adv from './modules/advertisment'
+
 Vue.use(Vuex);
 export default new Vuex.Store({
-    modules: { loading, login,home, projects,product,submitorder ,dictionary,user,hospital,order,news}
+    modules: { loading, login,home, projects,product,submitorder ,dictionary,user,hospital,order,news,adv}
 })

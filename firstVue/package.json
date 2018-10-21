@@ -67,6 +67,7 @@
     "sinon": "^2.1.0",
     "sinon-chai": "^2.8.0",
     "style-loader": "^0.18.1",
+    "sweetalert2": "^7.28.7",
     "transfer-webpack-plugin": "^0.1.4",
     "url-loader": "^0.5.8",
     "vue-awesome-swiper": "^3.1.3",

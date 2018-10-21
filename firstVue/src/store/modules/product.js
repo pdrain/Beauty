@@ -22,41 +22,74 @@ const getters = {
 }
 
 const actions = {
-    queryProductCats({ commit, state }) {
-        commit(types.QUERY_PRODUCT_CATS, state);
+    queryProductCats ({ commit, state }) {
+        return new Promise(function (resolve, reject) {
+            axios.get(api.PRODUCT_CAT).then(response => {
+                if (response.data.code == 0) {
+                    let data = response.data.data;
+                    resolve(data)
+                } else {
+                    if (reject && typeof (reject) == 'function') {
+                        reject();
+                    }
+                }
+            });
+        })
     },
-    queryProductList({ commit, state }, catId) {
-        commit(types.QUERY_PRODUCT_LIST, catId)
+    queryProductList ({ commit, state }, catId) {
+        return new Promise(function (resolve, reject) {
+            
+            state.currentProductCat = catId;
+            let _url_product_list = api.PRODUCT_LIST.replace('{0}', catId)
+            axios.get(_url_product_list).then(response => {
+
+                if (response.data.code == 0) {
+                    let data = response.data.data;
+                    resolve(data)
+                } else {
+                    if (reject && typeof (reject) == 'function') {
+                        reject();
+                    }
+                }
+            })
+        })
+    },
+    queryProductDetail ({ commit, state }, prdId) {
+        return new Promise(function (resolve, reject) {
+            let _url_product_detail = api.PRODUCT_DETAIL.replace('{0}', prdId)
+            axios.get(_url_product_detail).then(response => {
+
+                if (response.data.code == 0) {
+                    let data = response.data.data;
+                    resolve(data)
+                } else {
+                    if (reject && typeof (reject) == 'function') {
+                        reject();
+                    }
+                }
+            })
+        })
+    },
+    saveExchangeProduct ({ commit, state }, param) {
+        return new Promise(function (resolve, reject) {
+            axios.post(api.EXCHANGE_PRODUCT_SAVE,param).then(response => {
+
+                if (response.data.code == 0) {
+                    let data = response.data.data;
+                    resolve(data)
+                } else {
+                    if (reject && typeof (reject) == 'function') {
+                        reject();
+                    }
+                }
+            })
+        })
     }
 
 }
 
 const mutations = {
-    [types.QUERY_PRODUCT_CATS](state) {
-        axios.get(api.PRODUCT_CAT).then(response => {
-            if (response.data.Code == 0) {
-                state.productCats = response.data.Result;
-                state.currentProductCat = state.productCats[0].ID;
-            }
-            else {
-                alert(response.data.Message);
-            }
-        });
-    },
-    [types.QUERY_PRODUCT_LIST](state, catId) {
-
-        state.currentProductCat = catId;
-        let _url_product_list = util.format(api.PRODUCT_LIST, state.currentProductCat);
-        axios.get(_url_product_list).then(response => {
-            if (response.data.Code == 0) {
-                state.productList = response.data.Result;
-            }
-            else {
-                alert(response.data.Message);
-            }
-        })
-    }
-
+    
 }
 
 export default {

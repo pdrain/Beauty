@@ -12,6 +12,10 @@ require('swiper/dist/css/swiper.css')
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 Vue.use(VueAwesomeSwiper)
 
+import './assets/sweetalert2.css'
+
+
+
 //import wx from 'weixin-js-sdk'
 
 import VueLazyload from 'vue-lazyload'

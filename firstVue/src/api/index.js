@@ -18,8 +18,16 @@ export const USER_DO_UPGRADE="/api/users/upgrade/{openId}/"
 //api/users/children／openid
 export const USER_CLIENTS="/api/users/children/?openId="
 
-export const PRODUCT_CAT="/api/productcat";
-export const PRODUCT_LIST="/api/productlist/";
+//护肤美容产品分类
+export const PRODUCT_CAT="/api/products/types";
+// 护肤美容产品列表
+export const PRODUCT_LIST="/api/products/list/{0}";
+//护肤美容产品详情
+export const PRODUCT_DETAIL="/api/products/{0}";
+//兑换产品
+export const EXCHANGE_PRODUCT_SAVE="/api/product_order/save"
+//根据用户查看兑换产品激励
+export const GET_USER_EXCHANGE_INFO="/api/product_order/list"
 
 //获取微信用户信息
 export const GET_WX_INFO="/api/users/wx/"
@@ -61,6 +69,10 @@ export const DICT_CATELOG_ARTICLE="/api/articles"
 
 export const HOSPITAL_LIST="/api/hospitals"
 export const HOSPITAL_DETAIL="/api/hospital-detail/"
+
+
+//获取页面广告位图片
+export const ADVERTISMENT="/api/advertisment/get_adv_list"
 
 
 

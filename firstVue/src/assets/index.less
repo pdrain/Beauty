@@ -119,16 +119,21 @@ top:5px;}
     border-top: 1px solid @bottom-menu-border;
     background: @bottom-menu-bg;
     color: @bottom-menu-normalcolor;
-    position: fixed;
-    bottom: 0px
+    position:fixed;
+    bottom: 0px;
+    z-index: 99999;
 }
 
 .bottom-menu a {
     display: block;
     float: left;
-    width: 33%;
+    width: 33.333%;
     text-align: center;
     text-decoration: none; color:#666; 
+}
+
+.bottom-menu a:hover{
+  background: #ccc;
 }
 
 

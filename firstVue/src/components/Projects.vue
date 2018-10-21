@@ -2,7 +2,8 @@
   <div v-title="'美容项目'">
     <SearchBox ></SearchBox>
      <div class="banner">
-        <img src="../assets/banner-1.jpg" />
+        <!--<img src="../assets/banner-1.jpg" />-->
+        <top-banner code='2001'></top-banner>
     </div>
     <div class="projects">
     <div class="item" v-for="item in list" :key="item.ID">
@@ -28,13 +29,13 @@ import URL from "url";
 import Footer from "./Footer";
 import { mapGetters } from "vuex";
 import SearchBox from "./SearchBox";
+import topBanner from "./common/advertisment";
 import wx from  '../config/WeXin'
 
 export default {
   name: "Projects",
   data() {
     return {
-      urlParam: URL.parse(location.hash.replace("#", "")).search,
       list: []
     };
   },
@@ -43,7 +44,7 @@ export default {
     this.initShareInfo();
   },
   computed: {},
-  components: { SearchBox ,'c-footer':Footer},
+  components: { SearchBox ,'c-footer':Footer,topBanner},
   methods: {
     initShareInfo() {
       let shareOpt = {
@@ -64,7 +65,7 @@ export default {
     },
     getQueryString(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
-      var r = this.urlParam.substr(1).match(reg);
+      var r = location.search.substr(1).match(reg);
       if (r != null) return unescape(r[2]);
       return null;
     }
@@ -74,7 +75,7 @@ export default {
 
 <style scoped lang="less">
  @import '../assets/index.less';
- .banner{width:100%; height:150px; background:#fff; border-top:1px #f0f0f0 solid; border-bottom:1px #f0f0f0 solid;}
+ .banner{width:100%; height:5rem; background:#fff; border-top:1px #f0f0f0 solid; border-bottom:1px #f0f0f0 solid;}
  .banner img{width:100%; height:100%;}
 
 

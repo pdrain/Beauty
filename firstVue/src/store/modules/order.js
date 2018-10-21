@@ -31,11 +31,7 @@ const actions = {
             })
         });
     },
-    queryProductList ({ commit, state }, catId) {
-        return new Promise({
-
-        });
-    },
+  
     queryUserPerformance ({ commit, state }, openId) {
         return new Promise(function (resolve, reject) {
             let url = api.USER_PERFOMANCES + openId

@@ -30,6 +30,9 @@ const Login = resolve => require(['../components/Login'], resolve)
 const Projects = resolve => require(['../components/Projects'], resolve)
 const ProjectsDetail = resolve => require(['../components/ProjectDetail'], resolve)
 const Shop = resolve => require(['../components/Shop'], resolve)
+const ProductExchange = resolve => require(['../components/product-exchange'], resolve)
+const ProductDetail = resolve => require(['../components/product-detail'], resolve)
+
 const User = resolve => require(['../components/User'], resolve)
 const UserInfo = resolve => require(['../components/UserInfo'], resolve)
 const MyPoints = resolve => require(['../components/MyPoints'], resolve)
@@ -48,6 +51,7 @@ const UserRights = resolve => require(['../components/user-rights'], resolve)
 const UserUpgrade = resolve => require(['../components/UserUpgrade'], resolve)
 const UserClient = resolve => require(['../components/MyClient'], resolve)
 const UserAchievement = resolve => require(['../components/MyAchievement'], resolve)
+const Placard = resolve => require(['../components/placard'], resolve)
 
 const partnerlogin = resolve => require(['../components/partners/login'], resolve)
 const partnerreg = resolve => require(['../components/partners/reg'], resolve)
@@ -73,7 +77,7 @@ Vue.use(VueRouter)
 const router = new VueRouter({
     hashbang: true,
     history: true,
-    //mode:'history',
+    mode:'history',
     saveScrollPosition: false,
     routes: [
         { path: '/', component: Home },
@@ -82,6 +86,8 @@ const router = new VueRouter({
         { path: '/projects-detail', component: ProjectsDetail },
         { path: '/submitorder', component: SubmitOrder },
         { path: '/shop', component: Shop },
+        { path: '/shop/product-exchange',component:ProductExchange},
+        { path: '/shop/product-detail',component:ProductDetail},
 
         { path: '/user', component: User, meta: { requireAuth: true, } },// 添加该字段，表示进入这个路由是需要登录的
         { path: '/user/info', component: UserInfo },
@@ -98,6 +104,8 @@ const router = new VueRouter({
         { path: '/user/achievement', component: UserAchievement },
         { path: '/user/agreement', component: joinAgreement },
         { path: '/user/upgrade-agreement', component: UpgradAgreement },
+        { path: '/user/placard', component: Placard },
+        
 
         { path: '/partners/login', component: partnerlogin },
         { path: '/partners/reg', component: partnerreg },

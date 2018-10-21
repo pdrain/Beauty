@@ -1,14 +1,22 @@
 <template>
 <div v-title="'积分商城'">
-  <br/>
-    程序猿哥哥正在加班建设中...
+  <top-banner :code='1001'></top-banner>
+  <productlist></productlist>
+  
+  <c-footer></c-footer>
 </div>
 
 </template>
 
 <script>
+import productlist from "./shop/ProductList";
+import topBanner from "./common/advertisment";
+import Footer from "./Footer";
 
 export default {
-  name: 'shop',
-}
+  components: { productlist, topBanner, "c-footer": Footer },
+  data() {
+    return {};
+  }
+};
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div id="app">    
+  <div id="app">  
     <Loading></Loading>
     <router-view></router-view>
   </div>
@@ -9,6 +9,7 @@
 
 import * as types from './store/types'
 import Loading from './components/Loading'
+
 
 export default {
   name: 'app',
