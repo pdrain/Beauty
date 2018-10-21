@@ -95,12 +95,48 @@ export default {
     doExchange() {
       // 调用接口进行兑换，然后跳转直兑换结果页
       let _this = this;
-      _this.exchangeOrder.productId = _this.prdid
-      this.$store
-        .dispatch("saveExchangeProduct", _this.exchangeOrder)
-        .then(data => {
-          console.log(data);
-        });
+      _this.exchangeOrder.productId = _this.prdid;
+      _this.precheckBySave().then(
+        () => {
+          this.$store
+            .dispatch("saveExchangeProduct", _this.exchangeOrder)
+            .then(data => {
+              Swal({
+                text: "宝贝兑换成功!",
+                showCancelButton: true,
+                confirmButtonText: "继续浏览产品",
+                //cancelButtonText: "返回首页"
+              });
+            });
+        },
+        errs => {
+          Swal({text:errs.join("\r\n")});
+        }
+      );
+    },
+    precheckBySave() {
+      let _this = this;
+      let _errors = [];
+      let cb = (resolve, reject) => {
+        if (!_this.exchangeOrder.receiver) {
+          _errors.push("请输入联系人。");
+        }
+        if (!_this.exchangeOrder.phone) {
+          _errors.push("请输入联系电话。");
+        }
+        if (!_this.exchangeOrder.address) {
+          _errors.push("请输入详细收货地址。");
+        }
+        if (_errors.length == 0) {
+          resolve();
+        } else {
+          reject(_errors);
+        }
+      };
+      let promise = new Promise((resolve, reject) => {
+        cb(resolve, reject);
+      });
+      return promise;
     },
     doBuy() {
       Swal("Hello world!");

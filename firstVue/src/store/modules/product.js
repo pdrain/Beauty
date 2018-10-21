@@ -73,7 +73,6 @@ const actions = {
     saveExchangeProduct ({ commit, state }, param) {
         return new Promise(function (resolve, reject) {
             axios.post(api.EXCHANGE_PRODUCT_SAVE,param).then(response => {
-
                 if (response.data.code == 0) {
                     let data = response.data.data;
                     resolve(data)
