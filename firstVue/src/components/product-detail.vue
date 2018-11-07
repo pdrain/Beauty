@@ -32,10 +32,10 @@
                        <textarea v-model="exchangeOrder.address"></textarea>
                     </div>
                 </li>
-                <li class="multiLine"> 
+                <li class="singleLine"> 
                     <label>备注：</label>
                     <div>
-                       <textarea v-model="exchangeOrder.remark"></textarea>
+                       <textarea class="singleLine" v-model="exchangeOrder.remark"></textarea>
                     </div>
                 </li>
             </ul>
@@ -139,7 +139,7 @@ export default {
       return promise;
     },
     doBuy() {
-      Swal("Hello world!");
+      Swal("暂时不开放购买，敬请期待!");
     },
     getQueryString(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
@@ -236,7 +236,7 @@ export default {
   margin-top: 0.5rem;
 }
 .product .detial ul li label {
-  width: 20%;
+  width: 25%;
   text-align: right;
 }
 .product .detial ul li div {
@@ -253,9 +253,16 @@ export default {
 .product .detial ul li div textarea {
   height: 3rem;
 }
+.product .detial ul li div textarea.singleLine {
+  height: 1.5rem;
+}
 
 .product .detial ul li.multiLine {
   height: 3rem;
+}
+
+.product .detial ul li.singleLine{
+height: 1.5rem !important;
 }
 
 .deliveray-desc {

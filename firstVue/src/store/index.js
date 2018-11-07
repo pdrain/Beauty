@@ -21,7 +21,10 @@ import news from './modules/news'
 
 import adv from './modules/advertisment'
 
+
+import partners from './modules/partners'
+
 Vue.use(Vuex);
 export default new Vuex.Store({
-    modules: { loading, login,home, projects,product,submitorder ,dictionary,user,hospital,order,news,adv}
+    modules: { loading, login,home, projects,product,submitorder ,dictionary,user,hospital,order,news,adv,partners}
 })

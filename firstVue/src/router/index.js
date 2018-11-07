@@ -52,6 +52,7 @@ const UserUpgrade = resolve => require(['../components/UserUpgrade'], resolve)
 const UserClient = resolve => require(['../components/MyClient'], resolve)
 const UserAchievement = resolve => require(['../components/MyAchievement'], resolve)
 const Placard = resolve => require(['../components/placard'], resolve)
+const PlacardDetail = resolve => require(['../components/placard-detail'], resolve)
 
 const partnerlogin = resolve => require(['../components/partners/login'], resolve)
 const partnerreg = resolve => require(['../components/partners/reg'], resolve)
@@ -65,7 +66,7 @@ const PartnerHospitalDetail = resolve => require(['../components/partner-hospita
 const News = resolve => require(['../components/News'], resolve)
 const NewsDetail = resolve => require(['../components/NewsDetail'], resolve)
 
-const WelCome =resolve => require(['../components/welcome'], resolve)
+const WelCome = resolve => require(['../components/welcome'], resolve)
 
 const NotFontPage = resolve => require(['../components/404'], resolve)
 
@@ -77,7 +78,7 @@ Vue.use(VueRouter)
 const router = new VueRouter({
     hashbang: true,
     history: true,
-    mode:'history',
+    mode: 'history',
     saveScrollPosition: false,
     routes: [
         { path: '/', component: Home },
@@ -86,8 +87,8 @@ const router = new VueRouter({
         { path: '/projects-detail', component: ProjectsDetail },
         { path: '/submitorder', component: SubmitOrder },
         { path: '/shop', component: Shop },
-        { path: '/shop/product-exchange',component:ProductExchange},
-        { path: '/shop/product-detail',component:ProductDetail},
+        { path: '/shop/product-exchange', component: ProductExchange },
+        { path: '/shop/product-detail', component: ProductDetail },
 
         { path: '/user', component: User, meta: { requireAuth: true, } },// 添加该字段，表示进入这个路由是需要登录的
         { path: '/user/info', component: UserInfo },
@@ -105,7 +106,7 @@ const router = new VueRouter({
         { path: '/user/agreement', component: joinAgreement },
         { path: '/user/upgrade-agreement', component: UpgradAgreement },
         { path: '/user/placard', component: Placard },
-        
+        { path: '/user/placard/detail', component: PlacardDetail },
 
         { path: '/partners/login', component: partnerlogin },
         { path: '/partners/reg', component: partnerreg },
@@ -141,9 +142,14 @@ var getParentOpenId = function (name) {
     return '';
 }
 
+let isDebugger = true
 router.beforeEach((to, from, next) => {
+    let conacted_char = '?'
+    if (to.fullPath.indexOf('?') >= 0) {
+        conacted_char = '&'
+    }
     // debugger
-    if (location.host.indexOf('127.0.0.1') >= 0) {
+    if (isDebugger && location.host.indexOf('127.0.0.1') >= 0) {
         next();
         return false;
     }
@@ -153,13 +159,14 @@ router.beforeEach((to, from, next) => {
     //先判断用户是否已经授权
     let params = querystring.parse(location.search.replace('?', ''))
 
-    if(params.redirect){
+    if (params.redirect) {
         location.href = params.redirect
     }
 
     if (!params.code) {
         //微信授权
-        let wxAuthorizeUrl = location.origin + '/?parent=' + parentOpenId + '#' + to.fullPath
+
+        let wxAuthorizeUrl = location.origin + '/' + to.fullPath + conacted_char + 'parent=' + parentOpenId
         WX.doAuth(wxAuthorizeUrl)
     }
 
@@ -168,7 +175,7 @@ router.beforeEach((to, from, next) => {
     WX.getUserInfo(params.code).then(function (userInfo) {
         console.log(userInfo)
         if (userInfo.errcode) {
-            let wxAuthorizeUrl = location.origin + '/?parent=' + parentOpenId + '#' + to.fullPath
+            let wxAuthorizeUrl = location.origin + '/' + to.fullPath + conacted_char + 'parent=' + parentOpenId
             console.log('认证地址：' + wxAuthorizeUrl);
             WX.doAuth(wxAuthorizeUrl)
 

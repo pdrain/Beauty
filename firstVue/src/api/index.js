@@ -22,8 +22,12 @@ export const USER_CLIENTS="/api/users/children/?openId="
 export const PRODUCT_CAT="/api/products/types";
 // 护肤美容产品列表
 export const PRODUCT_LIST="/api/products/list/{0}";
+export const PRODUCT_LIST_BYCAT="/api/products/list/{0}";
 //护肤美容产品详情
 export const PRODUCT_DETAIL="/api/products/{0}";
+//订单列表
+export const PRODUCT_ORDER_LIST="/api/product_order/list?userId={0}&pageNo={1}"
+
 //兑换产品
 export const EXCHANGE_PRODUCT_SAVE="/api/product_order/save"
 //根据用户查看兑换产品激励
@@ -74,6 +78,10 @@ export const HOSPITAL_DETAIL="/api/hospital-detail/"
 //获取页面广告位图片
 export const ADVERTISMENT="/api/advertisment/get_adv_list"
 
+//保存用户分享海报信息
+export const SAVE_USER_SHARE_PLACARD_INFO='/api/share/save'
+//获取用户分享海报信息
+export const GET_USER_SHALE_INFO='/api/share/{0}'
 
 
 

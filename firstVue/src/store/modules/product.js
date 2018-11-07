@@ -38,9 +38,12 @@ const actions = {
     },
     queryProductList ({ commit, state }, catId) {
         return new Promise(function (resolve, reject) {
-            
+
             state.currentProductCat = catId;
             let _url_product_list = api.PRODUCT_LIST.replace('{0}', catId)
+            if (catId) {
+                _url_product_list = api.PRODUCT_LIST_BYCAT
+            }
             axios.get(_url_product_list).then(response => {
 
                 if (response.data.code == 0) {
@@ -53,6 +56,24 @@ const actions = {
                 }
             })
         })
+    },
+    queryUserProductOrder ({ commit, state }, userId) {
+        let promise = new Promise((resolve,reject)=>{
+            let url = api.PRODUCT_ORDER_LIST.replace('{0}',userId).replace('{1}',1)
+            axios.get(url).then(response => {
+
+                if (response.data.code == 0) {
+                    let data = response.data.data;
+                    resolve(data)
+                } else {
+                    if (reject && typeof (reject) == 'function') {
+                        reject();
+                    }
+                }
+            })
+        })
+
+        return promise;
     },
     queryProductDetail ({ commit, state }, prdId) {
         return new Promise(function (resolve, reject) {
@@ -72,7 +93,7 @@ const actions = {
     },
     saveExchangeProduct ({ commit, state }, param) {
         return new Promise(function (resolve, reject) {
-            axios.post(api.EXCHANGE_PRODUCT_SAVE,param).then(response => {
+            axios.post(api.EXCHANGE_PRODUCT_SAVE, param).then(response => {
                 if (response.data.code == 0) {
                     let data = response.data.data;
                     resolve(data)
@@ -88,7 +109,7 @@ const actions = {
 }
 
 const mutations = {
-    
+
 }
 
 export default {

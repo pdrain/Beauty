@@ -14,6 +14,9 @@ Vue.use(VueAwesomeSwiper)
 
 import './assets/sweetalert2.css'
 
+import './plugins/jquery'
+import './plugins/qrcode'
+
 
 
 //import wx from 'weixin-js-sdk'

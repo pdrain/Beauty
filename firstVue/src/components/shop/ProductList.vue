@@ -1,7 +1,7 @@
 <template>
   <div class="products">
     <div class="cats">
-      <div class="catitem"  v-for="(t,index) in prdCats" :key=index>
+      <div class="catitem"  v-for="(t,index) in prdCats" :key="index" @click="getProductList(t.id)">
         <img :src="t.icon"/>
         <a>{{t.name}}</a>
       </div>
@@ -60,7 +60,6 @@ export default {
     getProductCats() {
       let _this = this;
       this.$store.dispatch("queryProductCats").then(function(data) {
-        debugger;
         _this.currentCatId = "";
         _this.prdCats = data;
       });
