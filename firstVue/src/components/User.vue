@@ -7,15 +7,20 @@
             </div>
            
         </header>
-        <div class="user-detail" v-for="(nav,index) in menus" :key="index">
-           <h2 class="title"><span>&nbsp;</span>{{nav.groupname}}</h2>
-            <ul>
-              <li v-for="(item,i) in nav.items" :key="i" @click="gotoDetail(item.path)">{{item.name}} <span class="more" >&gt;</span></li>
+        <div class="user-detail" >
+          
+            <ul class="my">
+              <li v-for="(item,i) in menus" :key="i" @click="gotoDetail(item.path)">
+                <i :class="item.class">&nbsp;</i>
+                <span>
+                {{item.name}}
+                </span>
+              </li>
             </ul>
         </div>
         <br/>
         <div class="adv">
-            广告
+            <img src="../assets/my/wode.jpg"/>
         </div>
 <br/>
 <br/>
@@ -40,27 +45,16 @@ export default {
       msg: "Welcome to User Center!",
       UserInfo: "",
       menus: [
-        {
-          groupname: "订单信息",
-          items: [
-            { name: "我的订单", path: "/user/userrights", class: "order" },
-            { name: "我的客户", path: "/user/userrights", class: "about-us" },
-            { name: "我的业绩", path: "/user/userrights", class: "upgrade" },
-            { name: "我的积分", path: "/user/userrights", class: "ticket" }
-          ]
-        },
-        {
-          groupname: "用户权益",
-          items: [
+            { name: "我的订单", path: "/user/myorders", class: "order" },
+            { name: "我的客户", path: "/user/client", class: "about-us" },
+            { name: "我的业绩", path: "/user/achievement", class: "upgrade" },
+            { name: "我的积分", path: "/user/mypoints", class: "ticket" },
+         
             { name: "用户保障", path: "/user/userrights", class: "safe" },
             { name: "优惠券", path: "/user/coupon", class: "ticket" },
             { name: "我要升级", path: "/user/upgrade", class: "upgrade" },
-            { name: "邀请好友", path: "/user/placard", class: "welcome" }
-          ]
-        },
-        {
-          groupname: "关于画眉鸟",
-          items: [
+            { name: "邀请好友", path: "/user/placard", class: "welcome" },
+        
             { name: "关于我们", path: "/user/aboutus", class: "about-us" },
             { name: "合作机构", path: "/partners/hospitals", class: "partner" },
             {
@@ -68,16 +62,9 @@ export default {
               path: "/user/servicecenter",
               class: "service-center"
             },
-            { name: "设置", path: "/user/setting", class: "setting" }
-          ]
-        },
-        {
-          groupname: "",
-          items: [
+            { name: "设置", path: "/user/setting", class: "setting" },
             { name: "美容店加盟", path: "/partners/reg", class: "setting" },
             { name: "加盟协议", path: "/user/agreement", class: "agreement" }
-          ]
-        }
       ]
     };
   },
@@ -124,86 +111,33 @@ h2.title span {
   margin-right: 5px;
 }
 
-.user-detail ul {
-  width: 100%;
-  background: #fff;
-}
 
-.user-detail ul li {
-  height: 1.5rem;
-  line-height: 1.5rem;
-  text-align: left;
-  border-bottom: 0.05rem #f0f0f0 solid;
-  text-indent: 0.5rem;
-}
 
-.user-detail ul li span.more {
-  float: right;
-  margin-right: 0.5rem;
-}
 
-.uicons {
-  background: url("../assets/user-icons.png") no-repeat;
-  display: block;
-  padding-top: 2rem;
-}
-/*用户保障*/
-.uicons.safe {
-  background-position: 0.4rem -10rem !important;
-}
-/*客户中心*/
-.uicons.service-center {
-  background-position: -2.4rem -6.25rem !important;
-}
-.uicons.about-us {
-  background-position: -2.4rem -3.3rem !important;
-}
-.uicons.upgrade {
-  background-position: 0.4rem -3.4rem !important;
-}
-.uicons.ticket {
-  background-position: -2.4rem -0.3rem !important;
-}
-.uicons.setting {
-  background-position: 0.4rem -6.3rem !important;
-}
-.uicons.partner {
-  background-position: -2.4rem -10rem !important;
-}
-.uicons.agreement {
-  background-position: 0.4rem -13.85rem !important;
-}
-.uicons.order {
-  background-position: 0.4rem -0.4rem !important;
-}
-.uicons.welcome {
-  background-position: 0.4rem -16.6rem !important;
-}
 
 header {
   width: 100%;
   text-align: center;
-  border-bottom: @user-border-color;
-  background: @user-header-bg;
   padding: 20px 0px 10px 0px;
   background: url(../assets/tou.png) no-repeat;
+  background-color:#fff;
   height: 6.3rem;
-  background-size:cover;
+  background-size: cover;
 }
 
 header .nick {
   color: #fff;
-    font-size: 0.8rem;
-    line-height: 3rem;
-    height: 3rem;
-    width: 100%;
+  font-size: 0.8rem;
+  line-height: 3rem;
+  height: 3rem;
+  width: 100%;
 }
 
 header .icon img {
   width: 3.5rem;
-    height: 3.5rem;
-    vertical-align: middle;
-    border-radius: 3.5rem;
+  height: 3.5rem;
+  vertical-align: middle;
+  border-radius: 3.5rem;
 }
 
 .usercenter {
@@ -261,5 +195,9 @@ header .icon img {
   width: 100%;
   height: 100px;
   background: @user-bg;
+}
+
+.usercenter .adv img{
+  width: 100%;
 }
 </style> 

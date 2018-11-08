@@ -1,5 +1,5 @@
 <template>
-    <div class="order-list">
+    <div class="order-list content-body">
         <dl>
             <dd v-for="item in data" :key="item.name">
                 <router-link :to="{ path: '/projects-detail', query: { id: item.projectId }}">
@@ -33,7 +33,6 @@ export default {
 .order-list {
     width: 100%;
     background: #fff;
-    padding-bottom:3rem;
 }
 
 

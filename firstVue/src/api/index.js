@@ -4,7 +4,7 @@ export const DO_LOGIN='/api/users/?open_id=';
 export const REGISTER='/api/users/save';
 export const NEWS='/api/news';
 export const WEIXIN_AUTH='/api/weixin/Auth';
-export const GET_BASE_INFO='api/infos/{infoId}'
+export const GET_BASE_INFO='/api/infos/{infoId}'
 //业绩查询
 //api/order/performances/openid
 export const USER_PERFOMANCES="/api/order/performances/"
@@ -54,7 +54,7 @@ export const QUERY_ORDERS="/api/order/";
 //资讯文章查询-文章列表
 export const NEWS_LIST="/api/articles?pageNo={0}&pageSize={1}"
 //资讯文章查询-文章详情
-export const NEWS_DETAIL="api/articles/{0}"
+export const NEWS_DETAIL="/api/articles/{0}"
 
 
 

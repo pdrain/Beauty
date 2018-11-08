@@ -1,5 +1,5 @@
 <template>
-    <div class="placard-container">
+    <div class="placard-container content-body">
         <UserHeader  backurl="/user"  title="我的分享海报"></UserHeader>
         <div class="cats">
         <div class="item"   v-for="(item,index) in cats" :key="index"  @click="gotoProjectList(item)"><i :class='item.icon' ></i><span class="title">{{item.name}}</span></div>
@@ -40,7 +40,6 @@ export default {
 <style scoped lang="less">
 @import "../assets/index.less";
 .placard-container{
-padding-bottom: 2rem;
 }
 .placard {
   display: flex;

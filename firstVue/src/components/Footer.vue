@@ -2,6 +2,7 @@
     <div class="bottom-menu">
         <a class="footer-icon home" :class="{'active':homeActive}" @click="goHome">发现美丽</a>
         <a class="footer-icon shop" :class="{'active':shopActive}" @click="goShop">积分商城</a>
+        <a class="footer-icon shop" :class="{'active':newsActive}" @click="goNews">常识</a>
         <a class="footer-icon mine" :class="{'active':mineActive}" @click="goMy">我</a>
     </div>
 </template>
@@ -13,13 +14,15 @@ export default {
     return {
       homeActive: true,
       shopActive: false,
-      mineActive: false
+      mineActive: false,
+      newsActive: false
     };
   },
   created(){
       this.homeActive = location.pathname=='/'
       this.shopActive = location.pathname.indexOf('/shop')>-1
       this.mineActive = location.pathname.indexOf('/user')>-1
+      this.newsActive = location.pathname.indexOf('/news')>-1
   },
   methods: {
     goHome() {
@@ -27,6 +30,9 @@ export default {
     },
     goShop() {
       this.$router.push("/shop");
+    },
+    goNews() {
+      this.$router.push("/news");
     },
     goMy() {
       this.$router.push("/user");
@@ -38,7 +44,7 @@ export default {
 <style scoped>
 .footer-icon {
   background-size: 0.2rem !important;
-  background-size: 1.2rem !important;
+  background-size: 1rem !important;
   background-position-x: center !important;
   background-position-y: 0.2rem !important;
 }

@@ -131,7 +131,7 @@ const router = new VueRouter({
 
 });
 //获取Parent OpenID
-var getParentOpenId = function (name) {
+var getQueryParam = function (name) {
     var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
     var r = window.location.search.substr(1).match(reg);
     console.log(JSON.stringify(r))
@@ -142,67 +142,75 @@ var getParentOpenId = function (name) {
     return '';
 }
 
-let isDebugger = true
 router.beforeEach((to, from, next) => {
-    let conacted_char = '?'
-    if (to.fullPath.indexOf('?') >= 0) {
-        conacted_char = '&'
-    }
-    // debugger
-    if (isDebugger && location.host.indexOf('127.0.0.1') >= 0) {
-        next();
-        return false;
-    }
-
-    let _this = this;
-    var parentOpenId = getParentOpenId('parent')
-    //先判断用户是否已经授权
-    let params = querystring.parse(location.search.replace('?', ''))
-
-    if (params.redirect) {
-        location.href = params.redirect
-    }
-
-    if (!params.code) {
-        //微信授权
-
-        let wxAuthorizeUrl = location.origin + '/' + to.fullPath + conacted_char + 'parent=' + parentOpenId
-        WX.doAuth(wxAuthorizeUrl)
-    }
-
-
-    //获取用户信息
-    WX.getUserInfo(params.code).then(function (userInfo) {
-        console.log(userInfo)
-        if (userInfo.errcode) {
-            let wxAuthorizeUrl = location.origin + '/' + to.fullPath + conacted_char + 'parent=' + parentOpenId
-            console.log('认证地址：' + wxAuthorizeUrl);
-            WX.doAuth(wxAuthorizeUrl)
-
-        } else {
-            //用户登录
-            console.log(userInfo)
-            let url = api.DO_LOGIN + userInfo.openid + '&parent=' + parentOpenId + '&nickName=' + userInfo.nickname
-            axios.get(url).then(response => {
-                if (response.data.code == 0) {
-                    //localStorage.setItem('userinfo', JSON.stringify(userInfo))
-                    let _userInfo = response.data.data;
-                    _userInfo.WX = userInfo;
-                    localStorage.setItem('userinfo', JSON.stringify(_userInfo))
-                }
-            });
-            //初始化JSSDK
-            try {
-                var signUrl = encodeURIComponent(location.href.split('#')[0])
-                WX.initJSSDK(userInfo.access_token, signUrl).then(function () { });
-            } catch (e) {
-                console.log(e)
-            }
+    if (true) {
+        wxAuthInit().then(() => {
             next();
-        }
-    })
+        }, () => {
+            doWXAuth(to)
+            return;
+        })
+    } else {
+        next()
+    }
+
 })
 
+let getAuthUrl = function (to) {
+   
+    let wxAuthorizeUrl = location.origin + to.fullPath;
+    
+    return wxAuthorizeUrl
+}
+
+let doWXAuth = function (to) {
+    let wxAuthorizeUrl = getAuthUrl(to)
+    WX.doAuth(wxAuthorizeUrl)
+}
+
+let wxAuthInit = function () {
+    let fn = (resolve, reject) => {
+       
+        //先判断用户是否已经授权
+        let auth_code = getQueryParam('code');
+        if (!auth_code) {
+            reject()
+        } else {
+            //获取用户信息
+            WX.getUserInfo(auth_code).then(function (userInfo) {
+                console.log(userInfo)
+                if (userInfo.errcode) {
+                    reject()
+                } else {
+                    //设置用用户自动登录
+                    let parentOpenId = getQueryParam('parent')
+                    let url = api.DO_LOGIN + userInfo.openid + '&parent=' + parentOpenId + '&nickName=' + userInfo.nickname
+                    axios.get(url).then(response => {
+                        if (response.data.code == 0) {
+                            //localStorage.setItem('userinfo', JSON.stringify(userInfo))
+                            let _userInfo = response.data.data;
+                            _userInfo.WX = userInfo;
+                            localStorage.setItem('userinfo', JSON.stringify(_userInfo))
+                        }
+                    });
+                    //初始化JSSDK
+                    try {
+                        //var signUrl = encodeURIComponent(location.href.split('#')[0])
+                        var signUrl = encodeURIComponent(location.href)
+                        WX.initJSSDK(userInfo.access_token, signUrl).then(function () { });
+                    } catch (e) {
+                        console.log(e)
+                    }
+                    resolve();
+                }
+            })
+        }
+    }
+
+    return new Promise(fn)
+
+
+}
 
 
 export default router;

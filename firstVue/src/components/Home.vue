@@ -10,7 +10,7 @@
       
       <div class="hot-prd">
         <div class="item"  v-for="(item,index) in hotCats" :key="index">
-          <img src="../assets/icons/tupian-1.jpg"/>
+          <img :src="'../static/tuipian-'+(index+1)+'.jpeg'"/>
           <span>&nbsp;</span>
           <span class="title">{{item.name}}</span>
         </div>
@@ -50,7 +50,6 @@
                <li v-if="newsList.length==0"> 暂无推荐文章</li>
           </ul>
       </div>
-     
   </div>
   
 </template>
@@ -244,11 +243,11 @@ h2.title a.more {
 .partners .content {
   background: #fff;
   min-height: 1rem;
-  padding: 0.3rem;
+  //padding: 0.3rem;
   overflow: hidden;
 }
 .partners .content .swiper-container {
-  height: 3rem;
+  height: 5rem;
   text-align: center;
 }
 
