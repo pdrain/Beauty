@@ -1,8 +1,12 @@
 <template>
-    <div class="placard-container content-body">
+    <div class="placard-container content-body" v-title='"邀请好友"'>
         <UserHeader  backurl="/user"  title="我的分享海报"></UserHeader>
+        <div>
+          <a>个人好友</a>
+          <a>美容店</a>
+        </div>
         <div class="cats">
-        <div class="item"   v-for="(item,index) in cats" :key="index"  @click="gotoProjectList(item)"><i :class='item.icon' ></i><span class="title">{{item.name}}</span></div>
+        <div class="item"   v-for="(item,index) in cats" :key="index"  @click="goToPlaCard(item)"><i :class='item.icon' ></i><span class="title">{{item.name}}</span></div>
       </div>
          <c-footer></c-footer>
     </div>
@@ -29,8 +33,9 @@ export default {
         _this.cats = _list;
       });
     },
-    goToPlaCard() {
-      this.$router.push("/user/placard/detail");
+    goToPlaCard(item) {
+      let url = "/user/placard/detail/?cat="+item.id
+      this.$router.push(url);
     }
   }
 };

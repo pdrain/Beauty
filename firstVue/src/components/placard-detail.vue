@@ -1,17 +1,26 @@
 <template>
     <div v-title='"分享海报"' >
-    <share-placard :shareid="shareId"></share-placard>
-    <c-footer></c-footer>
+      <h2>企业分享给美容店的介绍页面</h2>
+      <div>
+        产品分类介绍<br/>
+        产品分类介绍<br/>
+        产品分类介绍<br/>
+        产品分类介绍<br/>
+      </div>
+      <share-placard :shareid="shareId" :catid='catid'></share-placard>
+      <c-footer></c-footer>
     </div>
 </template>
 
 <script>
 import Footer from "./Footer";
 import placardShareInfo from "./placard-share-info";
+import utils from "../utils";
 export default {
   data() {
     return {
-      shareId: ""
+      shareId: "",
+      catid: utils.getParams("cat")
     };
   },
   components: { "c-footer": Footer, "share-placard": placardShareInfo },
@@ -20,6 +29,7 @@ export default {
     _this.saveShareInfo().then(id => {
       _this.shareId = id;
     });
+    console.log(this.catid);
   },
   methods: {
     saveShareInfo() {
@@ -45,6 +55,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+h2{
+padding-top:5rem;
+padding-bottom:5rem;
+}
 </style>
 

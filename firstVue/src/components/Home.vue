@@ -159,22 +159,6 @@ export default {
         let _cats = data.data;
         _this.recommendCats = _cats;
         _this.hotCats =_cats.slice(0, 4);
-        var result = [];
-
-        for (var i = 0, len = _cats.length; i < len; i += 3) {
-          let g = _cats.slice(i, i + 3);
-
-          if (g.length < 3) {
-            for (var j = 0; j < 3 - g.length; j++) {
-              g.push({ icon: "none", name: "" });
-            }
-          }
-          result.push(g);
-        }
-        // 热门项目
-        //_this.hotCats = result.slice(0, 1);
-        //推荐项目
-        //_this.recommendCats = result.slice(1, result.length);
       });
     }
   }

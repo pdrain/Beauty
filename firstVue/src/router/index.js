@@ -10,6 +10,8 @@ import querystring from 'querystring'
 import WX from '../config/WeXin'
 import { mapGetters } from 'vuex'
 
+import utils from "../utils";
+
 
 /*
 import Login from '../components/Login'
@@ -143,23 +145,30 @@ var getQueryParam = function (name) {
 }
 
 router.beforeEach((to, from, next) => {
-    if (true) {
-        wxAuthInit().then(() => {
-            next();
-        }, () => {
-            doWXAuth(to)
-            return;
-        })
-    } else {
-        next()
+    //let isNative = utils.isNative()
+    //if (!isNative) {
+    //    wxAuthInit().then(() => {
+    //        next();
+    //    }, () => {
+    //        doWXAuth(to)
+    //        return;
+    //    })
+    //} else {
+    //    next()
+    //}
+    let shuldAuth = to.meta.requireAuth == true
+    let isLogin=true
+    if (shuldAuth && !isLogin) {
+        location.href = '/login/?target=' + to.fullPath
+        return false;
     }
-
+    next()
 })
 
 let getAuthUrl = function (to) {
-   
+
     let wxAuthorizeUrl = location.origin + to.fullPath;
-    
+
     return wxAuthorizeUrl
 }
 
@@ -170,7 +179,7 @@ let doWXAuth = function (to) {
 
 let wxAuthInit = function () {
     let fn = (resolve, reject) => {
-       
+
         //先判断用户是否已经授权
         let auth_code = getQueryParam('code');
         if (!auth_code) {

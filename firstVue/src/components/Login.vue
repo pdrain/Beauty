@@ -1,7 +1,6 @@
 <template>
   <div id="login-form" class="login-form">
-    <h1><span class="close" @click="closeWindow">X</span>
-      用户登录</h1>
+    
       <form>
         <ul>
             <li>
@@ -13,7 +12,7 @@
               <input type="password" placeholder="登录密码"/>
             </li>
         </ul>
-        <p class="error">{{msg}}</p>
+        <p class="error">{{errMsg}}</p>
         <p class="agreement">
           <label for="agree">
             <input type="checkbox" name="agree" id="">
@@ -37,30 +36,34 @@ import axios from "../http";
 import router from "../router";
 
 import * as types from "../store/types";
+import utils from "../utils";
 
 export default {
   name: "user-login",
   data() {
     return {
-      msg: "Welcome to Your Vue.js App"
+      loginInfo: { account: "", password: "" },
+      target: utils.getParams("target"),
+      errMsg: ""
     };
   },
   mounted() {},
   methods: {
     doLogin() {
-      let self = this;
-      var params = { account: "", password: "" };
-
-      axios.post(api.DO_LOGIN + "?v=1", params).then(response => {
-        let _data = response.data;
-        if (_data.Code == 0) {
-          
-          self.$store.commit(types.LOGIN, _data.Token);
-          //router.replace(decodeURIComponent(this.$route.query.redirect));
-        } else {
-          self.msg = response.Message
-        }
-      });
+      let _this = this;
+      var params = {
+        account: _this.loginInfo.account,
+        password: _this.loginInfo.password
+      };
+      _this.$router.push(_this.target);
+      //axios.post(api.DO_LOGIN + "?v=1", params).then(response => {debugger
+      //  let _data = response.data;
+      //  if (_data.Code == 0) {
+      //    _this.$router.push(_this.target);
+      // } else {
+      //   self.msg = response.Message;
+      // }
+      //});
     },
     closeWindow: function() {
       this.$router.push("/projects");
@@ -134,9 +137,9 @@ export default {
   color: #666;
   text-indent: 1rem;
 }
-.login-form .error{
-  color:#f00;
-  padding:0px;
+.login-form .error {
+  color: #f00;
+  padding: 0px;
   margin: 0px;
   line-height: 16px;
   text-align: left;

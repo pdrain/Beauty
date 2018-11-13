@@ -1,34 +1,48 @@
 <template>
     <div v-title='"分享海报"'>
-        <div id="qrcodeCanvas"></div>
+        <div id="qrcodeCanvas" class="qrcode"></div>
     </div>
 </template>
 
 <script>
 import utils from "../utils/index";
 export default {
-  props: ["shareid"],
+  props: ["shareid", "catid"],
   data() {
     return {
-      id: this.shareid || utils.getParams("shareId")
+      userInfo: null,
+      qrCodeUrl: "",
+      cats: []
     };
   },
   watch: {
     shareid: function() {
-      console.log("aaaa" + this.shareid);
+      console.log(11);
+      if (!this.shareid) {
+        this.shareid = utils.getParams("shareId");
+      }
+      this.init();
     }
   },
   created() {
-      this.init()
-    console.log(this.id);
+    let _this = this;
+    _this.$store.dispatch("getLostorageUserInfo").then(function(uInfo) {
+      _this.userInfo = uInfo;
+    });
+
+    _this.getAllCatagories().then(() => {
+      _this.qrCodeUrl = this.getQRcodeUrl();
+      console.log(_this.qrCodeUrl)
+    });
   },
   methods: {
     init() {
       let _this = this;
       _this.getShareInfo().then(result => {
         jQuery("#qrcodeCanvas").qrcode({
-          render: "canvas",
-          text: location.origin + "/projects/?cIds=29,33,34,35,38,39&parent=",
+          //render: "canvas",
+          render: "img",
+          text: _this.qrCodeUrl,
           width: "200", //二维码的宽度
           height: "200", //二维码的高度
           background: "#ffffff", //二维码的后景色
@@ -37,15 +51,51 @@ export default {
         });
       });
     },
+    getQRcodeUrl() {
+      let _this = this;
+      let url = "";
+      let sCids = [];
+      _this.cats.forEach(cat => {
+        if (cat.id == _this.catid) {
+          cat.second.forEach(item => {
+            sCids.push(item.id);
+          });
+        }
+      });
+
+      url = location.origin + "/projects/?cIds=" + sCids.join(",");
+      url += "&parent=" + _this.userInfo.openid;
+      return url;
+    },
     getShareInfo() {
       let _this = this;
       let promise = new Promise((resolve, reject) => {
-        _this.$store.dispatch("getUserShareInfo").then(result => {
-          resolve();
-        });
+        _this.$store
+          .dispatch("getUserShareInfo", _this.shareid)
+          .then(result => {
+            resolve();
+          });
       });
       return promise;
+    },
+    getAllCatagories() {
+      let _this = this;
+      let fn = (resolve, reject) => {
+        _this.$store.dispatch("getAllCategories").then(function(data) {
+          let _list = data.data;
+          _this.cats = _list;
+          resolve();
+        });
+      };
+      return new Promise(fn);
     }
   }
 };
 </script>
+
+
+<style lang="less" scoped>
+.qrcode canvas{
+  border:0.05rem #f0f0f0 solid;
+}
+</style>

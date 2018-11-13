@@ -3,7 +3,7 @@
         <header>
            <div class="nick" v-if=" UserInfo">{{UserInfo.nickName}}</div>
             <div class="icon">
-                <img v-if=" UserInfo" :src="UserInfo.WX.headimgurl" />
+                <img src='' />
             </div>
            
         </header>
@@ -20,7 +20,7 @@
         </div>
         <br/>
         <div class="adv">
-            <img src="../assets/my/wode.jpg"/>
+            <img src="../assets/my/wode.png"/>
         </div>
 <br/>
 <br/>
@@ -46,9 +46,9 @@ export default {
       UserInfo: "",
       menus: [
             { name: "我的订单", path: "/user/myorders", class: "order" },
-            { name: "我的客户", path: "/user/client", class: "about-us" },
-            { name: "我的业绩", path: "/user/achievement", class: "upgrade" },
-            { name: "我的积分", path: "/user/mypoints", class: "ticket" },
+            { name: "我的客户", path: "/user/client", class: "clients" },
+            { name: "我的业绩", path: "/user/achievement", class: "archivment" },
+            { name: "我的积分", path: "/user/mypoints", class: "point" },
          
             { name: "用户保障", path: "/user/userrights", class: "safe" },
             { name: "优惠券", path: "/user/coupon", class: "ticket" },
@@ -63,7 +63,7 @@ export default {
               class: "service-center"
             },
             { name: "设置", path: "/user/setting", class: "setting" },
-            { name: "美容店加盟", path: "/partners/reg", class: "setting" },
+            { name: "美容店加盟", path: "/partners/reg", class: "reg" },
             { name: "加盟协议", path: "/user/agreement", class: "agreement" }
       ]
     };

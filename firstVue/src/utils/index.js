@@ -6,4 +6,9 @@ utils.getParams = (name) => {
     return null;
 }
 
+utils.isNative = ()=>{
+    return navigator.userAgent.indexOf('HuaMeiNiao')>=0
+   
+}
+
 export default utils;

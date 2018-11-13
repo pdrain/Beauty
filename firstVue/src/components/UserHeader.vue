@@ -1,7 +1,7 @@
 <template>
   <div class="userheader">
     <div>
-      <a v-if="backurl"  class="goback" @click="goBack"></a>
+      <!--<a v-if="backurl"  class="goback" @click="goBack"></a>-->
       <img src="../assets/company.jpg" />
     </div>
     <h1>

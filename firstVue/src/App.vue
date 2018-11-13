@@ -1,5 +1,6 @@
 <template>
   <div id="app">  
+    <topnav></topnav>
     <Loading></Loading>
     <router-view></router-view>
   </div>
@@ -9,11 +10,11 @@
 
 import * as types from './store/types'
 import Loading from './components/Loading'
-
+import topnav from './components/top-nav'
 
 export default {
   name: 'app',
-  components: {Loading },
+  components: {Loading,topnav },
   data(){
       return {}
 

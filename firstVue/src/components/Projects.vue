@@ -1,5 +1,5 @@
 <template>
-  <div v-title="'美容项目'">
+  <div class="content-body"  v-title="'美容项目'">
     <SearchBox ></SearchBox>
      <div class="banner">
         <!--<img src="../assets/banner-1.jpg" />-->
